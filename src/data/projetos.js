@@ -86,7 +86,11 @@ const projetos = [
     icon: '🏗️',
     cor: 'from-sky-700 to-blue-900',
     imagem: '/images/projetos/emisa.webp',
-    galeria: [],
+    galeria: [
+      '/images/projetos/emisa-lista.webp',
+      '/images/projetos/emisa-loteamento.webp',
+      '/images/projetos/emisa-sobre.webp',
+    ],
     repo: null,
     privado: true,
     site: null,
