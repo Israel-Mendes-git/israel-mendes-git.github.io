@@ -1,129 +1,110 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import projetos, { destaques } from '../data/projetos'
+import ProjectCard from '../components/ProjectCard'
 
 function Home() {
-  const projetos = [
-    { id: 1, nome: 'O Grito da Mata', engine: 'Unity', ano: '2025', cor: 'from-green-600 to-emerald-600', icon: '🎮', status: 'Finalizado', destaque: 'Roguelike com mapas procedurais' },
-    { id: 2, nome: 'Chess Multiplayer', engine: 'Unity', ano: '2025', cor: 'from-green-700 to-green-500', icon: '♟️', status: 'Finalizado', destaque: 'Xadrez 3D multiplayer' },
-    { id: 3, nome: 'Rapadura Filmes', engine: 'Web', ano: '2026', cor: 'from-emerald-600 to-green-400', icon: '🎬', status: 'Finalizado', destaque: 'Plataforma de streaming' },
-    { id: 6, nome: 'Card Game Multiplayer', engine: 'Unity', ano: '2025', cor: 'from-purple-600 to-pink-600', icon: '🃏', status: 'WIP', destaque: 'Hearthstone like' },
-    { id: 7, nome: 'Balatro 2', engine: 'Unity', ano: '2026', cor: 'from-blue-600 to-cyan-600', icon: '🃟', status: 'WIP', destaque: 'Recriando sistema Balatro' },
-    { id: 9, nome: 'UI Kanban', engine: 'Kotlin', ano: '2026', descricao: 'Aplicativo para TV que recria a interface do Kanban.', tipo: 'Web App', status: 'Finalizado', cor: 'from-blue-600 to-indigo-600', icon: '📋', destaque: 'Aplicativo para TV' }
- 
-]
+  // Números derivados dos dados — não precisam de manutenção manual.
+  const finalizados = projetos.filter((p) => p.status === 'Finalizado').length
+  const emAndamento = projetos.filter((p) => p.status === 'WIP').length
+  const engines = new Set(projetos.map((p) => p.engine)).size
+
+  const stats = [
+    { numero: projetos.length, label: 'Projetos no total' },
+    { numero: finalizados, label: 'Finalizados' },
+    { numero: emAndamento, label: 'Em desenvolvimento' },
+    { numero: engines, label: 'Engines e stacks' },
+  ]
 
   return (
     <div>
-      {/* Hero Section com wave */}
-      <div className='relative'>
-        <img 
-          src="https://capsule-render.vercel.app/api?type=waving&height=200&section=header&reversal=false&fontSize=39&fontAlign=50&fontAlignY=50&stroke=-&animation=scaleIn&descSize=20&descAlign=50&descAlignY=50&textBg=false&theme=merko" 
-          className="w-full"
-          alt="header"
+      {/* Hero */}
+      <header className='relative overflow-hidden border-b border-green-900/30'>
+        <div className='absolute inset-0 bg-gradient-to-br from-green-950 via-black to-black' />
+        <div
+          className='absolute inset-0 opacity-[0.07]'
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(34,197,94,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,.6) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+          }}
         />
-        <div className='absolute inset-0 flex items-center justify-center'>
-          <div className='text-center px-4 mt-20'>
-            <h1 className='text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent'>
-              Israel Mendes
-            </h1>
-            <p className='text-xl md:text-2xl text-gray-400'>
-              Game Developer | Técnico em Informática | Ciência da Computação
-            </p>
-            <div className='flex flex-wrap gap-4 justify-center mt-8'>
-              <Link to='/projects' className='bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105'>
-                Explorar Projetos →
-              </Link>
-              <Link to='/contato' className='border-2 border-green-500 text-green-400 hover:bg-green-500/10 font-bold py-3 px-8 rounded-full transition'>
-                Contato 
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+        <div className='absolute -top-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-green-600/20 blur-[100px]' />
 
-      {/* Stats Section */}
-      <div className='bg-black/50 backdrop-blur-sm py-16 border-y border-green-900/30'>
-        <div className='container mx-auto px-4'>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8 text-center'>
-            {[
-              { numero: '7+', label: 'Projetos Completos', icon: '' },
-              { numero: '3', label: 'Engines Dominadas', icon: '' },
-              { numero: '1 ano', label: 'Dev Rapadura Atômica', icon: '' },
-              { numero: '13', label: 'Projetos no Total', icon: '' }
-            ].map(stat => (
-              <div key={stat.label} className='group hover:scale-105 transition'>
-                <div className='text-4xl mb-2'>{stat.icon}</div>
-                <div className='text-3xl font-bold text-green-400 mb-1'>{stat.numero}</div>
-                <div className='text-gray-500 text-sm'>{stat.label}</div>
-              </div>
-            ))}
+        <div className='container relative mx-auto px-4 py-24 text-center md:py-32'>
+          <p className='mb-4 text-sm uppercase tracking-[0.3em] text-green-500'>Desenvolvedor de jogos</p>
+          <h1 className='mb-4 bg-gradient-to-r from-green-300 to-green-600 bg-clip-text text-5xl font-bold text-transparent md:text-7xl'>
+            Israel Mendes
+          </h1>
+          <p className='mx-auto mb-8 max-w-2xl text-lg text-gray-400 md:text-xl'>
+            Game Developer · Técnico em Informática · Ciência da Computação
+          </p>
+          <div className='flex flex-wrap justify-center gap-4'>
+            <Link
+              to='/projects'
+              className='rounded-full bg-green-600 px-8 py-3 font-bold text-white transition hover:scale-105 hover:bg-green-700'
+            >
+              Explorar projetos →
+            </Link>
+            <Link
+              to='/contato'
+              className='rounded-full border-2 border-green-500 px-8 py-3 font-bold text-green-400 transition hover:bg-green-500/10'
+            >
+              Contato
+            </Link>
           </div>
         </div>
-      </div>
+      </header>
+
+      {/* Números */}
+      <section className='border-b border-green-900/30 bg-black/50 py-14 backdrop-blur-sm'>
+        <div className='container mx-auto grid grid-cols-2 gap-8 px-4 text-center md:grid-cols-4'>
+          {stats.map((s) => (
+            <div key={s.label} className='transition hover:scale-105'>
+              <div className='mb-1 text-4xl font-bold text-green-400'>{s.numero}</div>
+              <div className='text-sm text-gray-500'>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Destaques */}
-      <div className='container mx-auto px-4 py-16'>
-        <h2 className='text-4xl font-bold text-white text-center mb-4'>Projetos em Destaque</h2>
-        <p className='text-gray-500 text-center mb-12 max-w-2xl mx-auto'>
-          Conheça alguns dos meus melhores trabalhos
+      <section className='container mx-auto px-4 py-16'>
+        <h2 className='mb-4 text-center text-4xl font-bold text-white'>Projetos em destaque</h2>
+        <p className='mx-auto mb-12 max-w-2xl text-center text-gray-500'>
+          Do roguelike de cartas que estou construindo aos sistemas que rodam em produção
         </p>
-        
-        <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {projetos.map((proj, index) => (
-            <Link key={proj.id} to={`/projeto/${proj.id}`}>
-              <div 
-                className='group bg-black/50 backdrop-blur-sm rounded-2xl overflow-hidden hover-glow-green transition-all duration-500 hover:-translate-y-2 border border-green-900/30 h-full'
-              >
-                <div className={`h-56 bg-gradient-to-br ${proj.cor} flex items-center justify-center relative overflow-hidden`}>
-                  <div className='absolute inset-0 bg-black/30 group-hover:bg-black/50 transition duration-500'></div>
-                  <span className='text-8xl group-hover:scale-110 transition duration-500'>{proj.icon}</span>
-                  <div className={`absolute top-4 right-4 px-2 py-1 rounded-full text-xs font-bold ${
-                    proj.status === 'Finalizado' ? 'bg-green-600 text-white' : 'bg-yellow-600 text-white'
-                  }`}>
-                    {proj.status === 'Finalizado' ? ' Finalizado' : ' WIP'}
-                  </div>
-                </div>
-                <div className='p-6'>
-                  <h3 className='text-2xl font-bold text-white mb-2 group-hover:text-green-400 transition'>
-                    {proj.nome}
-                  </h3>
-                  <p className='text-gray-400 text-sm mb-3'>{proj.destaque}</p>
-                  <div className='flex justify-between items-center'>
-                    <span className='text-green-400 font-semibold text-sm'>{proj.engine}</span>
-                    <span className='text-gray-600 text-sm'>{proj.ano}</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
+
+        <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
+          {destaques.map((p) => (
+            <ProjectCard key={p.id} projeto={p} alturaCapa='h-56' />
           ))}
         </div>
 
-        <div className='text-center mt-12'>
-          <Link 
-            to='/projects' 
-            className='inline-flex items-center gap-2 bg-transparent border-2 border-green-500 text-green-400 hover:bg-green-500/10 font-bold py-3 px-8 rounded-full transition'
+        <div className='mt-12 text-center'>
+          <Link
+            to='/projects'
+            className='inline-flex items-center gap-2 rounded-full border-2 border-green-500 px-8 py-3 font-bold text-green-400 transition hover:bg-green-500/10'
           >
-            Ver todos os projetos
-            <span>→</span>
+            Ver todos os projetos <span>→</span>
           </Link>
         </div>
-      </div>
+      </section>
 
-      {/* Call to Action */}
-      <div className='container mx-auto px-4 py-16 mb-16'>
-        <div className='bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-2xl p-12 text-center border border-green-800/50'>
-          <h2 className='text-3xl font-bold text-white mb-4'>Vamos criar alguma coisa?</h2>
-          <p className='text-gray-400 mb-8 max-w-2xl mx-auto'>
-            Estou sempre aberto a novos projetos e colaborações.  <br />
-            Se você tem uma ideia, me chame!
+      {/* Chamada */}
+      <section className='container mx-auto mb-16 px-4 py-16'>
+        <div className='rounded-2xl border border-green-800/50 bg-gradient-to-r from-green-900/30 to-emerald-900/30 p-12 text-center'>
+          <h2 className='mb-4 text-3xl font-bold text-white'>Vamos criar alguma coisa?</h2>
+          <p className='mx-auto mb-8 max-w-2xl text-gray-400'>
+            Estou sempre aberto a novos projetos e colaborações. Se você tem uma ideia, me chame.
           </p>
-          <Link 
-            to='/contato' 
-            className='inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105'
+          <Link
+            to='/contato'
+            className='inline-block rounded-full bg-green-600 px-8 py-3 font-bold text-white transition hover:scale-105 hover:bg-green-700'
           >
             Entrar em contato →
           </Link>
         </div>
-      </div>
+      </section>
     </div>
   )
 }
