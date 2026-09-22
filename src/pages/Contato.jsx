@@ -29,13 +29,13 @@ function Contato() {
   }
 
   const campo =
-    'w-full rounded-lg border border-borda bg-piche px-4 py-3 text-tinta placeholder:text-bruma/60 transition focus:border-ouro/60 focus:outline-none'
+    'w-full rounded-lg border border-borda bg-piche px-4 py-3 text-tinta placeholder:text-bruma/60 transition focus:border-verde/60 focus:outline-none'
 
   return (
     <div className='mx-auto max-w-3xl px-5 py-16 md:py-24'>
       <Revelar>
         <p className='regua mb-4'>05</p>
-        <h1 className='font-display text-4xl font-semibold text-tinta md:text-5xl'>{t('contato.titulo')}</h1>
+        <h1 className='text-4xl font-semibold text-tinta md:text-5xl'>{t('contato.titulo')}</h1>
         <p className='mt-4 max-w-xl text-lg text-bruma'>{t('contato.lead')}</p>
       </Revelar>
 
@@ -44,7 +44,7 @@ function Contato() {
           {CONTATOS.map((c) => {
             const conteudo = (
               <>
-                <FontAwesomeIcon icon={c.icon} className='w-4 text-ouro' />
+                <FontAwesomeIcon icon={c.icon} className='w-4 text-verde' />
                 <span className='truncate text-sm'>{c.texto}</span>
               </>
             )
@@ -56,7 +56,7 @@ function Contato() {
                     href={c.href}
                     target={c.href.startsWith('http') ? '_blank' : undefined}
                     rel='noopener noreferrer'
-                    className={`${classe} hover:bg-ouro-fundo/40 hover:text-tinta`}
+                    className={`${classe} hover:bg-verde-fundo/40 hover:text-tinta`}
                   >
                     {conteudo}
                   </a>
@@ -110,7 +110,7 @@ function Contato() {
 
           <button
             type='submit'
-            className='w-full rounded-lg bg-ouro py-3.5 font-semibold text-breu transition hover:bg-ouro-claro'
+            className='w-full rounded-lg bg-verde py-3.5 font-semibold text-breu transition hover:bg-verde-claro'
           >
             {t('contato.enviar')}
           </button>

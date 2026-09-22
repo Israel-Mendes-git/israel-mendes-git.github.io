@@ -23,11 +23,11 @@ function BotaoIdioma({ className = '' }) {
       type='button'
       onClick={alternar}
       aria-label={t('nav.idioma')}
-      className={`rounded-full border border-borda px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-bruma transition hover:border-ouro/60 hover:text-ouro ${className}`}
+      className={`rounded-full border border-borda px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-bruma transition hover:border-verde/60 hover:text-verde ${className}`}
     >
-      <span className={idioma === 'pt' ? 'text-ouro' : ''}>PT</span>
+      <span className={idioma === 'pt' ? 'text-verde' : ''}>PT</span>
       <span className='mx-1 text-borda'>/</span>
-      <span className={idioma === 'en' ? 'text-ouro' : ''}>EN</span>
+      <span className={idioma === 'en' ? 'text-verde' : ''}>EN</span>
     </button>
   )
 }
@@ -56,8 +56,8 @@ function Navbar() {
 
   const classeLink = ({ isActive }) =>
     `relative py-1 text-sm transition-colors ${
-      isActive ? 'text-ouro' : 'text-bruma hover:text-tinta'
-    } after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-ouro after:transition-all ${
+      isActive ? 'text-verde' : 'text-bruma hover:text-tinta'
+    } after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-verde after:transition-all ${
       isActive ? 'after:w-full' : 'after:w-0 hover:after:w-full'
     }`
 
@@ -68,11 +68,9 @@ function Navbar() {
       }`}
     >
       <nav className='mx-auto flex max-w-6xl items-center justify-between px-5 py-4' aria-label='principal'>
-        <Link to='/' className='group flex items-center gap-2.5' aria-label='Israel Mendes'>
-          <span className='grid h-8 w-8 place-items-center rounded border border-ouro/40 font-display text-sm font-semibold text-ouro transition group-hover:bg-ouro group-hover:text-breu'>
-            IM
-          </span>
-          <span className='hidden font-display text-base font-semibold text-tinta sm:block'>Israel Mendes</span>
+        <Link to='/' className='group flex items-center gap-2 text-xl font-bold' aria-label='Israel Mendes'>
+          <span aria-hidden='true' className='transition group-hover:scale-110'>🎮</span>
+          <span className='titulo-degrade hidden sm:block'>Israel Mendes</span>
         </Link>
 
         <div className='hidden items-center gap-8 md:flex'>
@@ -92,7 +90,7 @@ function Navbar() {
             aria-expanded={aberto}
             aria-controls='menu-mobile'
             aria-label={aberto ? t('nav.fechar') : t('nav.menu')}
-            className='grid h-9 w-9 place-items-center rounded border border-borda text-tinta transition hover:border-ouro/60'
+            className='grid h-9 w-9 place-items-center rounded border border-borda text-tinta transition hover:border-verde/60'
           >
             <span className='relative block h-3 w-4'>
               <span
@@ -129,8 +127,8 @@ function Navbar() {
                 to={i.path}
                 end={i.path === '/'}
                 className={({ isActive }) =>
-                  `block border-b border-borda/60 py-3.5 font-display text-lg ${
-                    isActive ? 'text-ouro' : 'text-bruma'
+                  `block border-b border-borda/60 py-3.5 text-lg ${
+                    isActive ? 'text-verde' : 'text-bruma'
                   }`
                 }
               >
@@ -154,10 +152,10 @@ function AoTrocarDeRota() {
 function Layout() {
   const { t } = useIdioma()
   return (
-    <div className='grao min-h-screen bg-breu'>
+    <div className='min-h-screen bg-breu'>
       <a
         href='#conteudo'
-        className='sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded focus:bg-ouro focus:px-4 focus:py-2 focus:font-semibold focus:text-breu'
+        className='sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded focus:bg-verde focus:px-4 focus:py-2 focus:font-semibold focus:text-breu'
       >
         {t('nav.pular')}
       </a>

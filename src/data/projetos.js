@@ -46,8 +46,8 @@ const projetos = [
       en: 'Guild-management roguelike with card combat — Darkest Dungeon meets Slay the Spire.',
     },
     descricao: {
-      pt: 'Você é o mestre da última guilda de um reino sendo devorado pela Corrupção. Não controla o herói: decide quem arrisca a vida, com qual baralho e até onde vale a pena ir. Heróis morrem permanentemente — a guilda vai cair mais cedo ou mais tarde, e a questão é quão longe você chega antes disso.',
-      en: 'You run the last guild of a kingdom being eaten by the Corruption. You do not control the hero: you decide who risks their life, with which deck, and how far it is worth pushing. Heroes die permanently — the guild will fall sooner or later, and the question is how far you get first.',
+      pt: 'Você é o mestre da última guilda de um reino devorado pela Corrupção: não controla o herói, decide quem arrisca a vida e até onde vale a pena ir. Heróis morrem para sempre — a guilda vai cair, a questão é quão longe você chega antes disso.',
+      en: 'You run the last guild of a kingdom eaten by the Corruption: you do not control the hero, you decide who risks their life and how far to push. Heroes die for good — the guild will fall, the question is how far you get first.',
     },
     detalhes: [
       {
@@ -114,8 +114,8 @@ const projetos = [
       en: 'A C++ Blender fork turned into Rapadura Atômica’s 2D animation software. It animates real series, every day.',
     },
     descricao: {
-      pt: 'O Nuclear é o software proprietário de animação 2D da Rapadura Atômica: um fork do Blender, em C++, moldado em cima do Grease Pencil para o jeito que o estúdio anima. Sou o segundo desenvolvedor do projeto — o principal é o Kayo Rodrigues. É o trabalho mais exigente que faço: mexer numa base de código de quase 900 MB sem quebrar o pipeline de quem está animando naquele mesmo dia.',
-      en: 'Nuclear is Rapadura Atômica’s proprietary 2D animation software: a C++ Blender fork shaped around Grease Pencil to match how the studio animates. I am the project’s second developer — the lead is Kayo Rodrigues. It is the most demanding work I do: touching an almost 900 MB codebase without breaking the pipeline of people animating that same day.',
+      pt: 'Fork do Blender em C++, moldado em cima do Grease Pencil para o jeito que a Rapadura Atômica anima. Sou o segundo desenvolvedor — mexer numa base de quase 900 MB sem quebrar o pipeline de quem está animando naquele mesmo dia é o trabalho mais exigente que faço.',
+      en: 'A C++ Blender fork shaped around Grease Pencil to match how Rapadura Atômica animates. I am the second developer — touching an almost 900 MB codebase without breaking the pipeline of people animating that same day is the most demanding work I do.',
     },
     detalhes: [
       {
@@ -260,8 +260,8 @@ const projetos = [
       en: 'Site and land-development showcase, with a panel the team uses to publish without touching code.',
     },
     descricao: {
-      pt: 'Site institucional e vitrine de empreendimentos da EMISA Construções e Serviços, de Cascavel/CE. O diferencial é o painel administrativo: a equipe de marketing publica empreendimentos, fotos, vídeos e depoimentos sozinha, sem depender de desenvolvedor.',
-      en: 'Corporate site and development showcase for EMISA Construções e Serviços, in Cascavel/CE. The differentiator is the admin panel: the marketing team publishes developments, photos, videos and testimonials on their own, with no developer in the loop.',
+      pt: 'Site e vitrine de empreendimentos da EMISA Construções, de Cascavel/CE. O diferencial é o painel: a equipe de marketing publica empreendimentos, fotos e vídeos sozinha, sem depender de desenvolvedor.',
+      en: 'Site and development showcase for EMISA Construções, in Cascavel/CE. The differentiator is the panel: the marketing team publishes developments, photos and videos on their own, with no developer in the loop.',
     },
     detalhes: [
       { pt: 'Next.js 16 com App Router e TypeScript', en: 'Next.js 16 with App Router and TypeScript' },
@@ -439,8 +439,8 @@ const projetos = [
       en: 'Builds an animation take file from a single JSON — rigs, set and animatic already in place.',
     },
     descricao: {
-      pt: 'Automatiza a etapa mais burocrática do pipeline 2D: a partir de um manifesto JSON por take, monta o arquivo .blend já com rigs, props e cenário copiados para dentro, o animatic carregado como referência da câmera, frame range, fps e resolução configurados, e tudo organizado em collections nomeadas. Roda em lote pela linha de comando ou como add-on, com a mesma lógica nos dois modos.',
-      en: 'Automates the most bureaucratic step of the 2D pipeline: from one JSON manifest per take, it builds the .blend with rigs, props and sets appended in, the animatic loaded as camera reference, frame range, fps and resolution set, and everything organised into named collections. It runs headless in batch or as an add-on, sharing the same logic in both modes.',
+      pt: 'A partir de um manifesto JSON por take, monta o .blend já com rigs, props e cenário dentro, o animatic como referência da câmera e tudo em collections nomeadas. Roda em lote pela linha de comando ou como add-on, com a mesma lógica nos dois modos.',
+      en: 'From one JSON manifest per take, it builds the .blend with rigs, props and sets already inside, the animatic as camera reference, and everything in named collections. It runs headless in batch or as an add-on, sharing one code path.',
     },
     detalhes: [
       { pt: 'Manifesto JSON por take como fonte da verdade', en: 'One JSON manifest per take as the source of truth' },

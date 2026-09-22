@@ -21,10 +21,10 @@ function Footer() {
         <div className='grid gap-10 sm:grid-cols-2 lg:grid-cols-3'>
           <div>
             <div className='flex items-center gap-2.5'>
-              <span className='grid h-8 w-8 place-items-center rounded border border-ouro/40 font-display text-sm font-semibold text-ouro'>
+              <span className='grid h-8 w-8 place-items-center rounded border border-verde/40 text-sm font-semibold text-verde'>
                 IM
               </span>
-              <span className='font-display text-base font-semibold text-tinta'>Israel Mendes</span>
+              <span className='text-base font-semibold text-tinta'>Israel Mendes</span>
             </div>
             <p className='mt-4 max-w-xs text-sm leading-relaxed text-bruma'>{t('rodape.feito')}</p>
           </div>
@@ -34,7 +34,7 @@ function Footer() {
             <ul className='space-y-2.5'>
               {ITENS.map((i) => (
                 <li key={i.path}>
-                  <Link to={i.path} className='text-sm text-bruma transition hover:text-ouro'>
+                  <Link to={i.path} className='text-sm text-bruma transition hover:text-verde'>
                     {t(`nav.${i.chave}`)}
                   </Link>
                 </li>
@@ -48,7 +48,7 @@ function Footer() {
               <li>
                 <a
                   href='mailto:israelmendesmzs@gmail.com'
-                  className='flex items-center gap-2.5 text-bruma transition hover:text-ouro'
+                  className='flex items-center gap-2.5 text-bruma transition hover:text-verde'
                 >
                   <FontAwesomeIcon icon={faEnvelope} className='w-3.5' />
                   <span className='break-all'>israelmendesmzs@gmail.com</span>
@@ -59,7 +59,7 @@ function Footer() {
                   href='https://github.com/Israel-Mendes-git'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='flex items-center gap-2.5 text-bruma transition hover:text-ouro'
+                  className='flex items-center gap-2.5 text-bruma transition hover:text-verde'
                 >
                   <FontAwesomeIcon icon={faGithub} className='w-3.5' />
                   Israel-Mendes-git
@@ -79,7 +79,7 @@ function Footer() {
             href='https://github.com/Israel-Mendes-git/israel-mendes-git.github.io'
             target='_blank'
             rel='noopener noreferrer'
-            className='font-mono text-xs text-bruma transition hover:text-ouro'
+            className='font-mono text-xs text-bruma transition hover:text-verde'
           >
             {t('rodape.codigoDoSite')} ↗
           </a>

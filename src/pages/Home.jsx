@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import projetos, { destaques } from '../data/projetos'
 import ProjectCard from '../components/ProjectCard'
-import CartaHero from '../components/CartaHero'
-import { Revelar, Secao } from '../components/ui'
+import { Revelar } from '../components/ui'
 import { useIdioma } from '../i18n'
 
 function Home() {
@@ -22,74 +21,73 @@ function Home() {
   return (
     <div>
       {/* Hero */}
-      <header className='relative overflow-hidden'>
-        <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_0%,rgba(224,166,75,.10),transparent_70%)]' />
+      <header className='relative overflow-hidden border-b border-verde/20'>
+        <div className='absolute inset-0 bg-gradient-to-br from-verde-fundo via-breu to-breu' />
         <div
-          className='pointer-events-none absolute inset-0 opacity-[0.035]'
+          className='absolute inset-0 opacity-[0.07]'
           style={{
             backgroundImage:
-              'linear-gradient(rgba(237,230,218,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(237,230,218,.6) 1px, transparent 1px)',
-            backgroundSize: '64px 64px',
-            maskImage: 'radial-gradient(70% 60% at 50% 0%, #000, transparent)',
+              'linear-gradient(rgba(34,197,94,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,.6) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
           }}
         />
+        <div className='absolute -top-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-verde/20 blur-[100px]' />
 
-        <div className='relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 md:grid-cols-[1.1fr,auto] md:py-28'>
-          <div>
-            <p className='regua mb-5 animate-subir'>{t('home.kicker')}</p>
-            <h1 className='font-display text-[clamp(2.75rem,8vw,5rem)] font-black leading-[0.92] tracking-tight text-tinta'>
-              <span className='block animate-subir'>{t('home.titulo1')}</span>
-              <span className='block animate-subir text-ouro [animation-delay:120ms]'>{t('home.titulo2')}</span>
-            </h1>
+        <div className='container relative mx-auto px-4 py-24 text-center md:py-32'>
+          <p className='regua mb-5 animate-subir text-verde'>{t('home.kicker')}</p>
 
-            <p className='mt-7 max-w-xl animate-subir text-lg leading-relaxed text-bruma [animation-delay:240ms]'>
-              {t('home.lead')}
-            </p>
+          <h1 className='titulo-degrade mb-5 animate-subir text-5xl font-bold [animation-delay:80ms] md:text-7xl'>
+            Israel Mendes
+          </h1>
 
-            <div className='mt-9 flex animate-subir flex-wrap gap-3 [animation-delay:360ms]'>
-              <Link
-                to='/projects'
-                className='rounded-full bg-ouro px-7 py-3 font-semibold text-breu transition hover:bg-ouro-claro'
-              >
-                {t('home.verProjetos')}
-              </Link>
-              <Link
-                to='/contato'
-                className='rounded-full border border-borda px-7 py-3 font-semibold text-tinta transition hover:border-ouro/60 hover:text-ouro'
-              >
-                {t('home.falarComigo')}
-              </Link>
-            </div>
-          </div>
+          <p className='mx-auto mb-4 max-w-2xl animate-subir text-xl font-semibold text-tinta [animation-delay:160ms] md:text-2xl'>
+            {t('home.titulo1')} {t('home.titulo2')}
+          </p>
 
-          <div className='flex animate-subir justify-center [animation-delay:200ms] md:justify-end'>
-            <CartaHero />
+          <p className='mx-auto mb-9 max-w-2xl animate-subir text-bruma [animation-delay:240ms]'>
+            {t('home.lead')}
+          </p>
+
+          <div className='flex animate-subir flex-wrap justify-center gap-4 [animation-delay:320ms]'>
+            <Link
+              to='/projects'
+              className='rounded-full bg-verde px-8 py-3 font-bold text-breu transition hover:scale-105 hover:bg-verde-escuro'
+            >
+              {t('home.verProjetos')} →
+            </Link>
+            <Link
+              to='/contato'
+              className='rounded-full border-2 border-verde px-8 py-3 font-bold text-verde transition hover:bg-verde/10'
+            >
+              {t('home.falarComigo')}
+            </Link>
           </div>
         </div>
       </header>
 
       {/* Números */}
-      <section className='border-y border-borda bg-piche/60'>
-        <div className='mx-auto grid max-w-6xl grid-cols-2 gap-px bg-borda md:grid-cols-4'>
+      <section className='border-b border-verde/20 bg-black/50 py-14'>
+        <div className='container mx-auto grid grid-cols-2 gap-8 px-4 text-center md:grid-cols-4'>
           {numeros.map((x) => (
-            <div key={x.label} className='bg-breu px-5 py-8 text-center'>
-              <div className='font-mono text-4xl font-bold text-ouro'>{x.n}</div>
-              <div className='mx-auto mt-2 max-w-[16ch] text-xs leading-snug text-bruma'>{x.label}</div>
+            <div key={x.label} className='transition hover:scale-105'>
+              <div className='mb-1 font-mono text-4xl font-bold text-verde-claro'>{x.n}</div>
+              <div className='mx-auto max-w-[16ch] text-sm leading-snug text-bruma'>{x.label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* Destaques */}
-      <div className='mx-auto max-w-6xl px-5 py-20'>
+      <section className='container mx-auto px-4 py-16'>
         <Revelar>
-          <Secao regua={t('home.numeros')} titulo={t('home.destaquesTitulo')} lead={t('home.destaquesLead')} />
+          <h2 className='mb-3 text-center text-4xl font-bold text-tinta'>{t('home.destaquesTitulo')}</h2>
+          <p className='mx-auto mb-12 max-w-2xl text-center text-bruma'>{t('home.destaquesLead')}</p>
         </Revelar>
 
-        <div className='mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+        <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
           {destaques.map((p, i) => (
             <Revelar key={p.id} delay={(i % 3) * 90}>
-              <ProjectCard projeto={p} alturaCapa='h-52' />
+              <ProjectCard projeto={p} alturaCapa='h-56' />
             </Revelar>
           ))}
         </div>
@@ -97,31 +95,28 @@ function Home() {
         <div className='mt-12 text-center'>
           <Link
             to='/projects'
-            className='inline-flex items-center gap-2 rounded-full border border-borda px-7 py-3 font-semibold text-tinta transition hover:border-ouro/60 hover:text-ouro'
+            className='inline-flex items-center gap-2 rounded-full border-2 border-verde px-8 py-3 font-bold text-verde transition hover:bg-verde/10'
           >
             {t('home.todos')} <span aria-hidden='true'>→</span>
           </Link>
         </div>
-      </div>
+      </section>
 
       {/* Chamada */}
-      <div className='mx-auto max-w-6xl px-5 pb-24'>
+      <section className='container mx-auto mb-16 px-4 py-16'>
         <Revelar>
-          <div className='relative overflow-hidden rounded-2xl border border-ouro/25 bg-gradient-to-br from-[#1a1510] to-[#0d0b08] px-6 py-14 text-center'>
-            <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(50%_80%_at_50%_100%,rgba(224,166,75,.12),transparent)]' />
-            <h2 className='relative font-display text-3xl font-semibold text-tinta md:text-4xl'>
-              {t('home.ctaTitulo')}
-            </h2>
-            <p className='relative mx-auto mt-4 max-w-xl text-bruma'>{t('home.ctaLead')}</p>
+          <div className='rounded-2xl border border-verde/30 bg-gradient-to-r from-verde-fundo to-emerald-950/40 p-12 text-center'>
+            <h2 className='mb-4 text-3xl font-bold text-tinta'>{t('home.ctaTitulo')}</h2>
+            <p className='mx-auto mb-8 max-w-2xl text-bruma'>{t('home.ctaLead')}</p>
             <Link
               to='/contato'
-              className='relative mt-8 inline-block rounded-full bg-ouro px-8 py-3 font-semibold text-breu transition hover:bg-ouro-claro'
+              className='inline-block rounded-full bg-verde px-8 py-3 font-bold text-breu transition hover:scale-105 hover:bg-verde-escuro'
             >
-              {t('home.ctaBotao')}
+              {t('home.ctaBotao')} →
             </Link>
           </div>
         </Revelar>
-      </div>
+      </section>
     </div>
   )
 }

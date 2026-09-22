@@ -12,8 +12,8 @@ function Filtro({ ativo, onClick, children }) {
       aria-pressed={ativo}
       className={`rounded-full border px-3.5 py-1.5 text-sm transition ${
         ativo
-          ? 'border-ouro bg-ouro text-breu'
-          : 'border-borda text-bruma hover:border-ouro/50 hover:text-tinta'
+          ? 'border-verde bg-verde text-breu'
+          : 'border-borda text-bruma hover:border-verde/50 hover:text-tinta'
       }`}
     >
       {children}
@@ -55,7 +55,7 @@ function Projects() {
     <div className='mx-auto max-w-6xl px-5 py-16 md:py-24'>
       <Revelar>
         <p className='regua mb-4'>{t('projetos.contagem', { n: filtrados.length, total: projetos.length })}</p>
-        <h1 className='font-display text-4xl font-semibold text-tinta md:text-5xl'>{t('projetos.titulo')}</h1>
+        <h1 className='text-4xl font-semibold text-tinta md:text-5xl'>{t('projetos.titulo')}</h1>
         <p className='mt-4 max-w-2xl text-lg text-bruma'>{t('projetos.lead')}</p>
       </Revelar>
 
@@ -93,7 +93,7 @@ function Projects() {
           <button
             type='button'
             onClick={limpar}
-            className='rounded-full border border-borda px-6 py-2.5 text-tinta transition hover:border-ouro/60 hover:text-ouro'
+            className='rounded-full border border-borda px-6 py-2.5 text-tinta transition hover:border-verde/60 hover:text-verde'
           >
             {t('projetos.limpar')}
           </button>

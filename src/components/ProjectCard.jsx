@@ -20,7 +20,7 @@ export function Capa({ projeto, className = 'h-48' }) {
         <div className='absolute inset-0 flex items-center justify-center'>
           {/* Brasão: losango com o ícone, no lugar do emoji solto da versão antiga */}
           <div className='relative grid h-24 w-24 place-items-center'>
-            <span className='absolute inset-0 rotate-45 rounded-lg border border-ouro/25 bg-black/25' />
+            <span className='absolute inset-0 rotate-45 rounded-lg border border-verde/25 bg-black/25' />
             <span className='relative text-4xl opacity-90 transition duration-500 group-hover:scale-110'>
               {projeto.icon}
             </span>
@@ -51,12 +51,12 @@ function ProjectCard({ projeto, alturaCapa = 'h-48' }) {
         className='group block h-full rounded-xl transition-transform duration-200 ease-out [transform-style:preserve-3d]'
         aria-label={`${projeto.nome} — ${campo(projeto.resumo)}`}
       >
-        <article className='flex h-full flex-col overflow-hidden rounded-xl border border-borda bg-piche transition-colors duration-300 group-hover:border-ouro/40 group-hover:shadow-ouro'>
+        <article className='flex h-full flex-col overflow-hidden rounded-xl border border-borda bg-piche transition-colors duration-300 group-hover:border-verde/40 group-hover:shadow-verde'>
           <Capa projeto={projeto} className={alturaCapa} />
 
           <div className='flex flex-1 flex-col p-5'>
             <div className='mb-1 flex items-baseline justify-between gap-3'>
-              <h3 className='font-display text-xl font-semibold leading-tight text-tinta transition group-hover:text-ouro-claro'>
+              <h3 className='text-xl font-semibold leading-tight text-tinta transition group-hover:text-verde-claro'>
                 {projeto.nome}
               </h3>
               <span className='shrink-0 font-mono text-[11px] text-bruma'>{projeto.ano}</span>
@@ -78,11 +78,11 @@ function ProjectCard({ projeto, alturaCapa = 'h-48' }) {
             </div>
 
             <div className='mt-auto flex items-center justify-between border-t border-borda pt-3'>
-              <span className='font-mono text-xs font-bold uppercase tracking-wider text-ouro'>{projeto.engine}</span>
+              <span className='font-mono text-xs font-bold uppercase tracking-wider text-verde'>{projeto.engine}</span>
               {projeto.privado ? (
                 <span className='font-mono text-[10px] text-bruma/70'>{t('selos.privado')}</span>
               ) : (
-                <span className='font-mono text-xs text-bruma transition group-hover:translate-x-1 group-hover:text-ouro'>
+                <span className='font-mono text-xs text-bruma transition group-hover:translate-x-1 group-hover:text-verde'>
                   →
                 </span>
               )}

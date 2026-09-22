@@ -127,7 +127,7 @@ export default function CartaHero() {
         onPointerUp={aoSoltar}
         onPointerCancel={aoSoltar}
         onPointerLeave={aoSair}
-        className='relative aspect-[5/7] w-[min(78vw,20rem)] cursor-grab touch-none rounded-2xl border border-ouro/30 bg-gradient-to-b from-[#1a1510] to-[#0d0b08] p-3 shadow-carta will-change-transform active:cursor-grabbing [transform-style:preserve-3d]'
+        className='relative aspect-[5/7] w-[min(78vw,20rem)] cursor-grab touch-none rounded-2xl border border-verde/30 bg-gradient-to-b from-[#1a1510] to-[#0d0b08] p-3 shadow-carta will-change-transform active:cursor-grabbing [transform-style:preserve-3d]'
         aria-hidden='true'
       >
         {/* Brilho holográfico que segue o ponteiro */}
@@ -141,13 +141,13 @@ export default function CartaHero() {
         />
 
         {/* Moldura interna */}
-        <div className='flex h-full flex-col rounded-xl border border-ouro/20 bg-[#0f0d0a] p-3'>
+        <div className='flex h-full flex-col rounded-xl border border-verde/20 bg-[#0f0d0a] p-3'>
           <div className='mb-2 flex items-center justify-between'>
-            <span className='font-mono text-[10px] tracking-[0.2em] text-ouro/70'>BR · CE</span>
-            <span className='text-ouro/60'>✦</span>
+            <span className='font-mono text-[10px] tracking-[0.2em] text-verde/70'>BR · CE</span>
+            <span className='text-verde/60'>✦</span>
           </div>
 
-          <div className='relative overflow-hidden rounded-lg border border-ouro/20'>
+          <div className='relative overflow-hidden rounded-lg border border-verde/20'>
             <img
               src='/images/israel.webp'
               alt=''
@@ -159,12 +159,12 @@ export default function CartaHero() {
             <div className='absolute inset-0 bg-gradient-to-t from-[#0f0d0a] via-transparent to-transparent' />
           </div>
 
-          <h2 className='mt-3 font-display text-xl font-semibold leading-none text-tinta'>Israel Mendes</h2>
-          <p className='mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-ouro'>
+          <h2 className='mt-3 text-xl font-semibold leading-none text-tinta'>Israel Mendes</h2>
+          <p className='mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-verde'>
             Unity · C++ · React
           </p>
 
-          <div className='my-3 h-px bg-gradient-to-r from-transparent via-ouro/40 to-transparent' />
+          <div className='my-3 h-px bg-gradient-to-r from-transparent via-verde/40 to-transparent' />
 
           <dl className='grid grid-cols-3 gap-1 text-center'>
             {[
@@ -173,7 +173,7 @@ export default function CartaHero() {
               [projetos.filter((p) => p.status === 'Produção').length, t('home.cartaNoAr')],
             ].map(([n, l]) => (
               <div key={l}>
-                <dt className='font-mono text-base font-bold text-ouro-claro'>{n}</dt>
+                <dt className='font-mono text-base font-bold text-verde-claro'>{n}</dt>
                 <dd className='font-mono text-[9px] uppercase tracking-wider text-bruma'>{l}</dd>
               </div>
             ))}
@@ -181,7 +181,7 @@ export default function CartaHero() {
 
           <div className='mt-auto flex items-end justify-between pt-2'>
             <span className='font-mono text-[9px] tracking-[0.2em] text-bruma'>RAPADURA ATÔMICA</span>
-            <span className='text-ouro/50'>☗</span>
+            <span className='text-verde/50'>☗</span>
           </div>
         </div>
       </div>

@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useIdioma } from '../i18n'
 
+// Verde cheio = no ar; verde apagado = entregue; âmbar = ainda em obra.
+// O âmbar é o único ponto fora da paleta, e é de propósito: "em desenvolvimento"
+// precisa se distinguir dos dois estados de pronto num relance.
 const CORES_STATUS = {
-  'Produção': 'border-musgo/50 bg-musgo/15 text-musgo',
-  Finalizado: 'border-ouro/40 bg-ouro/10 text-ouro',
-  WIP: 'border-selo/50 bg-selo/15 text-[#e08468]',
+  'Produção': 'border-verde bg-verde/20 text-verde-claro',
+  Finalizado: 'border-verde/40 bg-verde/10 text-verde',
+  WIP: 'border-amber-500/50 bg-amber-500/15 text-amber-400',
 }
 
 export function SeloStatus({ status, className = '' }) {
@@ -16,18 +19,6 @@ export function SeloStatus({ status, className = '' }) {
       <span className='h-1.5 w-1.5 rounded-full bg-current' />
       {t(`status.${status}`)}
     </span>
-  )
-}
-
-/** Título de seção com a régua tipográfica por cima. */
-export function Secao({ regua, titulo, lead, children, className = '' }) {
-  return (
-    <section className={className}>
-      {regua && <p className='regua mb-3'>{regua}</p>}
-      {titulo && <h2 className='font-display text-3xl font-semibold text-tinta md:text-4xl'>{titulo}</h2>}
-      {lead && <p className='mt-3 max-w-2xl text-bruma'>{lead}</p>}
-      {children}
-    </section>
   )
 }
 

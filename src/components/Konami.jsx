@@ -61,21 +61,21 @@ export default function Konami() {
         ))}
       </div>
 
-      <div className='pergaminho relative max-w-md p-8 text-center' onClick={(e) => e.stopPropagation()}>
+      <div className='painel relative max-w-md p-8 text-center' onClick={(e) => e.stopPropagation()}>
         <p className='regua mb-3'>↑ ↑ ↓ ↓ ← → ← → B A</p>
-        <h2 className='mb-3 font-display text-2xl font-semibold text-ouro-claro'>{t('ovo.titulo')}</h2>
+        <h2 className='mb-3 text-2xl font-semibold text-verde-claro'>{t('ovo.titulo')}</h2>
         <p className='mb-6 text-sm leading-relaxed text-bruma'>{t('ovo.corpo')}</p>
         <div className='flex flex-wrap justify-center gap-3'>
           <a
             href='mailto:israelmendesmzs@gmail.com'
-            className='rounded-full bg-ouro px-5 py-2.5 font-semibold text-breu transition hover:bg-ouro-claro'
+            className='rounded-full bg-verde px-5 py-2.5 font-semibold text-breu transition hover:bg-verde-claro'
           >
             {t('ovo.botao')}
           </a>
           <button
             type='button'
             onClick={() => setAberto(false)}
-            className='rounded-full border border-borda px-5 py-2.5 text-bruma transition hover:border-ouro/50 hover:text-tinta'
+            className='rounded-full border border-borda px-5 py-2.5 text-bruma transition hover:border-verde/50 hover:text-tinta'
           >
             {t('ovo.fechar')}
           </button>

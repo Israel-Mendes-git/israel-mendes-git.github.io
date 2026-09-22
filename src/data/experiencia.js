@@ -89,26 +89,16 @@ export const stackPorGrupo = [
   {
     id: 'jogos',
     titulo: { pt: 'Jogos', en: 'Games' },
-    itens: ['Unity', 'C#', 'Godot', 'GDScript', 'URP', 'Game feel'],
+    itens: ['Unity', 'C#', 'Godot', 'GDScript', 'URP'],
   },
   {
     id: 'sistemas',
-    titulo: { pt: 'Sistemas e baixo nível', en: 'Systems & low level' },
-    itens: ['C++', 'Blender / bpy', 'Python', 'Linux'],
+    titulo: { pt: 'Sistemas e ferramentas', en: 'Systems & tooling' },
+    itens: ['C++', 'Python', 'bpy', 'Linux', 'Docker', 'Git'],
   },
   {
     id: 'web',
-    titulo: { pt: 'Web e back-end', en: 'Web & back-end' },
-    itens: ['React', 'Next.js', 'TypeScript', 'Tailwind', 'Django', '.NET', 'Blazor', 'PostgreSQL'],
-  },
-  {
-    id: 'mobile',
-    titulo: { pt: 'Mobile e TV', en: 'Mobile & TV' },
-    itens: ['Kotlin', 'Jetpack Compose', 'Android TV'],
-  },
-  {
-    id: 'ferramentas',
-    titulo: { pt: 'Ferramentas', en: 'Tooling' },
-    itens: ['Git', 'Docker', 'Payload CMS', 'Kanboard'],
+    titulo: { pt: 'Web, apps e TV', en: 'Web, apps & TV' },
+    itens: ['React', 'Next.js', 'TypeScript', 'Tailwind', 'Django', '.NET', 'Kotlin'],
   },
 ]

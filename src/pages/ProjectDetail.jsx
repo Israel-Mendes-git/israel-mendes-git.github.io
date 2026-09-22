@@ -28,7 +28,7 @@ function Lightbox({ src, alt, onClose }) {
       <button
         type='button'
         onClick={onClose}
-        className='absolute right-5 top-5 rounded-full border border-borda bg-breu/80 px-4 py-2 text-sm text-tinta transition hover:border-ouro/60 hover:text-ouro'
+        className='absolute right-5 top-5 rounded-full border border-borda bg-breu/80 px-4 py-2 text-sm text-tinta transition hover:border-verde/60 hover:text-verde'
       >
         {t('detalhe.fecharImagem')} ✕
       </button>
@@ -41,18 +41,26 @@ function ProjectDetail() {
   const { t, campo } = useIdioma()
   const projeto = porId(id)
   const [zoom, setZoom] = useState(null)
+  const [tudo, setTudo] = useState(false)
+
+  // Projeto novo recolhe a lista de novo — senão o estado vaza entre rotas.
+  useEffect(() => setTudo(false), [id])
 
   if (!projeto) {
     return (
       <div className='mx-auto max-w-2xl px-5 py-32 text-center'>
-        <h1 className='font-display text-3xl font-semibold text-tinta'>{t('detalhe.naoEncontrado')}</h1>
+        <h1 className='text-3xl font-semibold text-tinta'>{t('detalhe.naoEncontrado')}</h1>
         <p className='mt-4 text-bruma'>{t('detalhe.naoEncontradoLead')}</p>
-        <Link to='/projects' className='link-ouro mt-8 inline-block'>
+        <Link to='/projects' className='link-verde mt-8 inline-block'>
           ← {t('detalhe.voltar')}
         </Link>
       </div>
     )
   }
+
+  // Só 4 itens de cara: a lista cheia chegava a 8 e afogava o resto da página.
+  const visiveis = tudo ? projeto.detalhes : projeto.detalhes.slice(0, 4)
+  const ocultos = projeto.detalhes.length - visiveis.length
 
   const indice = projetos.findIndex((p) => p.id === projeto.id)
   const anterior = projetos[indice - 1]
@@ -60,7 +68,7 @@ function ProjectDetail() {
 
   return (
     <div className='mx-auto max-w-4xl px-5 py-12 md:py-16'>
-      <Link to='/projects' className='link-ouro inline-block text-sm'>
+      <Link to='/projects' className='link-verde inline-block text-sm'>
         ← {t('detalhe.voltar')}
       </Link>
 
@@ -76,7 +84,7 @@ function ProjectDetail() {
           ) : (
             <div className='grid aspect-[16/9] place-items-center'>
               <div className='relative grid h-32 w-32 place-items-center'>
-                <span className='absolute inset-0 rotate-45 rounded-xl border border-ouro/25 bg-black/25' />
+                <span className='absolute inset-0 rotate-45 rounded-xl border border-verde/25 bg-black/25' />
                 <span className='relative text-5xl'>{projeto.icon}</span>
               </div>
             </div>
@@ -85,7 +93,7 @@ function ProjectDetail() {
 
           <div className='absolute inset-x-0 bottom-0 p-6 md:p-8'>
             <SeloStatus status={projeto.status} className='mb-3' />
-            <h1 className='font-display text-3xl font-semibold leading-tight text-tinta md:text-5xl'>
+            <h1 className='text-3xl font-semibold leading-tight text-tinta md:text-5xl'>
               {projeto.nome}
             </h1>
             <p className='mt-2 max-w-2xl text-bruma'>{campo(projeto.resumo)}</p>
@@ -122,20 +130,31 @@ function ProjectDetail() {
         </div>
 
         {/* O que tem dentro */}
-        <div className='mt-12 border-t border-borda pt-8'>
-          <h2 className='font-display text-2xl font-semibold text-tinta'>{t('detalhe.destaques')}</h2>
+        <div className='mt-12 border-t border-verde/20 pt-8'>
+          <h2 className='text-2xl font-bold text-tinta'>{t('detalhe.destaques')}</h2>
           <ul className='mt-5 space-y-3'>
-            {projeto.detalhes.map((d) => (
+            {visiveis.map((d) => (
               <li key={campo(d)} className='flex gap-3 leading-relaxed text-bruma'>
-                <span aria-hidden='true' className='mt-[10px] h-1 w-1 shrink-0 rotate-45 bg-ouro' />
+                <span aria-hidden='true' className='mt-[10px] h-1 w-1 shrink-0 rotate-45 bg-verde' />
                 <span>{campo(d)}</span>
               </li>
             ))}
           </ul>
+
+          {ocultos > 0 && (
+            <button
+              type='button'
+              onClick={() => setTudo((v) => !v)}
+              aria-expanded={tudo}
+              className='link-verde mt-4 text-sm'
+            >
+              {tudo ? t('detalhe.verMenos') : t('detalhe.verMais', { n: ocultos })}
+            </button>
+          )}
         </div>
 
         {projeto.nota && (
-          <p className='mt-8 rounded-lg border-l-2 border-ouro/50 bg-piche p-4 text-sm leading-relaxed text-bruma'>
+          <p className='mt-8 rounded-lg border-l-2 border-verde/50 bg-piche p-4 text-sm leading-relaxed text-bruma'>
             {campo(projeto.nota)}
           </p>
         )}
@@ -143,7 +162,7 @@ function ProjectDetail() {
         {/* Galeria */}
         {projeto.galeria.length > 0 && (
           <div className='mt-12 border-t border-borda pt-8'>
-            <h2 className='font-display text-2xl font-semibold text-tinta'>{t('detalhe.galeria')}</h2>
+            <h2 className='text-2xl font-semibold text-tinta'>{t('detalhe.galeria')}</h2>
             <div className='mt-5 grid grid-cols-2 gap-3 md:grid-cols-3'>
               {projeto.galeria.map((img) => (
                 <button
@@ -151,7 +170,7 @@ function ProjectDetail() {
                   type='button'
                   onClick={() => setZoom(img)}
                   aria-label={t('detalhe.ampliar')}
-                  className='group overflow-hidden rounded-lg border border-borda transition hover:border-ouro/60'
+                  className='group overflow-hidden rounded-lg border border-borda transition hover:border-verde/60'
                 >
                   <img
                     src={img}
@@ -172,7 +191,7 @@ function ProjectDetail() {
               href={projeto.site}
               target='_blank'
               rel='noopener noreferrer'
-              className='rounded-full bg-ouro px-6 py-3 font-semibold text-breu transition hover:bg-ouro-claro'
+              className='rounded-full bg-verde px-6 py-3 font-semibold text-breu transition hover:bg-verde-claro'
             >
               {t('detalhe.verNoAr')} ↗
             </a>
@@ -185,8 +204,8 @@ function ProjectDetail() {
               rel='noopener noreferrer'
               className={`rounded-full px-6 py-3 font-semibold transition ${
                 projeto.site
-                  ? 'border border-borda text-tinta hover:border-ouro/60 hover:text-ouro'
-                  : 'bg-ouro text-breu hover:bg-ouro-claro'
+                  ? 'border border-borda text-tinta hover:border-verde/60 hover:text-verde'
+                  : 'bg-verde text-breu hover:bg-verde-claro'
               }`}
             >
               {t('detalhe.verCodigo')} ↗
@@ -204,10 +223,10 @@ function ProjectDetail() {
         {anterior ? (
           <Link
             to={`/projeto/${anterior.id}`}
-            className='rounded-lg border border-borda p-4 transition hover:border-ouro/50'
+            className='rounded-lg border border-borda p-4 transition hover:border-verde/50'
           >
             <span className='regua'>←</span>
-            <span className='mt-1 block font-display text-lg text-tinta'>{anterior.nome}</span>
+            <span className='mt-1 block text-lg text-tinta'>{anterior.nome}</span>
           </Link>
         ) : (
           <span />
@@ -215,10 +234,10 @@ function ProjectDetail() {
         {proximo && (
           <Link
             to={`/projeto/${proximo.id}`}
-            className='rounded-lg border border-borda p-4 text-right transition hover:border-ouro/50 sm:col-start-2'
+            className='rounded-lg border border-borda p-4 text-right transition hover:border-verde/50 sm:col-start-2'
           >
             <span className='regua'>→</span>
-            <span className='mt-1 block font-display text-lg text-tinta'>{proximo.nome}</span>
+            <span className='mt-1 block text-lg text-tinta'>{proximo.nome}</span>
           </Link>
         )}
       </nav>
