@@ -772,10 +772,7 @@ export const CATEGORIAS = ['todos', 'jogos', 'web', 'ferramenta', 'estudo']
 
 export const STATUS = ['todos', 'Produção', 'Finalizado', 'WIP']
 
-export const tipos = (idioma) => {
-  const vistos = new Map()
-  for (const p of projetos) vistos.set(p.tipo.pt, p.tipo[idioma] ?? p.tipo.pt)
-  return [['todos', null], ...vistos.entries()]
-}
+// Engines presentes nos dados, na ordem em que aparecem.
+export const engines = [...new Set(projetos.map((p) => p.engine))]
 
 export default projetos

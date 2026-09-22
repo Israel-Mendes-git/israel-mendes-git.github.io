@@ -78,12 +78,18 @@ const strings = {
     },
     filtroCategoria: { pt: 'Categoria', en: 'Category' },
     filtroStatus: { pt: 'Situação', en: 'Status' },
-    filtroTipo: { pt: 'Gênero', en: 'Genre' },
+    filtroEngine: { pt: 'Engine', en: 'Engine' },
     todos: { pt: 'Todos', en: 'All' },
-    todosTipos: { pt: 'Todos os gêneros', en: 'All genres' },
     vazio: { pt: 'Nenhum projeto com essa combinação.', en: 'No project matches that combination.' },
     limpar: { pt: 'Limpar filtros', en: 'Clear filters' },
     contagem: { pt: 'Mostrando {n} de {total}', en: 'Showing {n} of {total}' },
+  },
+  bancada: {
+    vazia: {
+      pt: 'Arraste ou clique numa peça para montar o filtro',
+      en: 'Drag or click a piece to build the filter',
+    },
+    resultado: { pt: '{n} de {total} projetos', en: '{n} of {total} projects' },
   },
   detalhe: {
     voltar: { pt: 'Voltar aos projetos', en: 'Back to work' },
