@@ -40,24 +40,26 @@ export default function Konami() {
 
   return (
     <div
-      className='fixed inset-0 z-[120] grid place-items-center bg-breu/90 p-4 backdrop-blur-sm'
+      className='fixed inset-0 z-[120] grid place-items-center bg-breu/95 p-4'
       role='dialog'
       aria-modal='true'
       onClick={() => setAberto(false)}
     >
-      {/* Chuva de cartas ao fundo */}
+      {/* Chuva de cartas ao fundo.
+          Sem backdrop-blur e sem emoji: o blur em tela cheia repinta tudo a
+          cada quadro e o emoji é glifo de fonte, rasterizado de novo a cada
+          transform. Os dois juntos engasgavam a animação. Agora são retângulos
+          compostos na GPU. */}
       <div className='pointer-events-none absolute inset-0 overflow-hidden' aria-hidden='true'>
-        {Array.from({ length: 18 }).map((_, i) => (
+        {Array.from({ length: 12 }).map((_, i) => (
           <span
             key={i}
-            className='absolute -top-24 text-3xl opacity-70'
+            className='absolute -top-32 block h-16 w-11 rounded-md border border-verde/50 bg-verde/10 will-change-transform'
             style={{
-              left: `${(i * 37) % 100}%`,
-              animation: `cair ${5 + (i % 5)}s linear ${i * 0.22}s infinite`,
+              left: `${(i * 8.5 + 3) % 97}%`,
+              animation: `cair ${4.5 + (i % 5) * 0.6}s linear ${i * 0.28}s infinite`,
             }}
-          >
-            {['🂡', '🂱', '🃁', '🃑'][i % 4]}
-          </span>
+          />
         ))}
       </div>
 
@@ -82,7 +84,10 @@ export default function Konami() {
         </div>
       </div>
 
-      <style>{`@keyframes cair { to { transform: translateY(115vh) rotate(420deg); } }`}</style>
+      <style>{`@keyframes cair {
+        from { transform: translate3d(0, 0, 0) rotate(0deg); }
+        to   { transform: translate3d(0, 125vh, 0) rotate(300deg); }
+      }`}</style>
     </div>
   )
 }

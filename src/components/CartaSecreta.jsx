@@ -1,26 +1,24 @@
 import { useIdioma } from '../i18n'
-import useArrastavel from './useArrastavel'
+import Cobrinha from './Cobrinha'
 
 /**
  * Recompensa de quem encaixa "Jogos + C++" — combinação que não devolve
  * projeto nenhum, e que é justamente a que um estúdio procurando programador
  * de C++ para jogo tentaria. O vazio vira uma resposta em vez de um erro.
  *
- * Arrastável, pela mesma mola das peças da bancada.
+ * Não é arrastável: arrastar e jogar no mesmo elemento brigariam pelo
+ * ponteiro — um deslize para virar a cobra sairia arrastando a carta.
  */
 export default function CartaSecreta() {
   const { t } = useIdioma()
-  const arrasto = useArrastavel()
 
   return (
     <div className='flex justify-center py-16'>
       <div className='[perspective:1000px]'>
         <div
-          ref={arrasto.ref}
-          {...arrasto.handlers}
           role='note'
           aria-label={t('secreta.titulo')}
-          className='relative w-[min(88vw,22rem)] cursor-grab touch-none select-none overflow-hidden rounded-2xl border-2 border-verde/60 bg-gradient-to-b from-verde-fundo to-breu p-6 shadow-carta will-change-transform active:cursor-grabbing'
+          className='relative w-[min(92vw,24rem)] select-none overflow-hidden rounded-2xl border-2 border-verde/60 bg-gradient-to-b from-verde-fundo to-breu p-6 shadow-carta'
         >
           {/* cantoneiras, como nas cartas do perfil */}
           {[
@@ -38,9 +36,13 @@ export default function CartaSecreta() {
 
           <p className='mb-5 text-center text-sm leading-relaxed text-bruma'>{t('secreta.corpo')}</p>
 
-          <div className='mb-5 h-px bg-gradient-to-r from-transparent via-verde/50 to-transparent' />
+          <div className='mb-4 h-px bg-gradient-to-r from-transparent via-verde/50 to-transparent' />
 
-          <p className='text-center font-mono text-[10px] uppercase tracking-[0.2em] text-bruma/70'>
+          <p className='mb-4 text-center text-sm text-verde-claro'>{t('secreta.enquanto')}</p>
+
+          <Cobrinha />
+
+          <p className='mt-4 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-bruma/70'>
             {t('secreta.dica')}
           </p>
         </div>

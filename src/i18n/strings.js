@@ -147,6 +147,15 @@ const strings = {
     ferramenta: { pt: 'Ferramentas', en: 'Tooling' },
     estudo: { pt: 'Estudos', en: 'Studies' },
   },
+  jogo: {
+    titulo: { pt: 'Cobrinha', en: 'Snake' },
+    comecar: { pt: 'Jogar', en: 'Play' },
+    denovo: { pt: 'De novo', en: 'Again' },
+    fim: { pt: 'Você bateu', en: 'You crashed' },
+    pontos: { pt: 'pontos', en: 'score' },
+    recorde: { pt: 'recorde', en: 'best' },
+    controles: { pt: 'setas, WASD ou deslize', en: 'arrows, WASD or swipe' },
+  },
   secreta: {
     selo: { pt: 'Carta escondida', en: 'Hidden card' },
     titulo: { pt: 'Jogo em C++? Ainda não.', en: 'A game in C++? Not yet.' },
@@ -155,6 +164,7 @@ const strings = {
       en: 'Today my C++ lives in a Blender fork and my games live in Unity. These two pieces do not fit together in my portfolio yet — and that is exactly where I want to go.',
     },
     dica: { pt: 'você encaixou a combinação impossível', en: 'you snapped the impossible combination' },
+    enquanto: { pt: 'Enquanto isso, toma um jogo.', en: 'Meanwhile, have a game.' },
   },
   ovo: {
     titulo: { pt: 'Você achou o baralho escondido.', en: 'You found the hidden deck.' },
