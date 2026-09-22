@@ -15,8 +15,8 @@ export const experiencia = [
     },
     marcos: [
       {
-        pt: '**Nuclear** — 203 commits no fork em C++ do Blender que virou o software de animação 2D do estúdio. Sou o segundo desenvolvedor do projeto.',
-        en: '**Nuclear** — 203 commits on the C++ Blender fork that became the studio’s 2D animation software. I am the project’s second developer.',
+        pt: '**Nuclear** — fork do Blender em C++, o software de animação 2D do estúdio. Sou o segundo desenvolvedor.',
+        en: '**Nuclear** — a C++ Blender fork, the studio’s 2D animation software. I am the second developer.',
       },
       {
         pt: '**Filmerama** — plataforma de streaming do estúdio, no ar em filmerama.com.',

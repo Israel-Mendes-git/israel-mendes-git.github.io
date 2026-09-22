@@ -89,62 +89,6 @@ const projetos = [
     },
   },
   {
-    id: 17,
-    nome: 'Nuclear',
-    engine: 'C++',
-    ano: '2026',
-    categoria: 'ferramenta',
-    tipo: { pt: 'Software de animação', en: 'Animation software' },
-    status: 'Produção',
-    destaque: true,
-    icon: '☢️',
-    cor: 'from-[#1f3a3a] to-[#0d1b1b]',
-    imagem: null,
-    galeria: [],
-    repo: 'https://github.com/Rapadura-Atomica/Nuclear',
-    privado: false,
-    site: 'https://nuclear.rapaduraatomica.com.br',
-    stack: ['C++', 'Blender', 'Grease Pencil', 'Python', 'Linux'],
-    papel: {
-      pt: 'Segundo desenvolvedor do fork — 203 commits entre junho e agosto de 2026',
-      en: 'Second developer on the fork — 203 commits between June and August 2026',
-    },
-    resumo: {
-      pt: 'Fork do Blender em C++ que virou o software de animação 2D da Rapadura Atômica. Anima séries de verdade, todo dia.',
-      en: 'A C++ Blender fork turned into Rapadura Atômica’s 2D animation software. It animates real series, every day.',
-    },
-    descricao: {
-      pt: 'Fork do Blender em C++, moldado em cima do Grease Pencil para o jeito que a Rapadura Atômica anima. Sou o segundo desenvolvedor — mexer numa base de quase 900 MB sem quebrar o pipeline de quem está animando naquele mesmo dia é o trabalho mais exigente que faço.',
-      en: 'A C++ Blender fork shaped around Grease Pencil to match how Rapadura Atômica animates. I am the second developer — touching an almost 900 MB codebase without breaking the pipeline of people animating that same day is the most demanding work I do.',
-    },
-    detalhes: [
-      {
-        pt: 'Fork de uma base C++ de grande porte, com merge contínuo das mudanças de upstream',
-        en: 'Fork of a large C++ codebase, continuously merged with upstream changes',
-      },
-      {
-        pt: 'Ferramentas de desenho e de linha do tempo adaptadas ao fluxo 2D do estúdio, em cima do Grease Pencil',
-        en: 'Drawing and timeline tools adapted to the studio’s 2D workflow on top of Grease Pencil',
-      },
-      {
-        pt: 'Interface e terminologia em português, para uma equipe de animação que não programa',
-        en: 'Portuguese UI and terminology, for an animation team that does not code',
-      },
-      {
-        pt: 'Build e distribuição para as estações Linux da produção',
-        en: 'Build and distribution for the production Linux workstations',
-      },
-      {
-        pt: 'Software em uso diário — cada regressão custa hora de animador, não ponto de teste',
-        en: 'In daily use — every regression costs animator hours, not test points',
-      },
-    ],
-    nota: {
-      pt: 'Repositório oficial do estúdio, público. A contagem de commits não conta a história toda: a direção técnica do fork é do Kayo.',
-      en: 'The studio’s official public repository. Commit counts do not tell the whole story: technical direction of the fork is Kayo’s.',
-    },
-  },
-  {
     id: 2,
     nome: 'O Grito da Mata',
     engine: 'Unity',
@@ -232,6 +176,62 @@ const projetos = [
       { pt: 'Interface responsiva em tema escuro', en: 'Responsive dark-theme interface' },
     ],
     nota: null,
+  },
+  {
+    id: 17,
+    nome: 'Nuclear',
+    engine: 'C++',
+    ano: '2026',
+    categoria: 'ferramenta',
+    tipo: { pt: 'Software de animação', en: 'Animation software' },
+    status: 'Produção',
+    destaque: true,
+    icon: '☢️',
+    cor: 'from-[#1f3a3a] to-[#0d1b1b]',
+    imagem: null,
+    galeria: [],
+    repo: 'https://github.com/Rapadura-Atomica/Nuclear',
+    privado: false,
+    site: 'https://nuclear.rapaduraatomica.com.br',
+    stack: ['C++', 'Blender', 'Grease Pencil', 'Python', 'Linux'],
+    papel: {
+      pt: 'Segundo desenvolvedor do fork — 203 commits entre junho e agosto de 2026',
+      en: 'Second developer on the fork — 203 commits between June and August 2026',
+    },
+    resumo: {
+      pt: 'Fork do Blender em C++ que virou o software de animação 2D da Rapadura Atômica. Anima séries de verdade, todo dia.',
+      en: 'A C++ Blender fork turned into Rapadura Atômica’s 2D animation software. It animates real series, every day.',
+    },
+    descricao: {
+      pt: 'Fork do Blender em C++, moldado em cima do Grease Pencil para o jeito que a Rapadura Atômica anima. Sou o segundo desenvolvedor — mexer numa base de quase 900 MB sem quebrar o pipeline de quem está animando naquele mesmo dia é o trabalho mais exigente que faço.',
+      en: 'A C++ Blender fork shaped around Grease Pencil to match how Rapadura Atômica animates. I am the second developer — touching an almost 900 MB codebase without breaking the pipeline of people animating that same day is the most demanding work I do.',
+    },
+    detalhes: [
+      {
+        pt: 'Fork de uma base C++ de grande porte, com merge contínuo das mudanças de upstream',
+        en: 'Fork of a large C++ codebase, continuously merged with upstream changes',
+      },
+      {
+        pt: 'Ferramentas de desenho e de linha do tempo adaptadas ao fluxo 2D do estúdio, em cima do Grease Pencil',
+        en: 'Drawing and timeline tools adapted to the studio’s 2D workflow on top of Grease Pencil',
+      },
+      {
+        pt: 'Interface e terminologia em português, para uma equipe de animação que não programa',
+        en: 'Portuguese UI and terminology, for an animation team that does not code',
+      },
+      {
+        pt: 'Build e distribuição para as estações Linux da produção',
+        en: 'Build and distribution for the production Linux workstations',
+      },
+      {
+        pt: 'Software em uso diário — cada regressão custa hora de animador, não ponto de teste',
+        en: 'In daily use — every regression costs animator hours, not test points',
+      },
+    ],
+    nota: {
+      pt: 'Repositório oficial do estúdio, público. A contagem de commits não conta a história toda: a direção técnica do fork é do Kayo.',
+      en: 'The studio’s official public repository. Commit counts do not tell the whole story: technical direction of the fork is Kayo’s.',
+    },
   },
   {
     id: 3,

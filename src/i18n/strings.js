@@ -11,12 +11,12 @@ const strings = {
     pular: { pt: 'Pular para o conteúdo', en: 'Skip to content' },
   },
   home: {
-    kicker: { pt: 'Cascavel · Ceará · Brasil', en: 'Cascavel · Ceará · Brazil' },
-    titulo1: { pt: 'Faço jogos', en: 'I build games' },
-    titulo2: { pt: 'que terminam.', en: 'that ship.' },
+    kicker: { pt: 'Desenvolvedor de jogos · Cascavel, CE', en: 'Game developer · Cascavel, Brazil' },
+    titulo1: { pt: 'Faço jogos', en: 'I make games' },
+    titulo2: { pt: 'e ferramentas para quem faz.', en: 'and tools for the people who do.' },
     lead: {
-      pt: 'Desenvolvedor na Rapadura Atômica. Escrevo C++ num fork do Blender que anima séries, Unity num roguelike de cartas, e web que entra em produção e fica lá.',
-      en: 'Developer at Rapadura Atômica. I write C++ in a Blender fork that animates series, Unity in a card roguelike, and web apps that go to production and stay there.',
+      pt: 'Roguelike e sistema de cartas em Unity é o que eu faço por vontade própria. Na Rapadura Atômica, estúdio de animação e jogos, faço C++, web e as ferramentas que a produção usa todo dia.',
+      en: 'Roguelikes and card systems in Unity are what I build because I want to. At Rapadura Atômica, an animation and games studio, I write C++, web apps and the tools production uses every day.',
     },
     verProjetos: { pt: 'Ver os projetos', en: 'See the work' },
     falarComigo: { pt: 'Falar comigo', en: 'Get in touch' },
@@ -26,13 +26,13 @@ const strings = {
     cartaNoAr: { pt: 'no ar', en: 'live' },
     numeros: { pt: 'Em números', en: 'By the numbers' },
     statProjetos: { pt: 'projetos catalogados', en: 'catalogued projects' },
+    statJogos: { pt: 'jogos, do protótipo ao jogável', en: 'games, from prototype to playable' },
     statProducao: { pt: 'em produção, com usuários reais', en: 'in production, with real users' },
     statStacks: { pt: 'engines e stacks', en: 'engines and stacks' },
-    statCommits: { pt: 'commits no Nuclear (C++)', en: 'commits on Nuclear (C++)' },
     destaquesTitulo: { pt: 'O que vale olhar primeiro', en: 'Start here' },
     destaquesLead: {
-      pt: 'Os projetos que respondem por mim melhor do que um currículo.',
-      en: 'The projects that speak for me better than a résumé.',
+      pt: 'Se você tem cinco minutos, comece por estes.',
+      en: 'If you have five minutes, start with these.',
     },
     todos: { pt: 'Ver todos os projetos', en: 'See all projects' },
     ctaTitulo: { pt: 'Tem um projeto?', en: 'Got a project?' },
@@ -50,8 +50,8 @@ const strings = {
       en: 'I am from Cascavel, Ceará, Brazil. IT technician from EEEP Edson Queiroz and Computer Science student at Wyden — Unifanor.',
     },
     bioB: {
-      pt: 'Trabalho na Rapadura Atômica, estúdio de animação e jogos digitais, em três frentes que não costumam aparecer juntas: C++ de baixo nível num software de animação, aplicações web full-stack e ferramentas de pipeline em Python. Fora do expediente, faço jogo — roguelike e sistema de cartas, principalmente.',
-      en: 'I work at Rapadura Atômica, an animation and games studio, across three fronts that rarely show up together: low-level C++ in animation software, full-stack web apps, and Python pipeline tooling. After hours I make games — roguelikes and card systems, mostly.',
+      pt: 'Faço jogo desde 2024, quase sempre sozinho e do design ao código — roguelike e sistema de cartas, principalmente. No expediente, na Rapadura Atômica, mexo com C++ de baixo nível, web em produção e ferramentas de pipeline: três frentes que raramente aparecem no mesmo cargo.',
+      en: 'I have been making games since 2024, mostly alone and from design to code — roguelikes and card systems. On the clock, at Rapadura Atômica, I work on low-level C++, web in production and pipeline tooling: three fronts that rarely sit in the same role.',
     },
     bioC: {
       pt: 'O que me interessa de verdade é o momento em que uma regra vira sensação: por que uma carta parece pesada, por que uma morte dói, por que uma ferramenta some do caminho do animador.',
@@ -73,8 +73,8 @@ const strings = {
   projetos: {
     titulo: { pt: 'Projetos', en: 'Work' },
     lead: {
-      pt: 'Do roguelike em produção ao exercício de terminal. Sem esconder os pequenos — eles mostram o caminho.',
-      en: 'From a roguelike in progress to a terminal exercise. The small ones stay — they show the path.',
+      pt: 'Jogos, ferramentas e web. Os exercícios pequenos ficaram de propósito: mostram de onde eu vim.',
+      en: 'Games, tools and web. The small exercises stayed on purpose: they show where I came from.',
     },
     filtroCategoria: { pt: 'Categoria', en: 'Category' },
     filtroStatus: { pt: 'Situação', en: 'Status' },

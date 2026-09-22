@@ -9,12 +9,13 @@ function Home() {
 
   // Números derivados dos dados — não precisam de manutenção manual.
   const emProducao = projetos.filter((p) => p.status === 'Produção').length
+  const jogos = projetos.filter((p) => p.categoria === 'jogos').length
   const stacks = new Set(projetos.map((p) => p.engine)).size
 
   const numeros = [
+    { n: jogos, label: t('home.statJogos') },
     { n: projetos.length, label: t('home.statProjetos') },
     { n: emProducao, label: t('home.statProducao') },
-    { n: 203, label: t('home.statCommits') },
     { n: stacks, label: t('home.statStacks') },
   ]
 
