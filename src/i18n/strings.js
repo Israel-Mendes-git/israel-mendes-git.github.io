@@ -148,13 +148,18 @@ const strings = {
     estudo: { pt: 'Estudos', en: 'Studies' },
   },
   jogo: {
-    titulo: { pt: 'Cobrinha', en: 'Snake' },
+    titulo: { pt: 'Queda — blocos que caem', en: 'Fall — falling blocks' },
     comecar: { pt: 'Jogar', en: 'Play' },
     denovo: { pt: 'De novo', en: 'Again' },
-    fim: { pt: 'Você bateu', en: 'You crashed' },
+    fim: { pt: 'Encheu', en: 'Filled up' },
     pontos: { pt: 'pontos', en: 'score' },
+    linhas: { pt: 'linhas', en: 'lines' },
+    proxima: { pt: 'próxima', en: 'next' },
     recorde: { pt: 'recorde', en: 'best' },
-    controles: { pt: 'setas, WASD ou deslize', en: 'arrows, WASD or swipe' },
+    controles: {
+      pt: '← → mover · ↑ girar · ↓ descer · espaço larga',
+      en: '← → move · ↑ rotate · ↓ soft drop · space to slam',
+    },
   },
   secreta: {
     selo: { pt: 'Carta escondida', en: 'Hidden card' },

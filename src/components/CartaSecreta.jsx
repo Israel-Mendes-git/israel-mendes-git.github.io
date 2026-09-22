@@ -1,5 +1,5 @@
 import { useIdioma } from '../i18n'
-import Cobrinha from './Cobrinha'
+import Queda from './Queda'
 
 /**
  * Recompensa de quem encaixa "Jogos + C++" — combinação que não devolve
@@ -18,7 +18,7 @@ export default function CartaSecreta() {
         <div
           role='note'
           aria-label={t('secreta.titulo')}
-          className='relative w-[min(92vw,24rem)] select-none overflow-hidden rounded-2xl border-2 border-verde/60 bg-gradient-to-b from-verde-fundo to-breu p-6 shadow-carta'
+          className='relative w-[min(94vw,26rem)] select-none overflow-hidden rounded-2xl border-2 border-verde/60 bg-gradient-to-b from-verde-fundo to-breu p-6 shadow-carta'
         >
           {/* cantoneiras, como nas cartas do perfil */}
           {[
@@ -40,7 +40,7 @@ export default function CartaSecreta() {
 
           <p className='mb-4 text-center text-sm text-verde-claro'>{t('secreta.enquanto')}</p>
 
-          <Cobrinha />
+          <Queda />
 
           <p className='mt-4 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-bruma/70'>
             {t('secreta.dica')}
