@@ -7,7 +7,7 @@
     "dev": "vite",
     "prebuild": "node scripts/gerar-sitemap.mjs",
     "build": "vite build",
-    "postbuild": "node -e \"require('fs').copyFileSync('docs/index.html','docs/404.html')\"",
+    "postbuild": "node -e \"require('fs').copyFileSync('docs/index.html','docs/404.html')\" && node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "eslint ."
   },
