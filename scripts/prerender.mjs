@@ -51,6 +51,10 @@ const rotas = [
   })),
 ]
 
+// O Pages responde 200 só na forma com barra final; sem ela, 301.
+// canonical e og:url anunciam a forma que o servidor de fato entrega.
+const comBarra = (u) => (u.endsWith('/') ? u : `${u}/`)
+
 const escapar = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -80,8 +84,8 @@ for (const r of rotas) {
     .replace(/(<meta\s+property="og:title"\s+content=")[^"]*(")/s, `$1${escapar(r.titulo)}$2`)
     .replace(/(<meta\s+property="og:description"\s+content=")[^"]*(")/s, `$1${escapar(r.descricao)}$2`)
     .replace(/(<meta\s+property="og:image"\s+content=")[^"]*(")/s, `$1${BASE}${r.capa}$2`)
-    .replace(/(<meta\s+property="og:url"\s+content=")[^"]*(")/s, `$1${BASE}${r.url}$2`)
-    .replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/s, `$1${BASE}${r.url}$2`)
+    .replace(/(<meta\s+property="og:url"\s+content=")[^"]*(")/s, `$1${BASE}${comBarra(r.url)}$2`)
+    .replace(/(<link\s+rel="canonical"\s+href=")[^"]*(")/s, `$1${BASE}${comBarra(r.url)}$2`)
     .replace('<div id="root"></div>', `<div id="root"></div>\n    ${noscript(r)}`)
 
   const pasta = join(SAIDA, r.url)

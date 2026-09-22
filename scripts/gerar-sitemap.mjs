@@ -17,12 +17,16 @@ const rotas = [
   ...projetos.map((p) => ({ url: `/projeto/${p.id}`, prioridade: p.destaque ? '0.8' : '0.6' })),
 ]
 
+// Mesma razão do prerender: anunciar a forma sem barra custaria um 301
+// em cada rastreio.
+const comBarra = (u) => (u.endsWith('/') ? u : `${u}/`)
+
 const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ...rotas.map(
     (r) =>
-      `  <url><loc>${BASE}${r.url}</loc><lastmod>${hoje}</lastmod><priority>${r.prioridade}</priority></url>`
+      `  <url><loc>${BASE}${comBarra(r.url)}</loc><lastmod>${hoje}</lastmod><priority>${r.prioridade}</priority></url>`
   ),
   '</urlset>',
   '',
