@@ -7,6 +7,7 @@ import ProjectDetail from './pages/ProjectDetail'
 import Contato from './pages/Contato'
 import Footer from './pages/Footer'
 import Konami from './components/Konami'
+import useTransicao from './components/Transicao'
 import { ProvedorIdioma, useIdioma } from './i18n'
 
 const ITENS = [
@@ -142,15 +143,9 @@ function Navbar() {
   )
 }
 
-// Rota nova começa no topo — sem isso o visitante cai no meio da página.
-function AoTrocarDeRota() {
-  const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
-  return null
-}
-
 function Layout() {
   const { t } = useIdioma()
+  const { exibida, overlay } = useTransicao()
   return (
     <div className='min-h-screen bg-breu'>
       <a
@@ -160,9 +155,8 @@ function Layout() {
         {t('nav.pular')}
       </a>
       <Navbar />
-      <AoTrocarDeRota />
       <main id='conteudo' className='pt-16'>
-        <Routes>
+        <Routes location={exibida}>
           <Route path='/' element={<Home />} />
           <Route path='/sobre' element={<Sobre />} />
           <Route path='/projects' element={<Projects />} />
@@ -174,6 +168,7 @@ function Layout() {
       </main>
       <Footer />
       <Konami />
+      {overlay}
     </div>
   )
 }
