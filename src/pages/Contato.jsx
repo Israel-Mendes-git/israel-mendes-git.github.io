@@ -1,110 +1,123 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faPhone, faMapMarkerAlt, faBuilding, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faLocationDot, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { Revelar } from '../components/ui'
+import { useIdioma } from '../i18n'
 
 const EMAIL = 'israelmendesmzs@gmail.com'
 
-const contatos = [
+// O telefone saiu daqui: o número que estava no site tinha um dígito a mais
+// do que um celular brasileiro comporta. Volta assim que for conferido.
+const CONTATOS = [
   { icon: faEnvelope, texto: EMAIL, href: `mailto:${EMAIL}` },
-  // Número mantido como estava no site. Tem um dígito a mais do que um celular
-  // brasileiro comporta — conferir e, depois de corrigido, virar link tel:.
-  { icon: faPhone, texto: '(85) 9 97401-6045', href: null },
-  { icon: faMapMarkerAlt, texto: 'Cascavel / CE', href: null },
   { icon: faGithub, texto: 'github.com/Israel-Mendes-git', href: 'https://github.com/Israel-Mendes-git' },
-  { icon: faBuilding, texto: 'Rapadura Atômica — membro', href: 'https://rapaduraatomica.com.br' },
+  { icon: faBuilding, texto: 'Rapadura Atômica', href: 'https://rapaduraatomica.com.br' },
+  { icon: faLocationDot, texto: 'Cascavel — Ceará, Brasil', href: null },
 ]
 
 function Contato() {
+  const { t } = useIdioma()
   const [form, setForm] = useState({ nome: '', email: '', mensagem: '' })
 
   // Sem back-end: monta a mensagem e entrega ao cliente de e-mail do visitante.
-  const handleSubmit = (e) => {
+  const enviar = (e) => {
     e.preventDefault()
-    const assunto = `Contato pelo portfólio — ${form.nome}`
+    const assunto = `${t('contato.assunto')} — ${form.nome}`
     const corpo = `${form.mensagem}\n\n—\n${form.nome}\n${form.email}`
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`
   }
 
   const campo =
-    'w-full rounded-lg border border-green-900/30 bg-black/50 px-4 py-3 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500'
+    'w-full rounded-lg border border-borda bg-piche px-4 py-3 text-tinta placeholder:text-bruma/60 transition focus:border-ouro/60 focus:outline-none'
 
   return (
-    <div className='container mx-auto px-4 py-16'>
-      <div className='mx-auto max-w-2xl'>
-        <h1 className='mb-4 text-center text-4xl font-bold text-white'>Contato</h1>
-        <p className='mb-12 text-center text-gray-500'>Bora fazer alguma coisa</p>
+    <div className='mx-auto max-w-3xl px-5 py-16 md:py-24'>
+      <Revelar>
+        <p className='regua mb-4'>05</p>
+        <h1 className='font-display text-4xl font-semibold text-tinta md:text-5xl'>{t('contato.titulo')}</h1>
+        <p className='mt-4 max-w-xl text-lg text-bruma'>{t('contato.lead')}</p>
+      </Revelar>
 
-        <div className='rounded-2xl border border-green-900/30 bg-black/50 p-8 backdrop-blur-sm'>
-          <div className='mb-8 space-y-3'>
-            {contatos.map((c) => {
-              const conteudo = (
-                <>
-                  <FontAwesomeIcon icon={c.icon} className='w-6 text-2xl text-green-400' />
-                  <span>{c.texto}</span>
-                </>
-              )
-              const classe =
-                'flex items-center gap-4 rounded-lg border border-green-900/30 bg-green-900/10 p-3 text-gray-400 transition hover:bg-green-900/20'
+      <Revelar delay={80}>
+        <ul className='mt-12 grid gap-px overflow-hidden rounded-lg border border-borda bg-borda sm:grid-cols-2'>
+          {CONTATOS.map((c) => {
+            const conteudo = (
+              <>
+                <FontAwesomeIcon icon={c.icon} className='w-4 text-ouro' />
+                <span className='truncate text-sm'>{c.texto}</span>
+              </>
+            )
+            const classe = 'flex items-center gap-3 bg-piche px-4 py-4 text-bruma transition'
+            return (
+              <li key={c.texto}>
+                {c.href ? (
+                  <a
+                    href={c.href}
+                    target={c.href.startsWith('http') ? '_blank' : undefined}
+                    rel='noopener noreferrer'
+                    className={`${classe} hover:bg-ouro-fundo/40 hover:text-tinta`}
+                  >
+                    {conteudo}
+                  </a>
+                ) : (
+                  <div className={classe}>{conteudo}</div>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      </Revelar>
 
-              return c.href ? (
-                <a
-                  key={c.texto}
-                  href={c.href}
-                  target={c.href.startsWith('http') ? '_blank' : undefined}
-                  rel='noopener noreferrer'
-                  className={`${classe} hover:text-green-400`}
-                >
-                  {conteudo}
-                </a>
-              ) : (
-                <div key={c.texto} className={classe}>
-                  {conteudo}
-                </div>
-              )
-            })}
+      <Revelar delay={140}>
+        <form onSubmit={enviar} className='mt-10 space-y-3'>
+          <div className='grid gap-3 sm:grid-cols-2'>
+            <label className='block'>
+              <span className='sr-only'>{t('contato.nome')}</span>
+              <input
+                type='text'
+                placeholder={t('contato.nome')}
+                value={form.nome}
+                onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                className={campo}
+                required
+              />
+            </label>
+            <label className='block'>
+              <span className='sr-only'>{t('contato.email')}</span>
+              <input
+                type='email'
+                placeholder={t('contato.email')}
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className={campo}
+                required
+              />
+            </label>
           </div>
 
-          <form onSubmit={handleSubmit} className='space-y-4'>
-            <input
-              type='text'
-              placeholder='Seu nome'
-              value={form.nome}
-              onChange={(e) => setForm({ ...form, nome: e.target.value })}
-              className={campo}
-              required
-            />
-            <input
-              type='email'
-              placeholder='Seu e-mail'
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className={campo}
-              required
-            />
+          <label className='block'>
+            <span className='sr-only'>{t('contato.mensagem')}</span>
             <textarea
-              placeholder='Sua mensagem'
-              rows='5'
+              placeholder={t('contato.mensagem')}
+              rows='6'
               value={form.mensagem}
               onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
               className={campo}
               required
             />
+          </label>
 
-            <button
-              type='submit'
-              className='flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-green-600 to-green-500 py-3 font-bold text-white transition hover:from-green-700 hover:to-green-600'
-            >
-              <FontAwesomeIcon icon={faPaperPlane} />
-              Escrever mensagem
-            </button>
+          <button
+            type='submit'
+            className='w-full rounded-lg bg-ouro py-3.5 font-semibold text-breu transition hover:bg-ouro-claro'
+          >
+            {t('contato.enviar')}
+          </button>
 
-            <p className='text-center text-xs text-gray-600'>
-              O botão abre seu programa de e-mail com a mensagem já preenchida.
-            </p>
-          </form>
-        </div>
-      </div>
+          <p className='text-center text-xs text-bruma/70'>{t('contato.aviso')}</p>
+        </form>
+      </Revelar>
     </div>
   )
 }

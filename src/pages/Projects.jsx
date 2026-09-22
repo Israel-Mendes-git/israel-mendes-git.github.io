@@ -1,31 +1,48 @@
-import { useState } from 'react'
-import projetos, { categorias, naCategoria, tipos } from '../data/projetos'
+import { useMemo, useState } from 'react'
+import projetos, { CATEGORIAS, STATUS, tipos } from '../data/projetos'
 import ProjectCard from '../components/ProjectCard'
+import { Revelar } from '../components/ui'
+import { useIdioma } from '../i18n'
 
-function Filtro({ ativo, onClick, children, pequeno = false }) {
-  const base = pequeno
-    ? 'px-3 py-1 text-sm rounded-full transition-all duration-300 border'
-    : 'px-4 py-2 rounded-full transition-all duration-300 border'
-  const estilo = ativo
-    ? 'bg-green-600 text-white border-green-500 shadow-lg shadow-green-900/50'
-    : 'bg-black/40 text-gray-400 border-gray-800 hover:bg-green-900/30 hover:text-green-400 hover:border-green-900'
+function Filtro({ ativo, onClick, children }) {
   return (
-    <button type='button' onClick={onClick} className={`${base} ${estilo}`}>
+    <button
+      type='button'
+      onClick={onClick}
+      aria-pressed={ativo}
+      className={`rounded-full border px-3.5 py-1.5 text-sm transition ${
+        ativo
+          ? 'border-ouro bg-ouro text-breu'
+          : 'border-borda text-bruma hover:border-ouro/50 hover:text-tinta'
+      }`}
+    >
       {children}
     </button>
   )
 }
 
+function Linha({ rotulo, children }) {
+  return (
+    <div className='grid gap-3 py-4 sm:grid-cols-[7rem,1fr] sm:items-start'>
+      <span className='regua pt-2'>{rotulo}</span>
+      <div className='flex flex-wrap gap-2'>{children}</div>
+    </div>
+  )
+}
+
 function Projects() {
+  const { t, campo, idioma } = useIdioma()
   const [categoria, setCategoria] = useState('todos')
   const [status, setStatus] = useState('todos')
   const [tipo, setTipo] = useState('todos')
 
+  const listaTipos = useMemo(() => tipos(idioma), [idioma])
+
   const filtrados = projetos.filter(
     (p) =>
-      naCategoria(p, categoria) &&
+      (categoria === 'todos' || p.categoria === categoria) &&
       (status === 'todos' || p.status === status) &&
-      (tipo === 'todos' || p.tipo === tipo)
+      (tipo === 'todos' || p.tipo.pt === tipo)
   )
 
   const limpar = () => {
@@ -35,59 +52,67 @@ function Projects() {
   }
 
   return (
-    <div className='container mx-auto px-4 py-16'>
-      <h1 className='mb-4 text-center text-4xl font-bold text-white md:text-5xl'>Meus Projetos</h1>
-      <p className='mb-12 text-center text-xl text-gray-500'>Jogos, aplicações e estudos que desenvolvi</p>
+    <div className='mx-auto max-w-6xl px-5 py-16 md:py-24'>
+      <Revelar>
+        <p className='regua mb-4'>{t('projetos.contagem', { n: filtrados.length, total: projetos.length })}</p>
+        <h1 className='font-display text-4xl font-semibold text-tinta md:text-5xl'>{t('projetos.titulo')}</h1>
+        <p className='mt-4 max-w-2xl text-lg text-bruma'>{t('projetos.lead')}</p>
+      </Revelar>
 
-      <div className='mb-6 flex flex-wrap justify-center gap-3'>
-        {categorias.map((c) => (
-          <Filtro key={c.id} ativo={categoria === c.id} onClick={() => setCategoria(c.id)}>
-            {c.nome}
-          </Filtro>
-        ))}
-      </div>
+      {/* Cada linha ganha rótulo: sem ele, três botões "Todos" empilhados não
+          dizem ao visitante o que está sendo filtrado. */}
+      <div className='mt-12 divide-y divide-borda border-y border-borda'>
+        <Linha rotulo={t('projetos.filtroCategoria')}>
+          {CATEGORIAS.map((c) => (
+            <Filtro key={c} ativo={categoria === c} onClick={() => setCategoria(c)}>
+              {t(`categorias.${c}`)}
+            </Filtro>
+          ))}
+        </Linha>
 
-      <div className='mb-6 flex flex-wrap justify-center gap-3'>
-        {[
-          { id: 'todos', nome: 'Todos' },
-          { id: 'Finalizado', nome: 'Finalizado' },
-          { id: 'WIP', nome: 'Em desenvolvimento' },
-        ].map((s) => (
-          <Filtro key={s.id} ativo={status === s.id} onClick={() => setStatus(s.id)}>
-            {s.nome}
-          </Filtro>
-        ))}
-      </div>
+        <Linha rotulo={t('projetos.filtroStatus')}>
+          {STATUS.map((s) => (
+            <Filtro key={s} ativo={status === s} onClick={() => setStatus(s)}>
+              {s === 'todos' ? t('projetos.todos') : t(`status.${s}`)}
+            </Filtro>
+          ))}
+        </Linha>
 
-      <div className='mb-12 flex flex-wrap justify-center gap-2'>
-        {tipos.map((t) => (
-          <Filtro key={t} ativo={tipo === t} onClick={() => setTipo(t)} pequeno>
-            {t === 'todos' ? 'Todos os tipos' : t}
-          </Filtro>
-        ))}
+        <Linha rotulo={t('projetos.filtroTipo')}>
+          {listaTipos.map(([chave, rotulo]) => (
+            <Filtro key={chave} ativo={tipo === chave} onClick={() => setTipo(chave)}>
+              {chave === 'todos' ? t('projetos.todosTipos') : rotulo}
+            </Filtro>
+          ))}
+        </Linha>
       </div>
 
       {filtrados.length === 0 ? (
-        <div className='py-16 text-center'>
-          <p className='mb-4 text-gray-500'>Nenhum projeto com essa combinação de filtros.</p>
+        <div className='py-24 text-center'>
+          <p className='mb-6 text-bruma'>{t('projetos.vazio')}</p>
           <button
             type='button'
             onClick={limpar}
-            className='rounded-full border-2 border-green-500 px-6 py-2 font-bold text-green-400 transition hover:bg-green-500/10'
+            className='rounded-full border border-borda px-6 py-2.5 text-tinta transition hover:border-ouro/60 hover:text-ouro'
           >
-            Limpar filtros
+            {t('projetos.limpar')}
           </button>
         </div>
       ) : (
-        <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
-          {filtrados.map((p) => (
-            <ProjectCard key={p.id} projeto={p} />
+        <div className='mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+          {filtrados.map((p, i) => (
+            <Revelar key={p.id} delay={Math.min(i, 5) * 60}>
+              <ProjectCard projeto={p} />
+            </Revelar>
           ))}
         </div>
       )}
 
-      <p className='mt-12 text-center text-sm text-gray-500'>
-        Mostrando {filtrados.length} de {projetos.length} projetos
+      <p className='mt-14 text-center font-mono text-xs text-bruma'>
+        {campo({
+          pt: `${filtrados.length} de ${projetos.length}`,
+          en: `${filtrados.length} of ${projetos.length}`,
+        })}
       </p>
     </div>
   )

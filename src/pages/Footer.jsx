@@ -1,101 +1,88 @@
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faMapMarkerAlt, faPhone, faCode, faGamepad } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { useIdioma } from '../i18n'
+
+const ITENS = [
+  { path: '/', chave: 'home' },
+  { path: '/sobre', chave: 'sobre' },
+  { path: '/projects', chave: 'projetos' },
+  { path: '/contato', chave: 'contato' },
+]
 
 function Footer() {
+  const { t } = useIdioma()
   const ano = new Date().getFullYear()
 
   return (
-    <footer className='bg-black/80 backdrop-blur-sm border-t border-green-900/30 mt-20'>
-      <div className='container mx-auto px-4 py-12'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8'>
-          {/* Logo */}
+    <footer className='border-t border-borda bg-piche/50'>
+      <div className='mx-auto max-w-6xl px-5 py-14'>
+        <div className='grid gap-10 sm:grid-cols-2 lg:grid-cols-3'>
           <div>
-            <h3 className='text-2xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent mb-4'>
-              🎮 Israel Mendes
-            </h3>
-            <p className='text-gray-500 text-sm'>
-              Fazer jogo é massa demais
-            </p>
+            <div className='flex items-center gap-2.5'>
+              <span className='grid h-8 w-8 place-items-center rounded border border-ouro/40 font-display text-sm font-semibold text-ouro'>
+                IM
+              </span>
+              <span className='font-display text-base font-semibold text-tinta'>Israel Mendes</span>
+            </div>
+            <p className='mt-4 max-w-xs text-sm leading-relaxed text-bruma'>{t('rodape.feito')}</p>
           </div>
 
-          {/* Links Rápidos */}
-          <div>
-            <h4 className='text-white font-bold mb-4 text-sm'>Links Rápidos</h4>
-            <ul className='space-y-2'>
-              <li>
-                <Link to='/' className='text-gray-400 hover:text-green-400 transition text-sm'>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to='/sobre' className='text-gray-400 hover:text-green-400 transition text-sm'>
-                  Sobre
-                </Link>
-              </li>
-              <li>
-                <Link to='/projects' className='text-gray-400 hover:text-green-400 transition text-sm'>
-                  Projetos
-                </Link>
-              </li>
-              <li>
-                <Link to='/contato' className='text-gray-400 hover:text-green-400 transition text-sm'>
-                  Contato
-                </Link>
-              </li>
+          <nav aria-label={t('rodape.navegar')}>
+            <p className='regua mb-4'>{t('rodape.navegar')}</p>
+            <ul className='space-y-2.5'>
+              {ITENS.map((i) => (
+                <li key={i.path}>
+                  <Link to={i.path} className='text-sm text-bruma transition hover:text-ouro'>
+                    {t(`nav.${i.chave}`)}
+                  </Link>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Tecnologias */}
           <div>
-            <h4 className='text-white font-bold mb-4 text-sm'>Tecnologias</h4>
-            <ul className='space-y-2'>
-              <li className='flex items-center gap-2 text-gray-400 text-sm'>
-                <FontAwesomeIcon icon={faGamepad} className='text-green-400 w-3' />
-                Unity & C#
-              </li>
-              <li className='flex items-center gap-2 text-gray-400 text-sm'>
-                <FontAwesomeIcon icon={faGamepad} className='text-green-400 w-3' />
-                Godot & GDScript
-              </li>
-              <li className='flex items-center gap-2 text-gray-400 text-sm'>
-                <FontAwesomeIcon icon={faCode} className='text-green-400 w-3' />
-                Python & Django
-              </li>
-              <li className='flex items-center gap-2 text-gray-400 text-sm'>
-                <FontAwesomeIcon icon={faCode} className='text-green-400 w-3' />
-                React & Tailwind
-              </li>
-            </ul>
-          </div>
-
-          {/* Contato */}
-          <div>
-            <h4 className='text-white font-bold mb-4 text-sm'>Contato</h4>
-            <ul className='space-y-3'>
-              <li className='flex items-center gap-3 text-gray-400 text-sm'>
-                <FontAwesomeIcon icon={faEnvelope} className='text-green-400 w-4' />
-                <a href='mailto:israelmendesmzs@gmail.com' className='hover:text-green-400 transition break-all text-xs'>
-                  israelmendesmzs@gmail.com
+            <p className='regua mb-4'>{t('rodape.encontrar')}</p>
+            <ul className='space-y-2.5 text-sm'>
+              <li>
+                <a
+                  href='mailto:israelmendesmzs@gmail.com'
+                  className='flex items-center gap-2.5 text-bruma transition hover:text-ouro'
+                >
+                  <FontAwesomeIcon icon={faEnvelope} className='w-3.5' />
+                  <span className='break-all'>israelmendesmzs@gmail.com</span>
                 </a>
               </li>
-              <li className='flex items-center gap-3 text-gray-400 text-sm'>
-                <FontAwesomeIcon icon={faPhone} className='text-green-400 w-4' />
-                <span>(85) 9 97401-6045</span>
-              </li>
-              <li className='flex items-center gap-3 text-gray-400 text-sm'>
-                <FontAwesomeIcon icon={faMapMarkerAlt} className='text-green-400 w-4' />
-                <span>Cascavel/CE</span>
-              </li>
-              <li className='flex items-center gap-3 text-gray-400 text-sm'>
-                <FontAwesomeIcon icon={faGithub} className='text-green-400 w-4' />
-                <a href='https://github.com/Israel-Mendes-git' target='_blank' rel='noopener noreferrer' className='hover:text-green-400 transition'>
-                  GitHub
+              <li>
+                <a
+                  href='https://github.com/Israel-Mendes-git'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='flex items-center gap-2.5 text-bruma transition hover:text-ouro'
+                >
+                  <FontAwesomeIcon icon={faGithub} className='w-3.5' />
+                  Israel-Mendes-git
                 </a>
+              </li>
+              <li className='flex items-center gap-2.5 text-bruma'>
+                <FontAwesomeIcon icon={faLocationDot} className='w-3.5' />
+                Cascavel — CE
               </li>
             </ul>
           </div>
+        </div>
+
+        <div className='mt-12 flex flex-col gap-3 border-t border-borda pt-6 sm:flex-row sm:items-center sm:justify-between'>
+          <p className='font-mono text-xs text-bruma'>© {ano} Israel Mendes</p>
+          <a
+            href='https://github.com/Israel-Mendes-git/israel-mendes-git.github.io'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='font-mono text-xs text-bruma transition hover:text-ouro'
+          >
+            {t('rodape.codigoDoSite')} ↗
+          </a>
         </div>
       </div>
     </footer>

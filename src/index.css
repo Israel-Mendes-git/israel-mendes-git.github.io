@@ -2,45 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-breu font-sans text-tinta antialiased;
+  }
+
+  /* Fraunces tem eixo "wonk" — ligado só no display, dá o desalinho autoral. */
+  h1, h2, h3 {
+    font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  }
+
+  ::selection {
+    @apply bg-ouro text-breu;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-ouro;
+  }
 }
 
-body {
-  background: #000;
+@layer components {
+  /* Grão de filme por cima de tudo. Pseudo-elemento fixo, sem custo de DOM. */
+  .grao::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Papel velho: a superfície padrão dos blocos de conteúdo. */
+  .pergaminho {
+    @apply rounded-lg border border-borda bg-piche;
+  }
+
+  .regua {
+    @apply font-mono text-[11px] uppercase tracking-[0.25em] text-bruma;
+  }
+
+  .link-ouro {
+    @apply text-ouro underline-offset-4 transition hover:text-ouro-claro hover:underline;
+  }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes glow-green {
-  0%, 100% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
-  50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.8); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-float { animation: float 3s ease-in-out infinite; }
-.animate-glow-green { animation: glow-green 2s ease-in-out infinite; }
-.animate-slide-up { animation: slideUp 0.6s ease-out; }
-
-.hover-glow-green:hover {
-  box-shadow: 0 0 25px rgba(34, 197, 94, 0.25);
-}
-
-.gradient-border-green {
-  background:
-    linear-gradient(#000, #000) padding-box,
-    linear-gradient(45deg, #22c55e, #15803d) border-box;
-  border: 2px solid transparent;
-}
-
-/* Respeita quem pediu menos animação no sistema. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -50,7 +60,7 @@ body {
   }
 }
 
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #15803d; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0B0A09; }
+::-webkit-scrollbar-thumb { background: #2E2822; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #E0A64B; }

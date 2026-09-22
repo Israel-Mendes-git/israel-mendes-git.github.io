@@ -1,76 +1,191 @@
-﻿import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route, NavLink, Link, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Sobre from './pages/Sobre'
 import Projects from './pages/Projects'
 import ProjectDetail from './pages/ProjectDetail'
-import Footer from './pages/Footer'
 import Contato from './pages/Contato'
-import { useState, useEffect } from 'react'
+import Footer from './pages/Footer'
+import Konami from './components/Konami'
+import { ProvedorIdioma, useIdioma } from './i18n'
+
+const ITENS = [
+  { path: '/', chave: 'home' },
+  { path: '/sobre', chave: 'sobre' },
+  { path: '/projects', chave: 'projetos' },
+  { path: '/contato', chave: 'contato' },
+]
+
+function BotaoIdioma({ className = '' }) {
+  const { idioma, alternar, t } = useIdioma()
+  return (
+    <button
+      type='button'
+      onClick={alternar}
+      aria-label={t('nav.idioma')}
+      className={`rounded-full border border-borda px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-bruma transition hover:border-ouro/60 hover:text-ouro ${className}`}
+    >
+      <span className={idioma === 'pt' ? 'text-ouro' : ''}>PT</span>
+      <span className='mx-1 text-borda'>/</span>
+      <span className={idioma === 'en' ? 'text-ouro' : ''}>EN</span>
+    </button>
+  )
+}
 
 function Navbar() {
+  const { t } = useIdioma()
   const location = useLocation()
-  const [scrolled, setScrolled] = useState(false)
+  const [rolou, setRolou] = useState(false)
+  const [aberto, setAberto] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const aoRolar = () => setRolou(window.scrollY > 24)
+    aoRolar()
+    window.addEventListener('scroll', aoRolar, { passive: true })
+    return () => window.removeEventListener('scroll', aoRolar)
   }, [])
 
-  const navItems = [
-    { path: '/', name: 'Home', icon: '' },
-    { path: '/sobre', name: 'Sobre', icon: '' },
-    { path: '/projects', name: 'Projetos', icon: '' },
-    { path: '/contato', name: 'Contato', icon: '' }
-  ]
+  // Fecha o menu ao navegar e trava o scroll enquanto ele está aberto.
+  useEffect(() => setAberto(false), [location.pathname])
+  useEffect(() => {
+    document.body.style.overflow = aberto ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [aberto])
+
+  const classeLink = ({ isActive }) =>
+    `relative py-1 text-sm transition-colors ${
+      isActive ? 'text-ouro' : 'text-bruma hover:text-tinta'
+    } after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-ouro after:transition-all ${
+      isActive ? 'after:w-full' : 'after:w-0 hover:after:w-full'
+    }`
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/95 backdrop-blur-md shadow-lg shadow-green-900/20' : 'bg-transparent'}`}>
-      <div className='container mx-auto px-4 py-4'>
-        <div className='flex justify-between items-center'>
-          <Link to='/' className='text-2xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent hover:scale-105 transition'>
-            🎮 
-          </Link>
-          <div className='hidden md:flex gap-8'>
-            {navItems.map(item => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center gap-2 transition-all duration-300 ${
-                  location.pathname === item.path
-                    ? 'text-green-400 border-b-2 border-green-400 pb-1'
-                    : 'text-gray-400 hover:text-green-400 hover:scale-105'
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        rolou || aberto ? 'border-b border-borda bg-breu/90 backdrop-blur-md' : 'border-b border-transparent'
+      }`}
+    >
+      <nav className='mx-auto flex max-w-6xl items-center justify-between px-5 py-4' aria-label='principal'>
+        <Link to='/' className='group flex items-center gap-2.5' aria-label='Israel Mendes'>
+          <span className='grid h-8 w-8 place-items-center rounded border border-ouro/40 font-display text-sm font-semibold text-ouro transition group-hover:bg-ouro group-hover:text-breu'>
+            IM
+          </span>
+          <span className='hidden font-display text-base font-semibold text-tinta sm:block'>Israel Mendes</span>
+        </Link>
+
+        <div className='hidden items-center gap-8 md:flex'>
+          {ITENS.map((i) => (
+            <NavLink key={i.path} to={i.path} end={i.path === '/'} className={classeLink}>
+              {t(`nav.${i.chave}`)}
+            </NavLink>
+          ))}
+          <BotaoIdioma />
+        </div>
+
+        <div className='flex items-center gap-3 md:hidden'>
+          <BotaoIdioma />
+          <button
+            type='button'
+            onClick={() => setAberto((a) => !a)}
+            aria-expanded={aberto}
+            aria-controls='menu-mobile'
+            aria-label={aberto ? t('nav.fechar') : t('nav.menu')}
+            className='grid h-9 w-9 place-items-center rounded border border-borda text-tinta transition hover:border-ouro/60'
+          >
+            <span className='relative block h-3 w-4'>
+              <span
+                className={`absolute left-0 h-px w-full bg-current transition-all ${
+                  aberto ? 'top-1.5 rotate-45' : 'top-0'
                 }`}
+              />
+              <span
+                className={`absolute left-0 top-1.5 h-px w-full bg-current transition-opacity ${
+                  aberto ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-px w-full bg-current transition-all ${
+                  aberto ? 'top-1.5 -rotate-45' : 'top-3'
+                }`}
+              />
+            </span>
+          </button>
+        </div>
+      </nav>
+
+      {/* Menu mobile — a versão anterior simplesmente não tinha navegação no celular. */}
+      <div
+        id='menu-mobile'
+        className={`overflow-hidden border-t border-borda bg-breu transition-[max-height] duration-300 md:hidden ${
+          aberto ? 'max-h-80' : 'max-h-0 border-t-transparent'
+        }`}
+      >
+        <ul className='px-5 py-2'>
+          {ITENS.map((i) => (
+            <li key={i.path}>
+              <NavLink
+                to={i.path}
+                end={i.path === '/'}
+                className={({ isActive }) =>
+                  `block border-b border-borda/60 py-3.5 font-display text-lg ${
+                    isActive ? 'text-ouro' : 'text-bruma'
+                  }`
+                }
               >
-                <span>{item.icon}</span>
-                <span>{item.name}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
+                {t(`nav.${i.chave}`)}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
       </div>
-    </nav>
+    </header>
   )
 }
 
-function App() {
+// Rota nova começa no topo — sem isso o visitante cai no meio da página.
+function AoTrocarDeRota() {
+  const { pathname } = useLocation()
+  useEffect(() => window.scrollTo(0, 0), [pathname])
+  return null
+}
+
+function Layout() {
+  const { t } = useIdioma()
   return (
-    <BrowserRouter>
-      <div className='min-h-screen bg-black'>
-        <Navbar />
-        <div className='pt-16'>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/sobre' element={<Sobre />} />
-            <Route path='/projects' element={<Projects />} />
-            <Route path='/projeto/:id' element={<ProjectDetail />} />
-            <Route path='/contato' element={<Contato />} />
-          </Routes>
-        </div>
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <div className='grao min-h-screen bg-breu'>
+      <a
+        href='#conteudo'
+        className='sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded focus:bg-ouro focus:px-4 focus:py-2 focus:font-semibold focus:text-breu'
+      >
+        {t('nav.pular')}
+      </a>
+      <Navbar />
+      <AoTrocarDeRota />
+      <main id='conteudo' className='pt-16'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/sobre' element={<Sobre />} />
+          <Route path='/projects' element={<Projects />} />
+          <Route path='/projetos' element={<Projects />} />
+          <Route path='/projeto/:id' element={<ProjectDetail />} />
+          <Route path='/contato' element={<Contato />} />
+          <Route path='*' element={<Home />} />
+        </Routes>
+      </main>
+      <Footer />
+      <Konami />
+    </div>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <ProvedorIdioma>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
+    </ProvedorIdioma>
+  )
+}

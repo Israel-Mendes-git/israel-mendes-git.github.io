@@ -1,84 +1,147 @@
-const grupos = [
-  { titulo: 'Jogos', itens: ['Unity', 'C#', 'Godot', 'GDScript', 'URP'] },
-  { titulo: 'Web & Back-end', itens: ['React', 'Next.js', 'TypeScript', 'Tailwind', 'Django', 'Python', '.NET', 'Blazor'] },
-  { titulo: 'Mobile & TV', itens: ['Kotlin', 'Android TV'] },
-  { titulo: 'Ferramentas', itens: ['Git', 'GitHub', 'Docker', 'Payload CMS'] },
-]
+import { experiencia, formacao, stackPorGrupo } from '../data/experiencia'
+import { ComNegrito, Revelar, Secao } from '../components/ui'
+import { useIdioma } from '../i18n'
 
 function Sobre() {
+  const { t, campo } = useIdioma()
+
   return (
-    <div className='container mx-auto px-4 py-16'>
-      <div className='mx-auto max-w-4xl'>
-        {/* Cabeçalho com foto */}
-        <div className='mb-8 overflow-hidden rounded-2xl border border-green-900/30 bg-black/50 backdrop-blur-sm'>
-          <div className='flex flex-col items-center gap-8 p-8 md:flex-row md:items-start'>
-            <img
-              src='/images/israel.webp'
-              alt='Israel Mendes'
-              className='h-40 w-40 shrink-0 rounded-full border-4 border-green-700/60 object-cover shadow-lg shadow-green-900/40'
-            />
-            <div className='text-center md:text-left'>
-              <h1 className='mb-1 text-4xl font-bold text-white'>Israel Mendes</h1>
-              <p className='mb-4 text-green-400'>Desenvolvedor de jogos · Ciência da Computação</p>
-              <p className='mb-3 text-gray-400'>
-                Sou <span className='text-green-400'>Técnico em Informática</span> pela EEEP Edson Queiroz e curso{' '}
-                <span className='text-green-400'>Ciência da Computação</span> na Wyden — Unifanor.
-              </p>
-              <p className='text-gray-400'>
-                Trabalho na <span className='text-green-400'>Rapadura Atômica</span>, estúdio de animação e jogos
-                digitais, onde desenvolvo desde ferramentas internas de produção até plataformas web. Fora do
-                expediente, o que me move é jogo — principalmente roguelike e sistemas de carta.
-              </p>
-            </div>
+    <div className='mx-auto max-w-4xl px-5 py-16 md:py-24'>
+      {/* Cabeçalho */}
+      <Revelar>
+        <div className='flex flex-col items-center gap-8 sm:flex-row sm:items-end'>
+          <img
+            src='/images/israel.webp'
+            alt='Israel Mendes'
+            width='160'
+            height='160'
+            className='h-36 w-36 shrink-0 rounded-lg border border-ouro/30 object-cover shadow-carta'
+          />
+          <div className='text-center sm:text-left'>
+            <p className='regua mb-3'>{t('sobre.titulo')}</p>
+            <h1 className='font-display text-4xl font-semibold text-tinta md:text-5xl'>Israel Mendes</h1>
+            <p className='mt-2 text-ouro'>{t('sobre.papel')}</p>
           </div>
         </div>
+      </Revelar>
 
-        {/* Formação e idiomas */}
-        <div className='mb-8 grid gap-6 md:grid-cols-2'>
-          <div className='rounded-2xl border border-green-900/30 bg-black/50 p-6 backdrop-blur-sm'>
-            <h2 className='mb-4 text-xl font-bold text-white'>Formação</h2>
-            <div className='space-y-4'>
-              <div>
-                <p className='font-semibold text-green-400'>Ciência da Computação</p>
-                <p className='text-sm text-gray-500'>Wyden — Unifanor · em curso</p>
-              </div>
-              <div>
-                <p className='font-semibold text-green-400'>Técnico em Informática</p>
-                <p className='text-sm text-gray-500'>EEEP Edson Queiroz · concluído em 2025</p>
-              </div>
-            </div>
-          </div>
-
-          <div className='rounded-2xl border border-green-900/30 bg-black/50 p-6 backdrop-blur-sm'>
-            <h2 className='mb-4 text-xl font-bold text-white'>Idiomas</h2>
-            <div>
-              <p className='font-semibold text-green-400'>Inglês</p>
-              <p className='text-sm text-gray-500'>Intermediário</p>
-            </div>
-          </div>
+      <Revelar delay={80}>
+        <div className='mt-10 space-y-4 text-lg leading-relaxed text-bruma'>
+          <p>{t('sobre.bioA')}</p>
+          <p>{t('sobre.bioB')}</p>
+          <p className='border-l-2 border-ouro/40 pl-5 text-tinta'>{t('sobre.bioC')}</p>
         </div>
+      </Revelar>
 
-        {/* Stack */}
-        <div className='rounded-2xl border border-green-900/30 bg-black/50 p-8 backdrop-blur-sm'>
-          <h2 className='mb-6 text-2xl font-bold text-white'>Tecnologias</h2>
-          <div className='space-y-5'>
-            {grupos.map((g) => (
-              <div key={g.titulo}>
-                <h3 className='mb-2 text-sm font-bold uppercase tracking-wider text-gray-500'>{g.titulo}</h3>
-                <div className='flex flex-wrap gap-2'>
-                  {g.itens.map((t) => (
-                    <span
-                      key={t}
-                      className='rounded-lg border border-green-800 bg-green-900/30 px-3 py-1.5 text-sm text-green-400 transition hover:bg-green-900/50'
-                    >
-                      {t}
+      {/* Experiência */}
+      <Revelar delay={120}>
+        <Secao className='mt-20' regua='01' titulo={t('sobre.experiencia')} />
+      </Revelar>
+
+      <div className='mt-10 space-y-10'>
+        {experiencia.map((e, i) => (
+          <Revelar key={e.id} delay={i * 90}>
+            <article className='relative border-l border-borda pl-6 md:pl-8'>
+              <span className='absolute -left-[5px] top-2 h-2.5 w-2.5 rotate-45 border border-ouro bg-breu' />
+
+              <p className='font-mono text-xs uppercase tracking-widest text-ouro'>{campo(e.periodo)}</p>
+              <h3 className='mt-2 font-display text-2xl font-semibold text-tinta'>{campo(e.cargo)}</h3>
+              <p className='mt-1 text-sm text-bruma'>
+                {e.site ? (
+                  <a href={e.site} target='_blank' rel='noopener noreferrer' className='link-ouro'>
+                    {campo(e.org)}
+                  </a>
+                ) : (
+                  campo(e.org)
+                )}
+                <span className='mx-2 text-borda'>·</span>
+                {campo(e.local)}
+              </p>
+
+              <p className='mt-4 leading-relaxed text-bruma'>{campo(e.resumo)}</p>
+
+              <ul className='mt-5 space-y-2.5'>
+                {e.marcos.map((m) => (
+                  <li key={campo(m)} className='flex gap-3 text-sm leading-relaxed text-bruma'>
+                    <span aria-hidden='true' className='mt-[7px] h-1 w-1 shrink-0 rotate-45 bg-ouro' />
+                    <span>
+                      <ComNegrito texto={campo(m)} />
                     </span>
-                  ))}
-                </div>
+                  </li>
+                ))}
+              </ul>
+
+              <div className='mt-5 flex flex-wrap gap-1.5'>
+                {e.stack.map((s) => (
+                  <span key={s} className='rounded border border-borda px-2 py-0.5 font-mono text-[10px] text-bruma'>
+                    {s}
+                  </span>
+                ))}
               </div>
-            ))}
+            </article>
+          </Revelar>
+        ))}
+      </div>
+
+      {/* Formação e idiomas */}
+      <div className='mt-20 grid gap-6 md:grid-cols-2'>
+        <Revelar>
+          <div className='pergaminho h-full p-6'>
+            <p className='regua mb-5'>02 · {t('sobre.formacao')}</p>
+            <div className='space-y-5'>
+              {formacao.map((f) => (
+                <div key={f.id}>
+                  <p className='font-display text-lg font-semibold text-tinta'>{campo(f.curso)}</p>
+                  <p className='mt-0.5 text-sm text-bruma'>{f.instituicao}</p>
+                  <p className='mt-1 font-mono text-[11px] uppercase tracking-wider text-ouro/80'>
+                    {campo(f.situacao)}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </Revelar>
+
+        <Revelar delay={90}>
+          <div className='pergaminho h-full p-6'>
+            <p className='regua mb-5'>03 · {t('sobre.idiomas')}</p>
+            <div className='space-y-5'>
+              <div>
+                <p className='font-display text-lg font-semibold text-tinta'>{t('sobre.portugues')}</p>
+                <p className='mt-0.5 text-sm text-bruma'>{t('sobre.nativo')}</p>
+              </div>
+              <div>
+                <p className='font-display text-lg font-semibold text-tinta'>{t('sobre.ingles')}</p>
+                <p className='mt-0.5 text-sm text-bruma'>{t('sobre.intermediario')}</p>
+              </div>
+            </div>
+          </div>
+        </Revelar>
+      </div>
+
+      {/* Tecnologias */}
+      <Revelar>
+        <Secao className='mt-20' regua='04' titulo={t('sobre.tecnologias')} />
+      </Revelar>
+
+      <div className='mt-8 space-y-7'>
+        {stackPorGrupo.map((g, i) => (
+          <Revelar key={g.id} delay={i * 70}>
+            <div className='grid gap-3 border-t border-borda pt-5 sm:grid-cols-[10rem,1fr]'>
+              <h3 className='regua pt-1'>{campo(g.titulo)}</h3>
+              <div className='flex flex-wrap gap-2'>
+                {g.itens.map((x) => (
+                  <span
+                    key={x}
+                    className='rounded border border-borda bg-piche px-3 py-1.5 text-sm text-tinta transition hover:border-ouro/50 hover:text-ouro'
+                  >
+                    {x}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Revelar>
+        ))}
       </div>
     </div>
   )
