@@ -53,10 +53,6 @@ const strings = {
       pt: 'Faço jogo desde 2024, quase sempre sozinho e do design ao código — roguelike e sistema de cartas, principalmente. No expediente, na Rapadura Atômica, mexo com C++ de baixo nível, web em produção e ferramentas de pipeline: três frentes que raramente aparecem no mesmo cargo.',
       en: 'I have been making games since 2024, mostly alone and from design to code — roguelikes and card systems. On the clock, at Rapadura Atômica, I work on low-level C++, web in production and pipeline tooling: three fronts that rarely sit in the same role.',
     },
-    bioC: {
-      pt: 'O que me interessa de verdade é o momento em que uma regra vira sensação: por que uma carta parece pesada, por que uma morte dói, por que uma ferramenta some do caminho do animador.',
-      en: 'What actually interests me is the moment a rule turns into a feeling: why a card feels heavy, why a death stings, why a tool disappears from an animator’s way.',
-    },
     experiencia: { pt: 'Experiência', en: 'Experience' },
     formacao: { pt: 'Formação', en: 'Education' },
     idiomas: { pt: 'Idiomas', en: 'Languages' },
@@ -150,6 +146,15 @@ const strings = {
     web: { pt: 'Web e apps', en: 'Web & apps' },
     ferramenta: { pt: 'Ferramentas', en: 'Tooling' },
     estudo: { pt: 'Estudos', en: 'Studies' },
+  },
+  secreta: {
+    selo: { pt: 'Carta escondida', en: 'Hidden card' },
+    titulo: { pt: 'Jogo em C++? Ainda não.', en: 'A game in C++? Not yet.' },
+    corpo: {
+      pt: 'Hoje meu C++ está num fork do Blender e meu jogo está em Unity. Essas duas peças ainda não se encaixam no meu portfólio — e é exatamente para aí que eu quero ir.',
+      en: 'Today my C++ lives in a Blender fork and my games live in Unity. These two pieces do not fit together in my portfolio yet — and that is exactly where I want to go.',
+    },
+    dica: { pt: 'você encaixou a combinação impossível', en: 'you snapped the impossible combination' },
   },
   ovo: {
     titulo: { pt: 'Você achou o baralho escondido.', en: 'You found the hidden deck.' },

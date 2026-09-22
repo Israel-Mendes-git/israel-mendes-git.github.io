@@ -24,7 +24,6 @@ function Sobre() {
             <h1 className='titulo-degrade text-4xl font-bold'>Israel Mendes</h1>
             <p className='mt-1 text-verde'>{t('sobre.papel')}</p>
             <p className='mt-4 leading-relaxed text-bruma'>{t('sobre.bioB')}</p>
-            <p className='mt-3 border-l-2 border-verde/50 pl-4 leading-relaxed text-tinta'>{t('sobre.bioC')}</p>
           </div>
         </div>
       </Revelar>

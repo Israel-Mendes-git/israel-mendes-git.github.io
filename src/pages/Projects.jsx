@@ -2,10 +2,16 @@ import { useMemo, useState } from 'react'
 import projetos, { CATEGORIAS, STATUS, engines } from '../data/projetos'
 import ProjectCard from '../components/ProjectCard'
 import Bancada from '../components/Bancada'
+import CartaSecreta from '../components/CartaSecreta'
 import { Revelar } from '../components/ui'
 import { useIdioma } from '../i18n'
 
 const VAZIO = { categoria: 'todos', status: 'todos', engine: 'todos' }
+
+// Encaixar "Jogos + C++" não devolve projeto nenhum — e é justamente o que um
+// estúdio atrás de programador de C++ para jogo tentaria. Em vez do aviso de
+// lista vazia, aparece uma carta escondida.
+const ehSegredo = (e) => e.categoria === 'jogos' && e.engine === 'C++'
 
 function Projects() {
   const { t } = useIdioma()
@@ -57,7 +63,9 @@ function Projects() {
         total={projetos.length}
       />
 
-      {filtrados.length === 0 ? (
+      {filtrados.length === 0 && ehSegredo(escolhas) ? (
+        <CartaSecreta />
+      ) : filtrados.length === 0 ? (
         <div className='py-24 text-center'>
           <p className='mb-6 text-bruma'>{t('projetos.vazio')}</p>
           <button
