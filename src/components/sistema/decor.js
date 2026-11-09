@@ -98,15 +98,20 @@ export const DECOR = {
   9: { pal: ['#c9b48a', '#9a8458', '#4a3d24'], objetos: ['torre', 'bandeira', 'torre', 'pedra', 'torre', 'bandeira', 'torre', 'pedra'], orbita: 'baloes-ar' },
   11: { pal: ['#f2a6be', '#c25c7c', '#5a2236'], objetos: ['carta', 'computador', 'casa', 'carta', 'computador'], orbita: 'cartas' },
   13: { pal: ['#a7d98b', '#5c9a44', '#264a1c'], objetos: ['espada', 'arvore', 'pinheiro', 'bau', 'arvore', 'fogueira', 'pinheiro'] },
+  22: { pal: ['#d1d5db', '#8b929c', '#3a3f47'], objetos: ['antena', 'pedra', 'engrenagem', 'robo', 'pedra', 'satelite', 'engrenagem'], orbita: 'satelites', luzes: true },
+  23: { pal: ['#8a6a5a', '#4a3028', '#1a0f0c'], objetos: ['pinheiro', 'farol', 'casa', 'pinheiro', 'bau', 'pinheiro'], luzes: true },
+  24: { pal: ['#f87171', '#b91c1c', '#450a0a'], objetos: ['fogueira', 'robo', 'torre', 'fogueira', 'robo', 'fogueira'], orbita: 'eletrons' },
   // Web e apps
   4: { pal: ['#c3b4f5', '#6d5bd0', '#2a2266'], objetos: ['claquete', 'tela', 'farol', 'tela', 'claquete'], orbita: 'filme', luzes: true },
   3: { pal: ['#e6d3a8', '#bf9b5a', '#5a4422'], objetos: ['casa', 'guindaste', 'casa', 'arvore', 'casa', 'guindaste', 'casa', 'arvore'], luzes: true },
   5: { pal: ['#9fd3f5', '#3d8fd1', '#163e66'], objetos: ['computador', 'antena', 'computador', 'casa'], orbita: 'baloes', luzes: true },
   20: { pal: ['#fbd38d', '#e07b2f', '#6b3410'], objetos: ['megafone', 'antena', 'farol', 'megafone'], orbita: 'ondas', luzes: true },
+  26: { pal: ['#fca5a5', '#dc2626', '#4c0f0f'], objetos: ['tela', 'antena', 'tela', 'computador'], orbita: 'ondas', luzes: true },
   // Ferramentas
   17: { textura: 'grade', pal: ['#86efac', '#16a34a', '#08391c'], objetos: ['computador', 'antena', 'computador'], orbita: 'eletrons', luzes: true },
   7: { pal: ['#a7f3d0', '#34a37a', '#11402f'], objetos: ['barras', 'barras', 'computador', 'barras', 'bau'], luzes: true },
   10: { pal: ['#bfdbfe', '#5b8fd6', '#1e3a66'], objetos: ['tela', 'computador', 'tela', 'antena'], luzes: true },
+  25: { pal: ['#86efac', '#2f8a5a', '#0c3320'], objetos: ['barras', 'computador', 'bau', 'barras', 'robo'], orbita: 'engrenagens', luzes: true },
   // Estudos
   12: { orbita: 'cartas', objetos: ['carta', 'pedra', 'carta'] },
   14: { objetos: ['robo', 'antena', 'pedra', 'robo'], orbita: 'ondas' },
