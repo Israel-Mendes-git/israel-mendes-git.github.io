@@ -5,7 +5,7 @@ import { SeloStatus } from './ui'
 
 // Capa do card: captura real quando existe, senão um brasão com o ícone do projeto.
 export function Capa({ projeto, className = 'h-48' }) {
-  const { campo } = useIdioma()
+  const { campo, t } = useIdioma()
 
   return (
     <div className={`${className} relative overflow-hidden bg-gradient-to-br ${projeto.cor}`}>
@@ -32,6 +32,9 @@ export function Capa({ projeto, className = 'h-48' }) {
 
       <div className='absolute left-3 top-3 z-10 flex flex-wrap gap-1.5'>
         <SeloStatus status={projeto.status} />
+        {projeto.jogavel && (
+          <span className='bg-verde px-2 py-0.5 font-pixel text-xs font-bold text-breu'>▶ {t('selos.jogavel')}</span>
+        )}
       </div>
     </div>
   )
@@ -56,7 +59,7 @@ function ProjectCard({ projeto, alturaCapa = 'h-48' }) {
 
           <div className='flex flex-1 flex-col p-5'>
             <div className='mb-1 flex items-baseline justify-between gap-3'>
-              <h3 className='text-xl font-semibold leading-tight text-tinta transition group-hover:text-verde-claro'>
+              <h3 className='font-pixel text-2xl font-bold leading-tight text-tinta transition group-hover:text-verde-claro'>
                 {projeto.nome}
               </h3>
               <span className='shrink-0 font-mono text-[11px] text-bruma'>{projeto.ano}</span>

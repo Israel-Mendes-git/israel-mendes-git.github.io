@@ -11,36 +11,90 @@ const strings = {
     pular: { pt: 'Pular para o conteúdo', en: 'Skip to content' },
   },
   home: {
-    kicker: { pt: 'Desenvolvedor de jogos · Cascavel, CE', en: 'Game developer · Cascavel, Brazil' },
-    titulo1: { pt: 'Faço jogos', en: 'I make games' },
-    titulo2: { pt: 'e ferramentas para quem faz.', en: 'and tools for the people who do.' },
-    lead: {
-      pt: 'Roguelike e sistema de cartas em Unity é o que eu faço por vontade própria. Na Rapadura Atômica, estúdio de animação e jogos, faço C++, web e as ferramentas que a produção usa todo dia.',
-      en: 'Roguelikes and card systems in Unity are what I build because I want to. At Rapadura Atômica, an animation and games studio, I write C++, web apps and the tools production uses every day.',
+    kicker: { pt: 'Dev de jogos · interior do Ceará', en: 'Game dev · countryside of Ceará, Brazil' },
+    titulo: {
+      pt: 'Faço jogos e as ferramentas de quem faz.',
+      en: 'I make games and the tools for the people who make them.',
     },
-    verProjetos: { pt: 'Ver os projetos', en: 'See the work' },
-    falarComigo: { pt: 'Falar comigo', en: 'Get in touch' },
-    dicaCarta: { pt: 'arraste a carta', en: 'drag the card' },
-    cartaProj: { pt: 'proj.', en: 'proj.' },
-    cartaCpp: { pt: 'C++', en: 'C++' },
-    cartaNoAr: { pt: 'no ar', en: 'live' },
-    numeros: { pt: 'Em números', en: 'By the numbers' },
-    statProjetos: { pt: 'projetos catalogados', en: 'catalogued projects' },
-    statJogos: { pt: 'jogos, do protótipo ao jogável', en: 'games, from prototype to playable' },
-    statProducao: { pt: 'em produção, com usuários reais', en: 'in production, with real users' },
-    statStacks: { pt: 'engines e stacks', en: 'engines and stacks' },
-    destaquesTitulo: { pt: 'O que vale olhar primeiro', en: 'Start here' },
-    destaquesLead: {
-      pt: 'Se você tem cinco minutos, comece por estes.',
-      en: 'If you have five minutes, start with these.',
+    jogaveisTitulo: { pt: 'Joga aí', en: 'Play it' },
+    jogaveisLead: { pt: 'Roda no navegador, sem instalar nada.', en: 'Runs in the browser, nothing to install.' },
+    jogarAgora: { pt: 'Jogar agora', en: 'Play now' },
+    destaquesTitulo: { pt: 'Por onde começar', en: 'Start here' },
+    destaquesLead: { pt: 'Jogos, o fork do Blender e o que está no ar.', en: 'Games, the Blender fork and what is live.' },
+    todos: { pt: 'Todos os projetos', en: 'All projects' },
+    ctaBotao: { pt: 'Bora conversar', en: 'Let’s talk' },
+  },
+  espaco: {
+    pilotar: { pt: 'Pilotar', en: 'Fly' },
+    naoJogar: { pt: 'Só quero ver o site', en: 'Just show me the site' },
+    pousando: { pt: 'segura aí... pousando (ou aperte E)', en: 'hold still... landing (or press E)' },
+    sair: { pt: 'Sair', en: 'Exit' },
+  },
+  nave: {
+    pilotar: { pt: 'Pilotar', en: 'Fly' },
+    decolarSite: { pt: 'Decolar pelo site', en: 'Fly through the site' },
+    estacionar: { pt: 'Estacionar', en: 'Park' },
+    dicaHero: {
+      pt: 'a nave voa por todas as páginas: o menu é portal, os projetos são paradas',
+      en: 'the ship flies across every page: the menu is a portal, projects are stops',
     },
-    todos: { pt: 'Ver todos os projetos', en: 'See all projects' },
-    ctaTitulo: { pt: 'Tem um projeto?', en: 'Got a project?' },
-    ctaLead: {
-      pt: 'Jogo, ferramenta de pipeline ou sistema que precisa aguentar gente usando. Me manda o problema.',
-      en: 'A game, a pipeline tool, or a system that has to survive real users. Send me the problem.',
+    controles: {
+      pt: 'setas/WASD ou toque para voar · pare em cima de algo para entrar',
+      en: 'arrows/WASD or tap to fly · hover over something to enter',
     },
-    ctaBotao: { pt: 'Começar uma conversa', en: 'Start a conversation' },
+    entrar: { pt: 'segura aí ou aperte E', en: 'hold still or press E' },
+    mudo: { pt: 'Desligar som', en: 'Mute' },
+    comSom: { pt: 'Ligar som', en: 'Unmute' },
+    atirar: { pt: 'Atirar', en: 'Fire' },
+    dicaTeclado: {
+      pt: 'setas/WASD voam · Shift turbo · espaço atira · pare em cima de algo para entrar',
+      en: 'arrows/WASD fly · Shift boost · space fires · stop over something to enter',
+    },
+    dicaToque: {
+      pt: 'joystick ou toque para voar · toque num link para ir até ele · ● atira',
+      en: 'joystick or tap to fly · tap a link to go there · ● fires',
+    },
+    dicaMenu: {
+      pt: 'o menu do topo é portal · setas amarelas nas bordas apontam projetos que você ainda não viu',
+      en: 'the top menu is a portal · yellow arrows on the edges point to projects you have not seen',
+    },
+    combo: { pt: 'combo', en: 'combo' },
+    novoRecorde: { pt: 'novo recorde!', en: 'new record!' },
+    controle: {
+      pt: 'controle conectado · analógico voa, A entra, X atira, B turbo, Start estaciona',
+      en: 'controller connected · stick flies, A enters, X fires, B boosts, Start parks',
+    },
+    pinturaNova: { pt: 'pintura nova liberada: {nome}', en: 'new paint unlocked: {nome}' },
+    pintura: {
+      padrao: { pt: 'Verde de fábrica', en: 'Factory green' },
+      laranja: { pt: 'Laranja', en: 'Orange' },
+      roxa: { pt: 'Roxa', en: 'Purple' },
+      dourada: { pt: 'Dourada', en: 'Gold' },
+    },
+  },
+  diario: {
+    titulo: { pt: 'Diário de bordo', en: 'Ship log' },
+    hud: { pt: 'diário {n}/{total}', en: 'log {n}/{total}' },
+    progresso: { pt: '{n} de {total} projetos visitados', en: '{n} of {total} projects visited' },
+    transmitiuSim: { pt: 'transmissão enviada ✓', en: 'transmission sent ✓' },
+    transmitiuNao: { pt: 'transmissão pendente', en: 'transmission pending' },
+    chamado: {
+      pt: 'a estação de rádio está chamando: voe até Contato',
+      en: 'the radio station is calling: fly to Contact',
+    },
+    finalSelo: { pt: 'transmissão recebida', en: 'incoming transmission' },
+    finalTitulo: { pt: 'Você viu tudo.', en: 'You saw everything.' },
+    finalCorpo: {
+      pt: 'Pouca gente pousa em todos os planetas. Se chegou até aqui, a gente provavelmente ia se dar bem trabalhando junto. Me manda uma mensagem: vaga, freela ou só ideia de jogo.',
+      en: 'Not many people land on every planet. If you made it this far, we would probably work well together. Send me a message: a job, freelance or just a game idea.',
+    },
+    finalBotao: { pt: 'Abrir a rádio', en: 'Open the radio' },
+    pinturas: { pt: 'Pinturas da nave', en: 'Ship paints' },
+    fragmentosInfo: {
+      pt: '◆ {n} fragmentos · atire nos asteroides (espaço) para juntar mais',
+      en: '◆ {n} shards · shoot asteroids (space) to collect more',
+    },
+    finalFechar: { pt: 'Continuar voando', en: 'Keep flying' },
   },
   sobre: {
     titulo: { pt: 'Sobre', en: 'About' },
@@ -50,8 +104,8 @@ const strings = {
       en: 'I am from Cascavel, Ceará, Brazil. IT technician from EEEP Edson Queiroz and Computer Science student at Wyden — Unifanor.',
     },
     bioB: {
-      pt: 'Faço jogo desde 2024, quase sempre sozinho e do design ao código — roguelike e sistema de cartas, principalmente. No expediente, na Rapadura Atômica, mexo com C++ de baixo nível, web em produção e ferramentas de pipeline: três frentes que raramente aparecem no mesmo cargo.',
-      en: 'I have been making games since 2024, mostly alone and from design to code — roguelikes and card systems. On the clock, at Rapadura Atômica, I work on low-level C++, web in production and pipeline tooling: three fronts that rarely sit in the same role.',
+      pt: 'Faço jogo desde 2024, quase sempre sozinho, do design ao código. No trampo, na Rapadura Atômica, é C++ no fork do Blender, web no ar e ferramenta de pipeline. Me dê café e música que sai jogo novo.',
+      en: 'Making games since 2024, mostly solo, from design to code. At work, at Rapadura Atômica, it is C++ in a Blender fork, live web apps and pipeline tools. Give me coffee and music and a new game comes out.',
     },
     experiencia: { pt: 'Experiência', en: 'Experience' },
     formacao: { pt: 'Formação', en: 'Education' },
@@ -69,8 +123,8 @@ const strings = {
   projetos: {
     titulo: { pt: 'Projetos', en: 'Work' },
     lead: {
-      pt: 'Jogos, ferramentas e web. Os exercícios pequenos ficaram de propósito: mostram de onde eu vim.',
-      en: 'Games, tools and web. The small exercises stayed on purpose: they show where I came from.',
+      pt: 'Jogos, ferramentas e web. Os com ▶ dá para jogar aqui.',
+      en: 'Games, tools and web. The ones marked ▶ you can play right here.',
     },
     filtroCategoria: { pt: 'Categoria', en: 'Category' },
     filtroStatus: { pt: 'Situação', en: 'Status' },
@@ -79,13 +133,6 @@ const strings = {
     vazio: { pt: 'Nenhum projeto com essa combinação.', en: 'No project matches that combination.' },
     limpar: { pt: 'Limpar filtros', en: 'Clear filters' },
     contagem: { pt: 'Mostrando {n} de {total}', en: 'Showing {n} of {total}' },
-  },
-  bancada: {
-    vazia: {
-      pt: 'Arraste ou clique numa peça para montar o filtro',
-      en: 'Drag or click a piece to build the filter',
-    },
-    resultado: { pt: '{n} de {total} projetos', en: '{n} of {total} projects' },
   },
   detalhe: {
     voltar: { pt: 'Voltar aos projetos', en: 'Back to work' },
@@ -101,16 +148,20 @@ const strings = {
     galeria: { pt: 'Galeria', en: 'Gallery' },
     verNoAr: { pt: 'Ver no ar', en: 'View live' },
     verCodigo: { pt: 'Ver o código', en: 'View the code' },
+    verItch: { pt: 'Baixar no itch.io', en: 'Get it on itch.io' },
     fechado: { pt: 'Código fechado', en: 'Closed source' },
     naoPublicado: { pt: 'Repositório não publicado', en: 'Repository not published' },
     ampliar: { pt: 'Ampliar imagem', en: 'Enlarge image' },
     fecharImagem: { pt: 'Fechar', en: 'Close' },
+    jogar: { pt: 'Jogar', en: 'Play' },
+    jogarPeso: { pt: 'baixa ~{mb} MB na primeira vez', en: 'downloads ~{mb} MB the first time' },
+    telaCheia: { pt: 'Tela cheia', en: 'Fullscreen' },
   },
   contato: {
     titulo: { pt: 'Contato', en: 'Contact' },
     lead: {
-      pt: 'Respondo a tudo que não for automático. Vaga, freela, dúvida de código ou ideia de jogo — pode mandar.',
-      en: 'I answer anything that is not automated. Job, freelance, code question, or a game idea — go ahead.',
+      pt: 'Vaga, freela ou ideia de jogo: manda que eu respondo.',
+      en: 'Job, freelance or a game idea: send it and I will reply.',
     },
     nome: { pt: 'Seu nome', en: 'Your name' },
     email: { pt: 'Seu e-mail', en: 'Your email' },
@@ -121,6 +172,9 @@ const strings = {
       en: 'The button opens your email client with the message pre-filled.',
     },
     assunto: { pt: 'Contato pelo portfólio', en: 'Contact from portfolio' },
+    radioSelo: { pt: 'estação de rádio · frequência aberta', en: 'radio station · channel open' },
+    transmitir: { pt: 'Enviar transmissão', en: 'Send transmission' },
+    transmitido: { pt: 'Transmissão enviada. Missão cumprida.', en: 'Transmission sent. Mission complete.' },
   },
   rodape: {
     feito: {
@@ -139,6 +193,7 @@ const strings = {
   selos: {
     destaque: { pt: 'Destaque', en: 'Featured' },
     privado: { pt: 'Repositório privado', en: 'Private repository' },
+    jogavel: { pt: 'Jogável', en: 'Playable' },
   },
   categorias: {
     todos: { pt: 'Todos', en: 'All' },
@@ -146,39 +201,7 @@ const strings = {
     web: { pt: 'Web e apps', en: 'Web & apps' },
     ferramenta: { pt: 'Ferramentas', en: 'Tooling' },
     estudo: { pt: 'Estudos', en: 'Studies' },
-  },
-  jogo: {
-    titulo: { pt: 'Queda — blocos que caem', en: 'Fall — falling blocks' },
-    comecar: { pt: 'Jogar', en: 'Play' },
-    denovo: { pt: 'De novo', en: 'Again' },
-    fim: { pt: 'Encheu', en: 'Filled up' },
-    pontos: { pt: 'pontos', en: 'score' },
-    linhas: { pt: 'linhas', en: 'lines' },
-    proxima: { pt: 'próxima', en: 'next' },
-    recorde: { pt: 'recorde', en: 'best' },
-    controles: {
-      pt: '← → mover · ↑ girar · ↓ descer · espaço larga',
-      en: '← → move · ↑ rotate · ↓ soft drop · space to slam',
-    },
-  },
-  secreta: {
-    selo: { pt: 'Carta escondida', en: 'Hidden card' },
-    titulo: { pt: 'Jogo em C++? Ainda não.', en: 'A game in C++? Not yet.' },
-    corpo: {
-      pt: 'Hoje meu C++ está num fork do Blender e meu jogo está em Unity. Essas duas peças ainda não se encaixam no meu portfólio — e é exatamente para aí que eu quero ir.',
-      en: 'Today my C++ lives in a Blender fork and my games live in Unity. These two pieces do not fit together in my portfolio yet — and that is exactly where I want to go.',
-    },
-    dica: { pt: 'você encaixou a combinação impossível', en: 'you snapped the impossible combination' },
-    enquanto: { pt: 'Enquanto isso, toma um jogo.', en: 'Meanwhile, have a game.' },
-  },
-  ovo: {
-    titulo: { pt: 'Você achou o baralho escondido.', en: 'You found the hidden deck.' },
-    corpo: {
-      pt: 'Konami code num portfólio é clichê. Mas se você chegou até aqui, provavelmente a gente se daria bem trabalhando junto.',
-      en: 'A Konami code on a portfolio is a cliché. But if you got here, we would probably work well together.',
-    },
-    botao: { pt: 'Justo. Me manda um e-mail', en: 'Fair. Send me an email' },
-    fechar: { pt: 'Fechar', en: 'Close' },
+    jogaveis: { pt: 'Jogáveis', en: 'Playable' },
   },
 }
 

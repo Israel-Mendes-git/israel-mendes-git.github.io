@@ -6,8 +6,10 @@ import Projects from './pages/Projects'
 import ProjectDetail from './pages/ProjectDetail'
 import Contato from './pages/Contato'
 import Footer from './pages/Footer'
-import Konami from './components/Konami'
 import useTransicao from './components/Transicao'
+import { ProvedorNave } from './components/nave/Nave'
+import { anotarRota } from './components/nave/diario'
+import Sistema from './components/sistema/Sistema'
 import { ProvedorIdioma, useIdioma } from './i18n'
 
 const ITENS = [
@@ -71,7 +73,7 @@ function Navbar() {
       <nav className='mx-auto flex max-w-6xl items-center justify-between px-5 py-4' aria-label='principal'>
         <Link to='/' className='group flex items-center gap-2 text-xl font-bold' aria-label='Israel Mendes'>
           <span aria-hidden='true' className='transition group-hover:scale-110'>🎮</span>
-          <span className='titulo-degrade hidden sm:block'>Israel Mendes</span>
+          <span className='hidden font-pixel text-2xl text-tinta sm:block'>Israel Mendes</span>
         </Link>
 
         <div className='hidden items-center gap-8 md:flex'>
@@ -146,6 +148,17 @@ function Navbar() {
 function Layout() {
   const { t } = useIdioma()
   const { exibida, overlay } = useTransicao()
+  // Abrir a página de um projeto também conta como descoberta no diário.
+  useEffect(() => anotarRota(exibida.pathname), [exibida.pathname])
+  // A home é o sistema solar, em tela cheia, sem menu nem rodapé. Usa a rota
+  // exibida (não a pedida) para a transição de colunas cobrir a troca.
+  if (exibida.pathname === '/' || exibida.pathname.startsWith('/sistema'))
+    return (
+      <>
+        <Sistema />
+        {overlay}
+      </>
+    )
   return (
     <div className='min-h-screen bg-breu'>
       <a
@@ -157,7 +170,8 @@ function Layout() {
       <Navbar />
       <main id='conteudo' className='pt-16'>
         <Routes location={exibida}>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Sistema />} />
+          <Route path='/inicio' element={<Home />} />
           <Route path='/sobre' element={<Sobre />} />
           <Route path='/projects' element={<Projects />} />
           <Route path='/projetos' element={<Projects />} />
@@ -167,7 +181,6 @@ function Layout() {
         </Routes>
       </main>
       <Footer />
-      <Konami />
       {overlay}
     </div>
   )
@@ -177,7 +190,9 @@ export default function App() {
   return (
     <ProvedorIdioma>
       <BrowserRouter>
-        <Layout />
+        <ProvedorNave>
+          <Layout />
+        </ProvedorNave>
       </BrowserRouter>
     </ProvedorIdioma>
   )

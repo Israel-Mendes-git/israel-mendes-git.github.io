@@ -4,6 +4,8 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope, faLocationDot, faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { Revelar } from '../components/ui'
 import { useIdioma } from '../i18n'
+import { useNave } from '../components/nave/Nave'
+import { anotar, useDiario } from '../components/nave/diario'
 
 const EMAIL = 'israelmendesmzs@gmail.com'
 
@@ -19,10 +21,15 @@ const CONTATOS = [
 function Contato() {
   const { t } = useIdioma()
   const [form, setForm] = useState({ nome: '', email: '', mensagem: '' })
+  // Com a nave ligada, o contato vira a estação de rádio do jogo.
+  const { pilotando } = useNave()
+  const diario = useDiario()
+  const radio = pilotando || diario.transmitiu
 
   // Sem back-end: monta a mensagem e entrega ao cliente de e-mail do visitante.
   const enviar = (e) => {
     e.preventDefault()
+    anotar(() => ({ transmitiu: true }))
     const assunto = `${t('contato.assunto')} — ${form.nome}`
     const corpo = `${form.mensagem}\n\n—\n${form.nome}\n${form.email}`
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`
@@ -34,8 +41,8 @@ function Contato() {
   return (
     <div className='mx-auto max-w-3xl px-5 py-16 md:py-24'>
       <Revelar>
-        <p className='regua mb-4'>05</p>
-        <h1 className='text-4xl font-semibold text-tinta md:text-5xl'>{t('contato.titulo')}</h1>
+        <p className='regua mb-4'>{radio ? `📡 ${t('contato.radioSelo')}` : '05'}</p>
+        <h1 className='titulo-pixel text-4xl md:text-5xl'>{t('contato.titulo')}</h1>
         <p className='mt-4 max-w-xl text-lg text-bruma'>{t('contato.lead')}</p>
       </Revelar>
 
@@ -112,8 +119,11 @@ function Contato() {
             type='submit'
             className='w-full rounded-lg bg-verde py-3.5 font-semibold text-breu transition hover:bg-verde-claro'
           >
-            {t('contato.enviar')}
+            {radio ? `📡 ${t('contato.transmitir')}` : t('contato.enviar')}
           </button>
+          {diario.transmitiu && (
+            <p className='text-center font-pixel text-sm text-verde'>✓ {t('contato.transmitido')}</p>
+          )}
 
           <p className='text-center text-xs text-bruma/70'>{t('contato.aviso')}</p>
         </form>

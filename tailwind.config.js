@@ -22,10 +22,12 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        pixel: ['"Pixelify Sans"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
         verde: '0 0 25px -4px rgba(34,197,94,.30)',
         carta: '0 20px 45px -15px rgba(0,0,0,.85)',
+        pixel: '4px 4px 0 0 #052E16',
       },
       keyframes: {
         subir: { from: { opacity: 0, transform: 'translateY(24px)' }, to: { opacity: 1, transform: 'none' } },

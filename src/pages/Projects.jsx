@@ -1,90 +1,59 @@
-import { useMemo, useState } from 'react'
-import projetos, { CATEGORIAS, STATUS, engines } from '../data/projetos'
+import { useSearchParams } from 'react-router-dom'
+import projetos, { CATEGORIAS } from '../data/projetos'
 import ProjectCard from '../components/ProjectCard'
-import Bancada from '../components/Bancada'
-import CartaSecreta from '../components/CartaSecreta'
 import { Revelar } from '../components/ui'
 import { useIdioma } from '../i18n'
 
-const VAZIO = { categoria: 'todos', status: 'todos', engine: 'todos' }
-
-// Encaixar "Jogos + C++" não devolve projeto nenhum — e é justamente o que um
-// estúdio atrás de programador de C++ para jogo tentaria. Em vez do aviso de
-// lista vazia, aparece uma carta escondida.
-const ehSegredo = (e) => e.categoria === 'jogos' && e.engine === 'C++'
+// "jogaveis" não é categoria: atravessa jogos de qualquer engine que rodam no navegador.
+const FILTROS = [...CATEGORIAS, 'jogaveis']
 
 function Projects() {
   const { t } = useIdioma()
-  const [escolhas, setEscolhas] = useState(VAZIO)
+  // O filtro mora na URL: o planeta "jogos" da home chega aqui já filtrado.
+  const [busca, setBusca] = useSearchParams()
+  const atual = FILTROS.includes(busca.get('categoria')) ? busca.get('categoria') : 'todos'
 
-  const gavetas = useMemo(
-    () => [
-      {
-        id: 'categoria',
-        rotulo: t('projetos.filtroCategoria'),
-        pecas: CATEGORIAS.filter((c) => c !== 'todos').map((c) => ({ chave: c, rotulo: t(`categorias.${c}`) })),
-      },
-      {
-        id: 'status',
-        rotulo: t('projetos.filtroStatus'),
-        pecas: STATUS.filter((s) => s !== 'todos').map((s) => ({ chave: s, rotulo: t(`status.${s}`) })),
-      },
-      {
-        id: 'engine',
-        rotulo: t('projetos.filtroEngine'),
-        pecas: engines.map((e) => ({ chave: e, rotulo: e })),
-      },
-    ],
-    [t]
+  const filtrados = projetos.filter((p) =>
+    atual === 'todos' ? true : atual === 'jogaveis' ? p.jogavel : p.categoria === atual
   )
 
-  const filtrados = projetos.filter(
-    (p) =>
-      (escolhas.categoria === 'todos' || p.categoria === escolhas.categoria) &&
-      (escolhas.status === 'todos' || p.status === escolhas.status) &&
-      (escolhas.engine === 'todos' || p.engine === escolhas.engine)
-  )
-
-  const escolher = (grupo, chave) => setEscolhas((a) => ({ ...a, [grupo]: chave }))
+  const escolher = (f) => setBusca(f === 'todos' ? {} : { categoria: f }, { replace: true })
 
   return (
     <div className='container mx-auto max-w-6xl px-4 py-16'>
       <Revelar>
-        <h1 className='mb-3 text-center text-4xl font-bold text-tinta md:text-5xl'>{t('projetos.titulo')}</h1>
+        <h1 className='titulo-pixel mb-3 text-center text-4xl md:text-5xl'>{t('projetos.titulo')}</h1>
         <p className='mx-auto max-w-2xl text-center text-bruma'>{t('projetos.lead')}</p>
       </Revelar>
 
-      <Bancada
-        gavetas={gavetas}
-        escolhas={escolhas}
-        onEscolher={escolher}
-        onLimpar={() => setEscolhas(VAZIO)}
-        resultado={filtrados.length}
-        total={projetos.length}
-      />
-
-      {filtrados.length === 0 && ehSegredo(escolhas) ? (
-        <CartaSecreta />
-      ) : filtrados.length === 0 ? (
-        <div className='py-24 text-center'>
-          <p className='mb-6 text-bruma'>{t('projetos.vazio')}</p>
+      <div role='group' aria-label={t('projetos.filtroCategoria')} className='mt-10 flex flex-wrap justify-center gap-2'>
+        {FILTROS.map((f) => (
           <button
+            key={f}
             type='button'
-            onClick={() => setEscolhas(VAZIO)}
-            className='rounded-full border-2 border-verde px-6 py-2.5 font-bold text-verde transition hover:bg-verde/10'
+            aria-pressed={atual === f}
+            onClick={() => escolher(f)}
+            className={`border-2 px-4 py-1.5 font-pixel text-sm transition ${
+              atual === f
+                ? 'border-verde bg-verde text-breu shadow-pixel'
+                : 'border-borda text-bruma hover:border-verde/60 hover:text-verde'
+            }`}
           >
-            {t('projetos.limpar')}
+            {f === 'jogaveis' ? `▶ ${t('categorias.jogaveis')}` : t(`categorias.${f}`)}
           </button>
-        </div>
-      ) : (
-        <div className='mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
-          {filtrados.map((p, i) => (
-            <Revelar key={p.id} delay={Math.min(i, 5) * 60}>
-              <ProjectCard projeto={p} />
-            </Revelar>
-          ))}
-        </div>
-      )}
+        ))}
+      </div>
+      <p className='mt-3 text-center font-mono text-xs text-bruma' aria-live='polite'>
+        {t('projetos.contagem', { n: filtrados.length, total: projetos.length })}
+      </p>
+
+      <div className='mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
+        {filtrados.map((p, i) => (
+          <Revelar key={p.id} delay={Math.min(i, 5) * 60}>
+            <ProjectCard projeto={p} />
+          </Revelar>
+        ))}
+      </div>
     </div>
   )
 }

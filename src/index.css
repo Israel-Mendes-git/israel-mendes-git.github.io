@@ -40,10 +40,79 @@
     box-shadow: 0 0 25px rgba(34, 197, 94, 0.25);
   }
 
+  /* Botões com cara de menu de jogo: canto reto e sombra dura, que afunda no clique. */
+  .botao-pixel {
+    @apply inline-flex items-center gap-2 border-2 border-verde bg-verde px-6 py-2.5 font-pixel text-lg font-bold text-breu shadow-pixel transition-transform hover:-translate-y-0.5 hover:bg-verde-claro active:translate-x-1 active:translate-y-1 active:shadow-none;
+  }
+
+  .botao-pixel-vazado {
+    @apply inline-flex items-center gap-2 border-2 border-verde bg-breu/70 px-6 py-2.5 font-pixel text-lg font-bold text-verde shadow-pixel transition-transform hover:-translate-y-0.5 hover:bg-verde/10 active:translate-x-1 active:translate-y-1 active:shadow-none;
+  }
+
+  /* Título de seção em fonte pixel. */
+  .titulo-pixel {
+    @apply font-pixel font-bold text-tinta;
+  }
+
   /* Título com o degradê verde do portfólio original. */
   .titulo-degrade {
     @apply bg-gradient-to-r from-verde-claro to-verde-escuro bg-clip-text text-transparent;
   }
+}
+
+/* Nave: o que está embaixo dela ganha moldura; ligada, o dedo pilota em vez de rolar. */
+[data-nave-sobre] {
+  outline: 2px dashed #22c55e !important;
+  outline-offset: 4px;
+}
+/* Flash do lugar em que a nave entrou. */
+.nave-entrou {
+  animation: nave-entrou 0.45s ease-out;
+}
+@keyframes nave-entrou {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.9); filter: brightness(1.6); }
+  100% { box-shadow: 0 0 0 18px rgba(34, 197, 94, 0); filter: none; }
+}
+
+@keyframes nave-combo {
+  0% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Tela do jogo saindo do planeta. */
+.tela-abrir {
+  animation: tela-abrir 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+@keyframes tela-abrir {
+  0% { transform: scale(0.2); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Diário: monitor da nave, com grade, varredura e fios pulsando. */
+.diario-tela {
+  background-image:
+    linear-gradient(rgba(94, 234, 212, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 234, 212, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.diario-varredura {
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.18) 2px 3px);
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.7);
+}
+.fio-pulso {
+  stroke-dasharray: 10 6;
+  animation: fio-pulso 1.6s linear infinite;
+}
+@keyframes fio-pulso {
+  to { stroke-dashoffset: -32; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fio-pulso { animation: none; }
+}
+
+html.nave-ligada,
+html.nave-ligada body {
+  touch-action: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

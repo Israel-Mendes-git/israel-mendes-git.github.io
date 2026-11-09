@@ -21,7 +21,7 @@ function Sobre() {
             className='h-36 w-36 shrink-0 rounded-full border-4 border-verde/40 object-cover shadow-verde'
           />
           <div className='text-center sm:text-left'>
-            <h1 className='titulo-degrade text-4xl font-bold'>Israel Mendes</h1>
+            <h1 className='titulo-pixel text-5xl'>Israel Mendes</h1>
             <p className='mt-1 text-verde'>{t('sobre.papel')}</p>
             <p className='mt-4 leading-relaxed text-bruma'>{t('sobre.bioB')}</p>
           </div>
@@ -30,7 +30,7 @@ function Sobre() {
 
       {/* Experiência */}
       <Revelar>
-        <h2 className='mb-8 mt-16 text-3xl font-bold text-tinta'>{t('sobre.experiencia')}</h2>
+        <h2 className='titulo-pixel mb-8 mt-16 text-3xl'>{t('sobre.experiencia')}</h2>
       </Revelar>
 
       <div className='space-y-10'>
@@ -94,7 +94,7 @@ function Sobre() {
 
       {/* Tecnologias */}
       <Revelar>
-        <h2 className='mb-6 mt-16 text-3xl font-bold text-tinta'>{t('sobre.tecnologias')}</h2>
+        <h2 className='titulo-pixel mb-6 mt-16 text-3xl'>{t('sobre.tecnologias')}</h2>
       </Revelar>
 
       <div className='space-y-5'>

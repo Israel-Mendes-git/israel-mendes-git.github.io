@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import projetos, { porId } from '../data/projetos'
 import { SeloStatus } from '../components/ui'
 import { useIdioma } from '../i18n'
+import Jogar from '../components/Jogar'
 
 function Lightbox({ src, alt, onClose }) {
   const { t } = useIdioma()
@@ -93,12 +94,14 @@ function ProjectDetail() {
 
           <div className='absolute inset-x-0 bottom-0 p-6 md:p-8'>
             <SeloStatus status={projeto.status} className='mb-3' />
-            <h1 className='text-3xl font-semibold leading-tight text-tinta md:text-5xl'>
+            <h1 className='font-pixel text-4xl font-bold leading-tight text-tinta md:text-6xl'>
               {projeto.nome}
             </h1>
             <p className='mt-2 max-w-2xl text-bruma'>{campo(projeto.resumo)}</p>
           </div>
         </div>
+
+        {projeto.jogavel && <Jogar projeto={projeto} />}
 
         {/* Ficha */}
         <dl className='mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-borda bg-borda sm:grid-cols-4'>
@@ -131,7 +134,7 @@ function ProjectDetail() {
 
         {/* O que tem dentro */}
         <div className='mt-12 border-t border-verde/20 pt-8'>
-          <h2 className='text-2xl font-bold text-tinta'>{t('detalhe.destaques')}</h2>
+          <h2 className='titulo-pixel text-2xl'>{t('detalhe.destaques')}</h2>
           <ul className='mt-5 space-y-3'>
             {visiveis.map((d) => (
               <li key={campo(d)} className='flex gap-3 leading-relaxed text-bruma'>
@@ -162,7 +165,7 @@ function ProjectDetail() {
         {/* Galeria */}
         {projeto.galeria.length > 0 && (
           <div className='mt-12 border-t border-borda pt-8'>
-            <h2 className='text-2xl font-semibold text-tinta'>{t('detalhe.galeria')}</h2>
+            <h2 className='titulo-pixel text-2xl'>{t('detalhe.galeria')}</h2>
             <div className='mt-5 grid grid-cols-2 gap-3 md:grid-cols-3'>
               {projeto.galeria.map((img) => (
                 <button
@@ -194,6 +197,17 @@ function ProjectDetail() {
               className='rounded-full bg-verde px-6 py-3 font-semibold text-breu transition hover:bg-verde-claro'
             >
               {t('detalhe.verNoAr')} ↗
+            </a>
+          )}
+
+          {projeto.itch && (
+            <a
+              href={projeto.itch}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='rounded-full bg-[#fa5c5c] px-6 py-3 font-semibold text-white transition hover:brightness-110'
+            >
+              {t('detalhe.verItch')} ↗
             </a>
           )}
 

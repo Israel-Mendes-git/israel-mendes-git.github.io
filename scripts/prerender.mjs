@@ -21,19 +21,19 @@ const rotas = [
     url: '/sobre',
     titulo: 'Sobre — Israel Mendes',
     descricao:
-      'Desenvolvedor de jogos em Cascavel/CE. Unity e C# nos meus roguelikes; C++, web em produção e ferramentas de pipeline na Rapadura Atômica.',
+      'Desenvolvedor de jogos em Cascavel/CE. Jogos em Godot e Unity; C++, web e ferramentas de pipeline na Rapadura Atômica.',
     capa: CAPA_PADRAO,
   },
   {
     url: '/projects',
     titulo: 'Projetos — Israel Mendes',
-    descricao: `${projetos.length} projetos: jogos em Unity, ferramentas e aplicações web, do roguelike em produção ao exercício de terminal.`,
+    descricao: `${projetos.length} projetos: jogos em Godot e Unity, ferramentas e aplicações web. Alguns dá para jogar no navegador.`,
     capa: CAPA_PADRAO,
   },
   {
     url: '/projetos',
     titulo: 'Projetos — Israel Mendes',
-    descricao: `${projetos.length} projetos: jogos em Unity, ferramentas e aplicações web, do roguelike em produção ao exercício de terminal.`,
+    descricao: `${projetos.length} projetos: jogos em Godot e Unity, ferramentas e aplicações web. Alguns dá para jogar no navegador.`,
     capa: CAPA_PADRAO,
   },
   {
