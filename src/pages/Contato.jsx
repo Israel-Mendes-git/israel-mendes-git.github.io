@@ -4,8 +4,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope, faLocationDot, faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { Revelar } from '../components/ui'
 import { useIdioma } from '../i18n'
-import { useNave } from '../components/nave/Nave'
-import { anotar, useDiario } from '../components/nave/diario'
+import { anotar, useDiario } from '../components/diario'
 
 const EMAIL = 'israelmendesmzs@gmail.com'
 
@@ -21,15 +20,17 @@ const CONTATOS = [
 function Contato() {
   const { t } = useIdioma()
   const [form, setForm] = useState({ nome: '', email: '', mensagem: '' })
-  // Com a nave ligada, o contato vira a estação de rádio do jogo.
-  const { pilotando } = useNave()
+  // Depois da primeira mensagem, o contato vira a estação de rádio do sistema solar.
   const diario = useDiario()
-  const radio = pilotando || diario.transmitiu
+  const radio = diario.transmitiu
+  // Só nesta visita: o site não tem como saber se o programa de e-mail abriu.
+  const [tentou, setTentou] = useState(false)
 
   // Sem back-end: monta a mensagem e entrega ao cliente de e-mail do visitante.
   const enviar = (e) => {
     e.preventDefault()
     anotar(() => ({ transmitiu: true }))
+    setTentou(true)
     const assunto = `${t('contato.assunto')} — ${form.nome}`
     const corpo = `${form.mensagem}\n\n—\n${form.nome}\n${form.email}`
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`
@@ -121,8 +122,15 @@ function Contato() {
           >
             {radio ? `📡 ${t('contato.transmitir')}` : t('contato.enviar')}
           </button>
-          {diario.transmitiu && (
-            <p className='text-center font-pixel text-sm text-verde'>✓ {t('contato.transmitido')}</p>
+          {/* Antes dizia "Transmissão enviada" para sempre, mesmo sem cliente de
+              e-mail — a mensagem se perdia e o visitante achava que tinha mandado. */}
+          {tentou && (
+            <p role='status' className='text-center text-sm text-bruma'>
+              {t('contato.transmitido')}{' '}
+              <a href={`mailto:${EMAIL}`} className='font-semibold text-verde underline underline-offset-2'>
+                {EMAIL}
+              </a>
+            </p>
           )}
 
           <p className='text-center text-xs text-bruma/70'>{t('contato.aviso')}</p>

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route, NavLink, Link, useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { BrowserRouter, Routes, Route, NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
+import projetos from './data/projetos'
 import Home from './pages/Home'
 import Sobre from './pages/Sobre'
 import Projects from './pages/Projects'
@@ -7,8 +8,7 @@ import ProjectDetail from './pages/ProjectDetail'
 import Contato from './pages/Contato'
 import Footer from './pages/Footer'
 import useTransicao from './components/Transicao'
-import { ProvedorNave } from './components/nave/Nave'
-import { anotarRota } from './components/nave/diario'
+import { anotarRota } from './components/diario'
 import Sistema from './components/sistema/Sistema'
 import { ProvedorIdioma, useIdioma } from './i18n'
 
@@ -50,6 +50,20 @@ function Navbar() {
 
   // Fecha o menu ao navegar e trava o scroll enquanto ele está aberto.
   useEffect(() => setAberto(false), [location.pathname])
+  // Esc fecha; virar o tablet para paisagem (menu some no md:) também fecha —
+  // antes o overflow:hidden ficava no body e a página não rolava mais.
+  useEffect(() => {
+    if (!aberto) return
+    const tecla = (e) => e.key === 'Escape' && setAberto(false)
+    const largo = window.matchMedia('(min-width: 768px)')
+    const aoMudar = () => largo.matches && setAberto(false)
+    window.addEventListener('keydown', tecla)
+    largo.addEventListener('change', aoMudar)
+    return () => {
+      window.removeEventListener('keydown', tecla)
+      largo.removeEventListener('change', aoMudar)
+    }
+  }, [aberto])
   useEffect(() => {
     document.body.style.overflow = aberto ? 'hidden' : ''
     return () => {
@@ -70,7 +84,7 @@ function Navbar() {
         rolou || aberto ? 'border-b border-borda bg-breu/90 backdrop-blur-md' : 'border-b border-transparent'
       }`}
     >
-      <nav className='mx-auto flex max-w-6xl items-center justify-between px-5 py-4' aria-label='principal'>
+      <nav className='mx-auto flex max-w-6xl items-center justify-between px-5 py-4' aria-label={t('nav.principal')}>
         <Link to='/' className='group flex items-center gap-2 text-xl font-bold' aria-label='Israel Mendes'>
           <span aria-hidden='true' className='transition group-hover:scale-110'>🎮</span>
           <span className='hidden font-pixel text-2xl text-tinta sm:block'>Israel Mendes</span>
@@ -119,6 +133,9 @@ function Navbar() {
       {/* Menu mobile — a versão anterior simplesmente não tinha navegação no celular. */}
       <div
         id='menu-mobile'
+        // Fechado, sai do Tab e do leitor de tela (antes só encolhia a altura).
+        inert={!aberto}
+        aria-hidden={!aberto}
         className={`overflow-hidden border-t border-borda bg-breu transition-[max-height] duration-300 md:hidden ${
           aberto ? 'max-h-80' : 'max-h-0 border-t-transparent'
         }`}
@@ -129,6 +146,8 @@ function Navbar() {
               <NavLink
                 to={i.path}
                 end={i.path === '/'}
+                // Tocar na página em que já está não muda a rota: fecha à mão.
+                onClick={() => setAberto(false)}
                 className={({ isActive }) =>
                   `block border-b border-borda/60 py-3.5 text-lg ${
                     isActive ? 'text-verde' : 'text-bruma'
@@ -145,11 +164,49 @@ function Navbar() {
   )
 }
 
+// Endereço que não existe: volta para o sistema solar, que avisa com uma piada.
+// Navega UMA vez (efeito sem dependências). <Navigate> dispara a cada render, e
+// esta página continua renderizada atrás das colunas da transição: cada render
+// navegava de novo, reiniciava a transição e as colunas ficavam presas na tela.
+function Perdido() {
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const destino = useRef(pathname)
+  useEffect(() => {
+    navigate('/', { replace: true, state: { perdido: destino.current } })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  return null
+}
+
+// Título da aba por página. O HTML pré-renderizado só acerta a primeira carga;
+// navegando, a aba ficava com o título da página de entrada.
+function tituloDa(caminho, t) {
+  const c = caminho.replace(/\/+$/, '') || '/'
+  const m = c.match(/^\/projeto\/([^/]+)$/)
+  const p = m && projetos.find((x) => String(x.id) === m[1])
+  if (p) return `${p.nome} — Israel Mendes`
+  const secao = { '/sobre': 'nav.sobre', '/projects': 'nav.projetos', '/projetos': 'nav.projetos', '/contato': 'nav.contato' }[c]
+  return secao ? `${t(secao)} — Israel Mendes` : t('meta.titulo')
+}
+
 function Layout() {
   const { t } = useIdioma()
   const { exibida, overlay } = useTransicao()
   // Abrir a página de um projeto também conta como descoberta no diário.
   useEffect(() => anotarRota(exibida.pathname), [exibida.pathname])
+  useEffect(() => {
+    document.title = tituloDa(exibida.pathname, t)
+  }, [exibida.pathname, t])
+  // Troca de página leva o foco ao conteúdo, para leitor de tela e teclado
+  // saberem que a página mudou (antes o foco ficava no link clicado, já sumido).
+  const primeira = useRef(true)
+  useEffect(() => {
+    if (primeira.current) {
+      primeira.current = false
+      return
+    }
+    document.getElementById('conteudo')?.focus({ preventScroll: true })
+  }, [exibida.pathname])
   // A home é o sistema solar, em tela cheia, sem menu nem rodapé. Usa a rota
   // exibida (não a pedida) para a transição de colunas cobrir a troca.
   if (exibida.pathname === '/' || exibida.pathname.startsWith('/sistema'))
@@ -168,7 +225,7 @@ function Layout() {
         {t('nav.pular')}
       </a>
       <Navbar />
-      <main id='conteudo' className='pt-16'>
+      <main id='conteudo' tabIndex={-1} className='pt-16 outline-none'>
         <Routes location={exibida}>
           <Route path='/' element={<Sistema />} />
           <Route path='/inicio' element={<Home />} />
@@ -177,7 +234,7 @@ function Layout() {
           <Route path='/projetos' element={<Projects />} />
           <Route path='/projeto/:id' element={<ProjectDetail />} />
           <Route path='/contato' element={<Contato />} />
-          <Route path='*' element={<Home />} />
+          <Route path='*' element={<Perdido />} />
         </Routes>
       </main>
       <Footer />
@@ -190,9 +247,7 @@ export default function App() {
   return (
     <ProvedorIdioma>
       <BrowserRouter>
-        <ProvedorNave>
-          <Layout />
-        </ProvedorNave>
+        <Layout />
       </BrowserRouter>
     </ProvedorIdioma>
   )

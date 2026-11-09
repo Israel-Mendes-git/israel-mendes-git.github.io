@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useIdioma } from '../../i18n'
 import { CINTURAO, alcance, montarCorpos, posicionar } from './corpos'
 import { pintarCorpo, pintarSol } from './pintar'
 import { desenharDecor } from './decor'
 import DiarioMapa from './DiarioMapa'
 import { climaMusica, desligarMusica, efeito, ligarMusica, musicaPreferida, pausarMusica } from './musica'
-import { anotar, lerDiario, useDiario } from '../nave/diario'
+import { anotar, lerDiario, useDiario } from '../diario'
 import projetosTodos from '../../data/projetos'
-import { PINTURAS, spriteNave } from '../nave/sprite'
+import { PINTURAS, spriteNave } from './sprite'
 
 // O portfólio como um sistema solar. Nada "abre": a câmera se aproxima e o
 // corpo se revela — longe é um ponto com nome, perto mostra o projeto na
@@ -77,12 +77,32 @@ function estilo(el, prop, valor) {
   el.style[prop] = valor
 }
 
+// Invisível (opacity 0) não pode receber Tab nem ser lido: antes o teclado
+// passava por 30+ botões escondidos. `inert` tira sem mudar o visual.
+function inerte(el, sim) {
+  if (el.inert !== sim) el.inert = sim
+}
+
 const semMovimento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const limitar = (v, a, b) => Math.min(b, Math.max(a, v))
 
 export default function Sistema() {
   const { campo, t } = useIdioma()
   const navigate = useNavigate()
+  const location = useLocation()
+  // Veio de um endereço que não existe (rota *): piada e some sozinha. O state é
+  // limpo na hora para recarregar a página não repetir o aviso.
+  const [perdido, setPerdido] = useState(() => location.state?.perdido ?? null)
+  useEffect(() => {
+    if (!location.state?.perdido) return
+    setPerdido(location.state.perdido)
+    navigate(location.pathname + location.search, { replace: true, state: null })
+  }, [location, navigate])
+  useEffect(() => {
+    if (!perdido) return
+    const id = setTimeout(() => setPerdido(null), 6000)
+    return () => clearTimeout(id)
+  }, [perdido])
   const { corpos, porId } = useMemo(montarCorpos, [])
   const telaRef = useRef(null)
   const raizRef = useRef(null)
@@ -145,7 +165,8 @@ export default function Sistema() {
       const cam = camRef.current
       if (!cam) return
       setDica(false)
-      if (!id || id === 'sol') {
+      // hasOwn: porId é objeto comum, e porId['toString'] existe (vem do protótipo).
+      if (!id || id === 'sol' || !Object.hasOwn(porId, id)) {
         setFoco(null)
         cam.tz = cam.zGeral
         cam.tx = 0
@@ -239,6 +260,7 @@ export default function Sistema() {
       r: 1 + Math.random() * 3,
     }))
 
+    let primeiraMedida = true
     const medir = () => {
       cam.esc = (window.innerWidth < 700 ? 2 : 3) + (qualidade.nivel >= 2 ? 1 : 0)
       cam.l = window.innerWidth
@@ -246,7 +268,9 @@ export default function Sistema() {
       tela.width = Math.ceil(cam.l / cam.esc)
       tela.height = Math.ceil(cam.a / cam.esc)
       ctx.imageSmoothingEnabled = false
-      cam.zGeral = (Math.min(cam.l, cam.a) * 0.48) / (CINTURAO.dist + CINTURAO.largura + 40)
+      const zAntes = cam.zGeral
+      // max(1, …): janela 0x0 (aba oculta, navegador embutido carregando) daria zoom 0 e log(0).
+      cam.zGeral = (Math.max(1, Math.min(cam.l, cam.a)) * 0.48) / (CINTURAO.dist + CINTURAO.largura + 40)
       // Nebulosa só com enfeites ligados, e só se o tamanho mudou.
       const chaveNeb = `${tela.width}x${tela.height}`
       if (qualidade.enfeites && nebulosa?.chave !== chaveNeb) {
@@ -254,7 +278,10 @@ export default function Sistema() {
         nebulosa.chave = chaveNeb
       }
 
-      if (!focoRef.current) cam.tz = cam.zGeral
+      // Só acompanha a visão geral se a câmera estava nela. Antes, todo resize ou
+      // troca de qualidade automática desfazia o zoom que o visitante tinha dado.
+      if (!focoRef.current && (primeiraMedida || Math.abs(cam.tz - zAntes) < 1e-9)) cam.tz = cam.zGeral
+      primeiraMedida = false
     }
     medir()
     window.addEventListener('resize', medir)
@@ -262,7 +289,9 @@ export default function Sistema() {
     // Começa de longe e aproxima: dá a escala do lugar.
     cam.z = cam.zGeral * 0.35
     const inicial = new URLSearchParams(window.location.search).get('foco')
-    if (inicial && porId[inicial]) setTimeout(() => focarRef.current(inicial), 600)
+    // Timer limpo na desmontagem: saindo antes de 600 ms, ele rodava na outra
+    // página e reescrevia a URL dela para /?foco=…
+    const timerFoco = inicial && Object.hasOwn(porId, inicial) ? setTimeout(() => focarRef.current(inicial), 600) : 0
 
     const tela2mundo = (sx, sy) => ({ x: cam.x + (sx - cam.ax) / cam.z, y: cam.y + (sy - cam.ay) / cam.z })
     const mundo2tela = (wx, wy) => ({ x: cam.ax + (wx - cam.x) * cam.z, y: cam.ay + (wy - cam.y) * cam.z })
@@ -288,7 +317,11 @@ export default function Sistema() {
       // Revelado no celular: o corpo sobe para o texto caber embaixo.
       const ayAlvo = f && pertoRef.current === f.id && estreita ? cam.a * 0.3 : cam.a / 2
       cam.ax = cam.l / 2
-      cam.ay += (ayAlvo - cam.ay) * (1 - Math.exp(-dt / 200)) || ayAlvo
+      // Primeiro quadro: nasce no alvo. Não usar `|| ayAlvo` na conta: com dt = 0
+      // (relógio arredondado do Firefox) o incremento dá 0 e somava ayAlvo inteiro,
+      // empurrando o sistema para fora da tela a cada quadro.
+      if (!cam.ay) cam.ay = ayAlvo
+      else cam.ay += (ayAlvo - cam.ay) * (1 - Math.exp(-dt / 200))
 
       if (f) {
         cam.tx = f.x
@@ -304,6 +337,13 @@ export default function Sistema() {
       const k = parado ? 1 : 1 - Math.exp(-dt / 260)
       // Zoom em escala logarítmica: aproximar de 0,1 a 10 leva o mesmo tempo que de 1 a 100.
       cam.z = Math.exp(Math.log(cam.z) + (Math.log(cam.tz) - Math.log(cam.z)) * k)
+      // Rede de segurança: um NaN/Infinity na câmera deixava a tela preta até
+      // recarregar (log de NaN nunca se recupera). Volta para a visão geral.
+      if (![cam.z, cam.tz, cam.x, cam.y, cam.tx, cam.ty, cam.vx, cam.vy].every(Number.isFinite) || cam.z <= 0) {
+        cam.z = cam.tz = cam.zGeral
+        cam.x = cam.y = cam.tx = cam.ty = cam.vx = cam.vy = 0
+        if (focoRef.current) setFoco(null)
+      }
       // Seguindo um corpo, a posição gruda mais rápido (ele está em órbita).
       const kp = cam.arrastando ? 1 : f ? Math.max(k, 0.18) : k
       cam.x += (cam.tx - cam.x) * kp
@@ -556,6 +596,7 @@ export default function Sistema() {
         if (esconderSinais || dentro) {
           estilo(el, 'opacity', '0')
           estilo(el, 'pointerEvents', 'none')
+          inerte(el, true)
           continue
         }
         const mx = 40
@@ -582,6 +623,7 @@ export default function Sistema() {
         prontos.push(s)
         estilo(s.el, 'opacity', '1')
         estilo(s.el, 'pointerEvents', 'auto')
+        inerte(s.el, false)
         s.el.style.transform = `translate(${Math.round(s.x)}px, ${Math.round(s.y)}px) translate(-50%, -50%)`
         const seta = s.el.querySelector('[data-seta]')
         if (seta) seta.style.transform = `rotate(${s.ang}rad)`
@@ -605,6 +647,7 @@ export default function Sistema() {
         // Só escreve no DOM o que mudou: estilo novo a cada quadro faz o navegador recalcular à toa.
         estilo(el, 'opacity', String(vis))
         estilo(el, 'pointerEvents', vis > 0.5 ? 'auto' : 'none')
+        inerte(el, vis <= 0.5)
         if (vis > 0) estilo(el, 'transform', `translate(${Math.round(p.x)}px, ${Math.round(p.y + Math.max(R, 4) + 6)}px) translateX(-50%)`)
         el.__sub ??= el.querySelector('[data-sub]') || false
         if (el.__sub) estilo(el.__sub, 'display', R > 22 ? '' : 'none')
@@ -633,6 +676,7 @@ export default function Sistema() {
           const a = (estreita ? Math.PI : Math.PI * 0.65) + (i - (sats.length - 1) / 2) * 0.62 + Math.sin(tempo * 0.4) * 0.04
           const rr = R + (estreita ? 28 : 44)
           el.style.opacity = alfa
+          inerte(el, alfa < 0.5)
           el.style.transform = `translate(${Math.round(p.x + Math.cos(a) * rr)}px, ${Math.round(p.y + Math.sin(a) * rr)}px) translate(-50%, -50%)`
         })
       }
@@ -640,7 +684,8 @@ export default function Sistema() {
 
     const quadro = (agora) => {
       const dtReal = agora - ultimo
-      const dt = Math.min(48, dtReal)
+      // O carimbo do rAF pode vir antes do performance.now() da montagem: dt < 0.
+      const dt = Math.max(0, Math.min(48, dtReal))
       ultimo = agora
       if (!document.hidden && dtReal < 500) ajustarQualidade(dtReal)
       passo(dt)
@@ -711,7 +756,7 @@ export default function Sistema() {
       if (pinca && ponteiros.size === 2) {
         const [a, b] = [...ponteiros.values()]
         const d = Math.hypot(a.x - b.x, a.y - b.y)
-        zoomEm((a.x + b.x) / 2, (a.y + b.y) / 2, d / pinca.d)
+        if (d >= 1 && pinca.d >= 1) zoomEm((a.x + b.x) / 2, (a.y + b.y) / 2, d / pinca.d)
         pinca.d = d
         return
       }
@@ -755,7 +800,7 @@ export default function Sistema() {
           cam.vx = (b.x - a.x) / (b.t - a.t)
           cam.vy = (b.y - a.y) / (b.t - a.t)
         }
-      } else if (arrasto && performance.now() - arrasto.t < 500 && arrasto.alvo === tela) {
+      } else if (e.type !== 'pointercancel' && arrasto && performance.now() - arrasto.t < 500 && arrasto.alvo === tela) {
         const c = corpoEm(e.clientX, e.clientY)
         if (c) focarRef.current(c.id)
       }
@@ -775,6 +820,7 @@ export default function Sistema() {
 
     const aoTeclar = (e) => {
       if (/^(INPUT|TEXTAREA)$/.test(e.target?.tagName)) return
+      if (e.ctrlKey || e.metaKey || e.altKey) return
       if (jogandoRef.current) {
         if (e.key === 'Escape') setJogando(null)
         return
@@ -809,8 +855,10 @@ export default function Sistema() {
     window.addEventListener('pointercancel', aoSoltar)
     raiz.addEventListener('click', aoClicar, true)
     window.addEventListener('pointerup', limparClique)
+    window.addEventListener('pointercancel', limparClique)
     window.addEventListener('keydown', aoTeclar)
     return () => {
+      clearTimeout(timerFoco)
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', medir)
       raiz.removeEventListener('wheel', aoRolar)
@@ -820,6 +868,7 @@ export default function Sistema() {
       window.removeEventListener('pointercancel', aoSoltar)
       raiz.removeEventListener('click', aoClicar, true)
       window.removeEventListener('pointerup', limparClique)
+      window.removeEventListener('pointercancel', limparClique)
       window.removeEventListener('keydown', aoTeclar)
       document.body.style.cursor = ''
     }
@@ -981,7 +1030,15 @@ export default function Sistema() {
         />
       )}
 
-      {registro && (
+      {perdido && (
+        <p role='status' className='pointer-events-none absolute inset-x-0 top-20 z-30 px-4 text-center'>
+          <span className='tela-abrir inline-block max-w-xl border-2 border-verde bg-[#020a05]/95 px-3 py-1.5 font-pixel text-xs text-verde shadow-pixel'>
+            📡 {t('espaco.perdido', { rota: perdido.length > 40 ? `${perdido.slice(0, 38)}…` : perdido })}
+          </span>
+        </p>
+      )}
+
+      {registro && !perdido && (
         <p className='pointer-events-none absolute inset-x-0 top-20 z-30 text-center'>
           <span className='tela-abrir inline-block border-2 border-verde bg-[#020a05]/95 px-3 py-1.5 font-pixel text-xs text-verde shadow-pixel'>
             {registro === '__completo__' ? (

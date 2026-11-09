@@ -21,7 +21,7 @@ function Home() {
         <p className='regua relative mb-4 text-verde'>{t('home.kicker')}</p>
         <h1 className='relative font-pixel text-5xl text-tinta md:text-7xl'>Israel Mendes</h1>
         <p className='relative mt-4 max-w-xl text-lg text-bruma'>{t('home.titulo')}</p>
-        <div data-nave-ignorar className='relative mt-10 flex flex-wrap justify-center gap-3'>
+        <div className='relative mt-10 flex flex-wrap justify-center gap-3'>
           <button
             type='button'
             onClick={() => siteRef.current?.scrollIntoView({ behavior: 'smooth' })}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import projetos from "../../data/projetos";
-import { useDiario } from "../nave/diario";
+import { useDiario } from "../diario";
+import useFocoPreso from "../useFocoPreso";
 
 // Diário de bordo como mapa de pistas, na tela do computador da nave.
 // Colunas por ano, faixas por categoria. Cartões descobertos viram "fotos";
@@ -124,6 +125,8 @@ const PLANETA = {
 };
 
 export default function DiarioMapa({ campo, aoFechar, aoIr, aoPagina }) {
+  const caixaRef = useRef(null);
+  useFocoPreso(caixaRef);
   const d = useDiario();
   const mapa = useMemo(montar, []);
   const visto = (id) => d.projetos.includes(id);
@@ -159,6 +162,7 @@ export default function DiarioMapa({ campo, aoFechar, aoIr, aoPagina }) {
 
   useEffect(() => {
     const tecla = (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key === "Escape" || e.key.toLowerCase() === "j") {
         e.preventDefault();
         e.stopPropagation();
@@ -214,7 +218,7 @@ export default function DiarioMapa({ campo, aoFechar, aoIr, aoPagina }) {
       if (pinca && ponteiros.size === 2) {
         const [a, b] = [...ponteiros.values()];
         const dd = Math.hypot(a.x - b.x, a.y - b.y);
-        zoom((a.x + b.x) / 2, (a.y + b.y) / 2, dd / pinca);
+        if (dd >= 1 && pinca >= 1) zoom((a.x + b.x) / 2, (a.y + b.y) / 2, dd / pinca);
         pinca = dd;
         return;
       }
@@ -270,8 +274,13 @@ export default function DiarioMapa({ campo, aoFechar, aoIr, aoPagina }) {
 
   return (
     <div
+      ref={caixaRef}
+      tabIndex={-1}
+      role="dialog"
+      aria-modal="true"
+      aria-label={campo({ pt: "Diário de bordo", en: "Ship log" })}
       data-sem-arraste
-      className="diario-tela absolute inset-0 z-50 flex flex-col overflow-hidden bg-[#03100d] text-tinta"
+      className="diario-tela outline-none absolute inset-0 z-50 flex flex-col overflow-hidden bg-[#03100d] text-tinta"
     >
       {/* Cabeçalho do terminal */}
       <div className="relative z-10 flex flex-wrap items-start justify-between gap-3 border-b border-[#5eead4]/25 bg-[#03100d]/95 px-4 py-3">

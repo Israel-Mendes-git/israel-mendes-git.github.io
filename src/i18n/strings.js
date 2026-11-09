@@ -9,6 +9,13 @@ const strings = {
     fechar: { pt: 'Fechar menu', en: 'Close menu' },
     idioma: { pt: 'Mudar para inglês', en: 'Switch to Portuguese' },
     pular: { pt: 'Pular para o conteúdo', en: 'Skip to content' },
+    principal: { pt: 'principal', en: 'main' },
+  },
+  meta: {
+    titulo: {
+      pt: 'Israel Mendes — Desenvolvedor de jogos e ferramentas',
+      en: 'Israel Mendes — Game and tools developer',
+    },
   },
   home: {
     kicker: { pt: 'Dev de jogos · interior do Ceará', en: 'Game dev · countryside of Ceará, Brazil' },
@@ -25,76 +32,11 @@ const strings = {
     ctaBotao: { pt: 'Bora conversar', en: 'Let’s talk' },
   },
   espaco: {
-    pilotar: { pt: 'Pilotar', en: 'Fly' },
     naoJogar: { pt: 'Só quero ver o site', en: 'Just show me the site' },
-    pousando: { pt: 'segura aí... pousando (ou aperte E)', en: 'hold still... landing (or press E)' },
-    sair: { pt: 'Sair', en: 'Exit' },
-  },
-  nave: {
-    pilotar: { pt: 'Pilotar', en: 'Fly' },
-    decolarSite: { pt: 'Decolar pelo site', en: 'Fly through the site' },
-    estacionar: { pt: 'Estacionar', en: 'Park' },
-    dicaHero: {
-      pt: 'a nave voa por todas as páginas: o menu é portal, os projetos são paradas',
-      en: 'the ship flies across every page: the menu is a portal, projects are stops',
+    perdido: {
+      pt: 'Sinal perdido: “{rota}” não existe neste sistema. O guincho espacial te rebocou de volta.',
+      en: 'Signal lost: “{rota}” isn’t in this system. The space tow truck dragged you back.',
     },
-    controles: {
-      pt: 'setas/WASD ou toque para voar · pare em cima de algo para entrar',
-      en: 'arrows/WASD or tap to fly · hover over something to enter',
-    },
-    entrar: { pt: 'segura aí ou aperte E', en: 'hold still or press E' },
-    mudo: { pt: 'Desligar som', en: 'Mute' },
-    comSom: { pt: 'Ligar som', en: 'Unmute' },
-    atirar: { pt: 'Atirar', en: 'Fire' },
-    dicaTeclado: {
-      pt: 'setas/WASD voam · Shift turbo · espaço atira · pare em cima de algo para entrar',
-      en: 'arrows/WASD fly · Shift boost · space fires · stop over something to enter',
-    },
-    dicaToque: {
-      pt: 'joystick ou toque para voar · toque num link para ir até ele · ● atira',
-      en: 'joystick or tap to fly · tap a link to go there · ● fires',
-    },
-    dicaMenu: {
-      pt: 'o menu do topo é portal · setas amarelas nas bordas apontam projetos que você ainda não viu',
-      en: 'the top menu is a portal · yellow arrows on the edges point to projects you have not seen',
-    },
-    combo: { pt: 'combo', en: 'combo' },
-    novoRecorde: { pt: 'novo recorde!', en: 'new record!' },
-    controle: {
-      pt: 'controle conectado · analógico voa, A entra, X atira, B turbo, Start estaciona',
-      en: 'controller connected · stick flies, A enters, X fires, B boosts, Start parks',
-    },
-    pinturaNova: { pt: 'pintura nova liberada: {nome}', en: 'new paint unlocked: {nome}' },
-    pintura: {
-      padrao: { pt: 'Verde de fábrica', en: 'Factory green' },
-      laranja: { pt: 'Laranja', en: 'Orange' },
-      roxa: { pt: 'Roxa', en: 'Purple' },
-      dourada: { pt: 'Dourada', en: 'Gold' },
-    },
-  },
-  diario: {
-    titulo: { pt: 'Diário de bordo', en: 'Ship log' },
-    hud: { pt: 'diário {n}/{total}', en: 'log {n}/{total}' },
-    progresso: { pt: '{n} de {total} projetos visitados', en: '{n} of {total} projects visited' },
-    transmitiuSim: { pt: 'transmissão enviada ✓', en: 'transmission sent ✓' },
-    transmitiuNao: { pt: 'transmissão pendente', en: 'transmission pending' },
-    chamado: {
-      pt: 'a estação de rádio está chamando: voe até Contato',
-      en: 'the radio station is calling: fly to Contact',
-    },
-    finalSelo: { pt: 'transmissão recebida', en: 'incoming transmission' },
-    finalTitulo: { pt: 'Você viu tudo.', en: 'You saw everything.' },
-    finalCorpo: {
-      pt: 'Pouca gente pousa em todos os planetas. Se chegou até aqui, a gente provavelmente ia se dar bem trabalhando junto. Me manda uma mensagem: vaga, freela ou só ideia de jogo.',
-      en: 'Not many people land on every planet. If you made it this far, we would probably work well together. Send me a message: a job, freelance or just a game idea.',
-    },
-    finalBotao: { pt: 'Abrir a rádio', en: 'Open the radio' },
-    pinturas: { pt: 'Pinturas da nave', en: 'Ship paints' },
-    fragmentosInfo: {
-      pt: '◆ {n} fragmentos · atire nos asteroides (espaço) para juntar mais',
-      en: '◆ {n} shards · shoot asteroids (space) to collect more',
-    },
-    finalFechar: { pt: 'Continuar voando', en: 'Keep flying' },
   },
   sobre: {
     titulo: { pt: 'Sobre', en: 'About' },
@@ -174,7 +116,10 @@ const strings = {
     assunto: { pt: 'Contato pelo portfólio', en: 'Contact from portfolio' },
     radioSelo: { pt: 'estação de rádio · frequência aberta', en: 'radio station · channel open' },
     transmitir: { pt: 'Enviar transmissão', en: 'Send transmission' },
-    transmitido: { pt: 'Transmissão enviada. Missão cumprida.', en: 'Transmission sent. Mission complete.' },
+    transmitido: {
+      pt: 'Seu programa de e-mail deve ter aberto com a mensagem pronta. Não abriu? Escreva direto para',
+      en: 'Your email app should have opened with the message ready. Nothing opened? Write directly to',
+    },
   },
   rodape: {
     feito: {

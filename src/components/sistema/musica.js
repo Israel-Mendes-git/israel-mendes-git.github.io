@@ -1,3 +1,4 @@
+import { gravarArmazem, lerArmazem } from '../../armazem'
 // Trilha do sistema solar, gerada ao vivo (Web Audio, nenhum arquivo).
 // Clima de fogueira no espaço: acordes quentes e lentos, cordas dedilhadas
 // esparsas e abafadas (Karplus-Strong), uma nota de caixinha de música de vez
@@ -57,7 +58,7 @@ const CLIMAS = {
   diario: { melodia: 0.2, pausa: 0.3, brilho: 1000, volume: 0.34, fogo: 0.03 },
 }
 
-export const musicaPreferida = () => localStorage.getItem(CHAVE) !== 'off'
+export const musicaPreferida = () => lerArmazem(CHAVE) !== 'off'
 
 function montar() {
   const AC = window.AudioContext || window.webkitAudioContext
@@ -294,7 +295,7 @@ export function ligarMusica() {
   if (!ctx && !montar()) return false
   ctx.resume()
   ligada = true
-  localStorage.setItem(CHAVE, 'on')
+  gravarArmazem(CHAVE, 'on')
   const t = ctx.currentTime
   if (proxAcorde < t) {
     proxAcorde = t + 0.1
@@ -313,7 +314,7 @@ export function ligarMusica() {
 }
 
 function silenciar(salvar) {
-  if (salvar) localStorage.setItem(CHAVE, 'off')
+  if (salvar) gravarArmazem(CHAVE, 'off')
   if (!ctx || !ligada) {
     ligada = false
     return

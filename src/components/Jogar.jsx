@@ -50,12 +50,7 @@ export default function Jogar({ projeto }) {
         ) : (
           <button
             type='button'
-            data-nave-pouso
-            onClick={() => {
-              // A nave estaciona: setas e espaço passam a ser do jogo.
-              window.dispatchEvent(new Event('nave:parar'))
-              setLigado(true)
-            }}
+            onClick={() => setLigado(true)}
             className='group absolute inset-0 grid place-items-center'
           >
             {projeto.imagem && (

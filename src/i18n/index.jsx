@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import strings from './strings'
+import { gravarArmazem, lerArmazem } from '../armazem'
 
 const IDIOMAS = ['pt', 'en']
 const CHAVE = 'idioma'
@@ -9,7 +10,7 @@ const Ctx = createContext(null)
 // Primeira visita: segue o navegador. Depois disso, manda a escolha salva.
 function idiomaInicial() {
   if (typeof window === 'undefined') return 'pt'
-  const salvo = window.localStorage.getItem(CHAVE)
+  const salvo = lerArmazem(CHAVE)
   if (IDIOMAS.includes(salvo)) return salvo
   return navigator.language?.toLowerCase().startsWith('pt') ? 'pt' : 'en'
 }
@@ -18,7 +19,7 @@ export function ProvedorIdioma({ children }) {
   const [idioma, setIdioma] = useState(idiomaInicial)
 
   useEffect(() => {
-    window.localStorage.setItem(CHAVE, idioma)
+    gravarArmazem(CHAVE, idioma)
     document.documentElement.lang = idioma === 'pt' ? 'pt-BR' : 'en'
   }, [idioma])
 

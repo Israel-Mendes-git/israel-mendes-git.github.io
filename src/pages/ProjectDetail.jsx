@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import projetos, { porId } from '../data/projetos'
 import { SeloStatus } from '../components/ui'
 import { useIdioma } from '../i18n'
 import Jogar from '../components/Jogar'
+import useFocoPreso from '../components/useFocoPreso'
 
 function Lightbox({ src, alt, onClose }) {
   const { t } = useIdioma()
+  const caixa = useRef(null)
+  useFocoPreso(caixa)
 
   useEffect(() => {
     const aoTeclar = (e) => e.key === 'Escape' && onClose()
@@ -21,9 +24,12 @@ function Lightbox({ src, alt, onClose }) {
   return (
     <div
       className='fixed inset-0 z-[100] flex items-center justify-center bg-breu/95 p-4'
+      ref={caixa}
+      tabIndex={-1}
       onClick={onClose}
       role='dialog'
       aria-modal='true'
+      aria-label={alt}
     >
       <img src={src} alt={alt} className='max-h-full max-w-full rounded-lg shadow-carta' />
       <button
@@ -43,6 +49,8 @@ function ProjectDetail() {
   const projeto = porId(id)
   const [zoom, setZoom] = useState(null)
   const [tudo, setTudo] = useState(false)
+  // Estável: função nova a cada render re-registrava o Esc e piscava o overflow.
+  const fecharZoom = useCallback(() => setZoom(null), [])
 
   // Projeto novo recolhe a lista de novo — senão o estado vaza entre rotas.
   useEffect(() => setTudo(false), [id])
@@ -256,7 +264,7 @@ function ProjectDetail() {
         )}
       </nav>
 
-      {zoom && <Lightbox src={zoom} alt={projeto.nome} onClose={() => setZoom(null)} />}
+      {zoom && <Lightbox src={zoom} alt={projeto.nome} onClose={fecharZoom} />}
     </div>
   )
 }

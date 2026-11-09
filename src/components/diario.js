@@ -1,22 +1,33 @@
 import { useEffect, useState } from 'react'
-import projetos from '../../data/projetos'
+import projetos from '../data/projetos'
+import { gravarArmazem, lerArmazem } from '../armazem'
 
 // Diário de bordo: o que o visitante já viu, guardado só no navegador dele.
 const CHAVE = 'diario-de-bordo'
 const EVENTO = 'diario:mudou'
 
-const vazio = () => ({ projetos: [], transmitiu: false, final: false, fragmentos: 0, pintura: 'padrao', recorde: 0 })
+// Só ids que ainda existem: projeto removido não conta para "diário completo".
+const IDS = new Set(projetos.map((p) => p.id))
+const vazio = () => ({ projetos: [], transmitiu: false })
 
+// JSON válido mas em formato estranho (versão antiga, edição manual) não pode
+// derrubar a página: cada campo é conferido e cai no padrão se vier torto.
 export function lerDiario() {
+  const d = vazio()
+  let salvo
   try {
-    return { ...vazio(), ...JSON.parse(localStorage.getItem(CHAVE) || '{}') }
+    salvo = JSON.parse(lerArmazem(CHAVE) || '{}')
   } catch {
-    return vazio()
+    return d
   }
+  if (!salvo || typeof salvo !== 'object') return d
+  if (Array.isArray(salvo.projetos)) d.projetos = salvo.projetos.filter((id) => IDS.has(id))
+  if (typeof salvo.transmitiu === 'boolean') d.transmitiu = salvo.transmitiu
+  return d
 }
 
 function gravar(d) {
-  localStorage.setItem(CHAVE, JSON.stringify(d))
+  gravarArmazem(CHAVE, JSON.stringify(d))
   window.dispatchEvent(new Event(EVENTO))
 }
 
@@ -34,8 +45,6 @@ export function anotarRota(caminho) {
   if (!projetos.some((p) => p.id === id)) return
   anotar((d) => (d.projetos.includes(id) ? {} : { projetos: [...d.projetos, id] }))
 }
-
-export const TOTAL = projetos.length
 
 export function useDiario() {
   const [d, setD] = useState(lerDiario)

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLocation, useNavigationType } from 'react-router-dom'
 
 const COLUNAS = 5
 const DURACAO = 150 // ms de queda de cada coluna
@@ -26,17 +26,48 @@ export default function useTransicao() {
   const location = useLocation()
   const [exibida, setExibida] = useState(location)
   const [fase, setFase] = useState('parado')
+  const tipo = useNavigationType()
+  const tipoRef = useRef(tipo)
+  tipoRef.current = tipo
+
+  // "Voltar"/"Avançar" devolvem a rolagem de onde a pessoa saiu; link novo vai ao topo.
+  // Antes era sempre o topo: quem abria um projeto do fim da lista e voltava,
+  // caía no começo dela. A posição é salva ao sair (por key do histórico) e
+  // aplicada só depois que a página nova está no DOM (useLayoutEffect), senão
+  // o scrollTo bate na altura da página velha.
+  const posicoes = useRef(new Map())
+  const rolarPara = useRef(null)
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
+  }, [])
+  const trocar = (loc) => {
+    rolarPara.current = tipoRef.current === 'POP' ? posicoes.current.get(loc.key) ?? 0 : 0
+    setExibida(loc)
+  }
+  useLayoutEffect(() => {
+    if (rolarPara.current == null) return
+    // instant: o html tem scroll-behavior: smooth, e a página nova chegava ainda rolando.
+    window.scrollTo({ top: rolarPara.current, behavior: 'instant' })
+    rolarPara.current = null
+  }, [exibida.key])
 
   // Rota nova: ou troca na hora (quem pediu menos animação), ou monta as colunas.
   useEffect(() => {
-    if (location.pathname === exibida.pathname) return
-    if (semAnimacao()) {
-      setExibida(location)
-      window.scrollTo(0, 0)
+    // Mesma página, só ?query ou #hash mudou (ex.: filtro ?categoria= da lista):
+    // troca na hora, sem colunas. Antes isso era ignorado e o filtro não filtrava.
+    if (location.pathname === exibida.pathname) {
+      if (location.key !== exibida.key && fase === 'parado') setExibida(location)
       return
     }
-    setFase('montando')
-  }, [location, exibida])
+    if (fase === 'parado') posicoes.current.set(exibida.key, window.scrollY)
+    if (semAnimacao()) {
+      trocar(location)
+      return
+    }
+    // Transição em andamento: a fase "cobrindo" já troca para a location mais
+    // recente; se ela chegou na "saindo", começa quando voltar a "parado".
+    if (fase === 'parado') setFase('montando')
+  }, [location, exibida, fase])
 
   // Dois quadros entre montar e animar: um só não garante que o navegador
   // tenha pintado o estado inicial, e a transição sai engolida.
@@ -52,12 +83,11 @@ export default function useTransicao() {
     }
   }, [fase])
 
-  // Coberto: troca a página e sobe o scroll escondido atrás das colunas.
+  // Coberto: troca a página e acerta a rolagem escondida atrás das colunas.
   useEffect(() => {
     if (fase !== 'cobrindo') return
     const t = setTimeout(() => {
-      setExibida(location)
-      window.scrollTo(0, 0)
+      trocar(location)
       setFase('saindo')
     }, FASE)
     return () => clearTimeout(t)
